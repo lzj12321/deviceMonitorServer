@@ -36,19 +36,19 @@
 #define OTA_MODE 1
 
 /* robot serialNum */
-const String robotFlag = "xe_line2_ultra";
+const String robotFlag = "xe_line3_ultra";
 
 /* work mode and firmWare version */
 unsigned int workMode = MONITOR_MODE;
 const String firmWareVersion = "0.1";
 
 /* wifi param */
-char *ssid     = "TEXE-Robot";//wifi ssid
-char *password = "JX_TELUA";//wifi password
+char *ssid     = "NETGEAR";//wifi ssid
+char *password = "sj13607071774";//wifi password
 
 /* server param */
 WiFiClient client;
-const char *host = "192.168.16.102";//server ip
+const char *host = "10.0.0.11";//server ip
 const int tcpPort = 8888;//server port
 
 /* io param */

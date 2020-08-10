@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import pyqtSignal
 from loggerTool import Logger
 from robotState import RobotState
+import copy
 
 
 class MonitorServer(QObject):
@@ -33,6 +34,7 @@ class MonitorServer(QObject):
         self.monitoringRobot=[]
         self.otaStateRobots=[]
         self.waitOtaCheckRobots=[]
+        self.waitMonitorCheckRobots=[]
         self.robotState={}
         self.onlineRobotIp={}
         self.ipSocket={}
@@ -61,12 +63,10 @@ class MonitorServer(QObject):
 
 
     def setRobotToOtaState(self,_otaRobots):
-        self.waitOtaCheckRobots=_otaRobots
-        for _robot in self.waitOtaCheckRobots:
+        for _robot in _otaRobots:
             if _robot in self.otaStateRobots:
-                return
+                continue
             if _robot in self.onlineRobotIp.keys():
-                self.robotState[_robot]=RobotState.WAIT_OTA_CHECK
                 print('send ota msg to:'+_robot)
                 self.ipSocket[self.onlineRobotIp[_robot]].sendMsg('ota')
                 pass
@@ -74,12 +74,12 @@ class MonitorServer(QObject):
                 self.appendRunMsg.emit('cant set '+_robot+' into ota mode because it not online!')
         pass
 
-    def setRobotToMonitorState(self):
-        for _robot in self.monitoringRobot:
-            if _robot in self.otaStateRobots:
-                self.otaStateRobots.remove(_robot)
+    def setRobotToMonitorState(self,_monitorList):
+        self.monitoringRobot=copy.deepcopy(_monitorList)
+        for _robot in _monitorList:
             if _robot in self.onlineRobotIp.keys():
                 self.ipSocket[self.onlineRobotIp[_robot]].sendMsg('monitor')
+                print('send monitor msg to '+_robot)
             else:
                 self.appendRunMsg.emit('cant set '+_robot+' into monitor model because it not on line!')
         pass
@@ -174,30 +174,37 @@ class MonitorServer(QObject):
                 self.outLog('receivd a error msg:'+msg)
                 return
 
-            _robotState=RobotState.ONLINE
+            _robotState=self.robotState[_robotFlag]
             if _robotFlag in self.robotOnlineCheckFlag.keys():
                 self.robotOnlineCheckFlag[_robotFlag]=True
                 if _validMsg=='check':
                     _robotState=RobotState.ONLINE
+                    if _robotFlag in self.otaStateRobots:
+                        self.otaStateRobots.remove(_robotFlag)
                 elif _validMsg=='stop':
                     _robotState=RobotState.STOP
+                    if _robotFlag in self.otaStateRobots:
+                        self.otaStateRobots.remove(_robotFlag)
                 elif _validMsg=='pause':
                     _robotState=RobotState.PAUSE
-                elif _validMsg=='anfang':
-                    _robotState=RobotState.ANFANG
-                elif _validMsg=='catchError':
-                    _robotState=RobotState.CATCH_ERROR
-                elif _validMsg=='hipot':
-                    _robotState=RobotState.HIPOT
+                    if _robotFlag in self.otaStateRobots:
+                        self.otaStateRobots.remove(_robotFlag)
                 elif _validMsg=='ota_check':
                     _robotState=RobotState.OTA
-                    if _robotFlag in self.waitOtaCheckRobots:
-                        self.waitOtaCheckRobots.remove(_robotFlag)
                     if _robotFlag not in self.otaStateRobots:
                         self.otaStateRobots.append(_robotFlag)
-
+                    if _robotFlag in self.monitoringRobot:
+                        self.monitoringRobot.remove(_robotFlag)
                 elif _validMsg=='monitor_check':
-                    _robotState=RobotState.ONLINE
+                    if _robotFlag not in self.monitoringRobot:
+                        self.monitoringRobot.append(_robotFlag)
+                    if _robotFlag in self.otaStateRobots:
+                        self.otaStateRobots.remove(_robotFlag)
+                    if self.robotState[_robotFlag]==RobotState.OTA:
+                        _robotState=RobotState.ONLINE
+                else:
+                    return
+                    
                 if self.robotState[_robotFlag]!=_robotState:
                     self.saveRobotStateChangeLog(_robotFlag,_validMsg)
                     self.robotState[_robotFlag]=_robotState

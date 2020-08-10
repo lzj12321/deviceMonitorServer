@@ -10,7 +10,6 @@ class RobotState(IntEnum):
     PAUSE=6
     OTA=7
     MONITOR=8
-    WAIT_OTA_CHECK=9
 
 
 class MonitorState(IntEnum):

@@ -17,6 +17,7 @@ from monitorServer import MonitorServer
 from yamlTool import Yaml_Tool
 from robotState import RobotState,MonitorState
 from PyQt5.QtGui import QPixmap
+import copy
 
 
 class myButton(QPushButton):
@@ -192,9 +193,6 @@ class GUI(QWidget):
         elif self.monitorServer.robotState[_robot]==RobotState.PAUSE:
             lableBgColor='background:red'
             self.findChild(QPushButton,_robot).setText("中止")
-        elif self.monitorServer.robotState[_robot]==RobotState.WAIT_OTA_CHECK:
-            lableBgColor='background-color:rgb(78,255,155)'
-            self.findChild(QPushButton,_robot).setText("OTAING")
         elif self.monitorServer.robotState[_robot]==RobotState.OTA:
             lableBgColor='background:blue'
             self.findChild(QPushButton,_robot).setText("OTA")
@@ -202,7 +200,7 @@ class GUI(QWidget):
         if self.runMode==MonitorState.MONITOR_STATE:
             self.findChild(QPushButton,_robot).setStyleSheet(lableBgColor)
 
-        if _robot not in self.monitorServer.monitoringRobot:
+        if _robot not in self.monitorServer.monitoringRobot and _robot not in self.monitorServer.otaStateRobots:
             self.findChild(QPushButton,_robot).setStyleSheet("background-color:gray")
         pass
 
@@ -218,7 +216,7 @@ class GUI(QWidget):
 
     def closeEvent(self, a0: QtGui.QCloseEvent) -> None:
         choose = QMessageBox.question(self, 'Question', '确认关闭程序？', QMessageBox.Yes | QMessageBox.No,
-                                      QMessageBox.Yes)
+                                      QMessageBox.No)
         if choose == QMessageBox.No:
             a0.ignore()
 
@@ -261,19 +259,25 @@ class GUI(QWidget):
         # print(_str+' clicked')
         if self.runMode==MonitorState.MONITOR_STATE:
             return
-        if _device in self.choosingOtaList or _device in self.choosingMonitorList:
-            self.findChild(QPushButton,_device).setStyleSheet('background-color:gray')   
-            if _device in self.choosingMonitorList:
-                self.choosingMonitorList.remove(_device)
-            else:
-                self.choosingOtaList.remove(_device)
+
+        if _device in self.choosingOtaList and self.runMode==MonitorState.CHOOSING_OTA_STATE:
+            self.choosingOtaList.remove(_device)
+            print('remove ota '+_device)
+            self.findChild(QPushButton,_device).setStyleSheet('background-color:gray') 
+            return
+        if _device in self.choosingMonitorList and self.runMode==MonitorState.CHOOSING_MONITOR_STATE:
+            self.choosingMonitorList.remove(_device)
+            print('remove monitor '+_device)
+            self.findChild(QPushButton,_device).setStyleSheet('background-color:gray')
             return
             
-        self.findChild(QPushButton,_device).setStyleSheet('background-color:rgb(78,155,255)')
         if self.runMode==MonitorState.CHOOSING_OTA_STATE:
             self.choosingOtaList.append(_device)
+            print('add ota '+_device)
         elif self.runMode==MonitorState.CHOOSING_MONITOR_STATE:
             self.choosingMonitorList.append(_device)
+            print('add monitor '+_device)
+        self.findChild(QPushButton,_device).setStyleSheet('background-color:rgb(78,155,255)')
         pass
 
     def setbuttonStyleSheet(self,_buttons):
@@ -300,8 +304,7 @@ class GUI(QWidget):
             return
         elif self.runMode==MonitorState.CHOOSING_MONITOR_STATE:
             print(self.choosingMonitorList)
-            self.monitorServer.monitoringRobot=self.choosingMonitorList
-            self.monitorServer.setRobotToMonitorState()
+            self.monitorServer.setRobotToMonitorState(self.choosingMonitorList)
             self.choosingMonitorList.clear()
             pass
         elif self.runMode==MonitorState.CHOOSING_OTA_STATE:
@@ -316,15 +319,15 @@ class GUI(QWidget):
     def clearButtonClicked(self):
         print('clear button clicked')
         self.runMode=MonitorState.MONITOR_STATE
-        self.choosingMonitorList=self.monitorServer.monitoringRobot
-        self.choosingOtaList=self.monitorServer.otaStateRobots
+        self.choosingMonitorList=copy.deepcopy(self.monitorServer.monitoringRobot)
+        self.choosingOtaList=copy.deepcopy(self.monitorServer.otaStateRobots)
         self.updateAllDeviceLabel()
         pass
 
     def otaButtonClicked(self):
         print('ota button clicked')
-        self.choosingMonitorList=self.monitorServer.monitoringRobot
-        self.choosingOtaList=self.monitorServer.otaStateRobots
+        self.choosingMonitorList=copy.deepcopy(self.monitorServer.monitoringRobot)
+        self.choosingOtaList=copy.deepcopy(self.monitorServer.otaStateRobots)
         # self.choosingOtaList.clear()
         # self.choosingMonitorList.clear()
         self.runMode=MonitorState.CHOOSING_OTA_STATE
@@ -337,8 +340,8 @@ class GUI(QWidget):
 
     def monitorButtonClicked(self):
         print('monitor button clicked')
-        self.choosingMonitorList=self.monitorServer.monitoringRobot
-        self.choosingOtaList=self.monitorServer.otaStateRobots
+        self.choosingMonitorList=copy.deepcopy(self.monitorServer.monitoringRobot)
+        self.choosingOtaList=copy.deepcopy(self.monitorServer.otaStateRobots)
         # self.choosingOtaList.clear()
         # self.choosingMonitorList.clear()
         self.runMode=MonitorState.CHOOSING_MONITOR_STATE
