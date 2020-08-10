@@ -9,8 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import *
-from PyQt5.QtWidgets import QWidget,QApplication, QInputDialog, QLineEdit,QLabel,QFrame,QTextEdit,QMessageBox
+from PyQt5.QtWidgets import QWidget,QApplication, QInputDialog, QLineEdit,QLabel,QFrame,QTextEdit,QMessageBox,QPushButton
 import sys
 from monitorServer import MonitorServer
 from yamlTool import Yaml_Tool
@@ -18,39 +19,26 @@ from robotState import RobotState
 from PyQt5.QtGui import QPixmap
 
 
+class myButton(QPushButton):
+    clickedButton=pyqtSignal(str)
+    def __init__(self):
+        super(myButton,self).__init__()
+        self.clicked.connect(self.clickedMy)
+        pass
+
+    def clickedMy(self):
+        # self.clickedButton.emit('test')
+        self.clickedButton.emit(self.objectName())
+
+
 class GUI(QWidget):
+    test123=pyqtSignal(str)
     def __init__(self):
         super(GUI,self).__init__()
         self.getObjectNames()
         self.labelArray=[]
-        labelWidth=100
-        labelHeight=40
-        label_y=80
-        label_x=50
-        
-        objectIndex=0
-        for i in range(0,40):
-            _label=QLabel(self)
-            _label.setAlignment(Qt.AlignCenter)
-            self.labelArray.append(_label)
-            if i%5==0:
-                label_y=80
-                label_x=label_x+labelWidth+20
-                _label.setText(str(int(i/5+1))+'拉')
-            else:
-                _label.setObjectName(self.objectNames[objectIndex])
-                # print(self.objectNames[objectIndex])
-                objectIndex+=1
-                _label.setStyleSheet('background:yellow')
-                _label.setText("离线")
-
-            label_y=label_y+labelHeight+20
-            font = QtGui.QFont()
-            font.setPointSize(17)
-            font.setBold(True)
-            font.setWeight(75)
-            _label.setFont(font)
-            _label.setGeometry(label_x,label_y,labelWidth,labelHeight)
+        self.checkboxArray=[]
+        self.deviceLabelIni()
         
         self.label_33 = QtWidgets.QLabel(self)
         self.label_33.setGeometry(QtCore.QRect(300, 10, 701, 101))
@@ -63,7 +51,7 @@ class GUI(QWidget):
         self.label_33.setAlignment(QtCore.Qt.AlignCenter)
         self.label_33.setObjectName("label_33")
         self.textEdit = QtWidgets.QTextEdit(self)
-        self.textEdit.setGeometry(QtCore.QRect(200, 460, 750, 250))
+        self.textEdit.setGeometry(QtCore.QRect(330, 460, 750, 250))
         font = QtGui.QFont()
         font.setPointSize(15)
         font.setBold(True)
@@ -117,7 +105,41 @@ class GUI(QWidget):
         self.retranslateUi(self)
         QtCore.QMetaObject.connectSlotsByName(self)
         self.logoIni()
+        self.dataIni()
+        self.editButtonIni()
         self.runMonitorServer()
+
+    def deviceLabelIni(self):
+        labelWidth=100
+        labelHeight=40
+        label_y=80
+        label_x=50
+        
+        objectIndex=0
+        for i in range(0,40):
+            _label=myButton()
+            _label.setParent(self)
+            self.labelArray.append(_label)
+            if i%5==0:
+                label_y=80
+                label_x=label_x+labelWidth+20
+                _label.setText(str(int(i/5+1))+'拉')
+                _label.setStyleSheet("background-color:rgb(78,255,255)")
+            else:
+                _label.setObjectName(self.objectNames[objectIndex])
+                objectIndex+=1
+                _label.setStyleSheet("background-color:yellow")
+                _label.setText("离线")
+                _label.clickedButton.connect(self.deviceButtonClicked)
+
+            label_y=label_y+labelHeight+20
+            font = QtGui.QFont()
+            font.setPointSize(17)
+            font.setBold(True)
+            font.setWeight(75)
+            _label.setFont(font)
+            _label.setGeometry(label_x,label_y,labelWidth,labelHeight)
+        pass
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -155,26 +177,26 @@ class GUI(QWidget):
 
     def updateRobotLabel(self,_robot):
         if self.monitorServer.robotState[_robot]==RobotState.ANFANG:
-            self.findChild(QLabel,_robot).setStyleSheet('background:red')
-            self.findChild(QLabel,_robot).setText("安防报警")
+            self.findChild(QPushButton,_robot).setStyleSheet('background:red')
+            self.findChild(QPushButton,_robot).setText("安防报警")
         elif self.monitorServer.robotState[_robot]==RobotState.HIPOT:
-            self.findChild(QLabel,_robot).setStyleSheet('background:red')
-            self.findChild(QLabel,_robot).setText("高压报警")
+            self.findChild(QPushButton,_robot).setStyleSheet('background:red')
+            self.findChild(QPushButton,_robot).setText("高压报警")
         elif self.monitorServer.robotState[_robot]==RobotState.CATCH_ERROR:
-            self.findChild(QLabel,_robot).setStyleSheet('background:red')
-            self.findChild(QLabel,_robot).setText("未插入报警")
+            self.findChild(QPushButton,_robot).setStyleSheet('background:red')
+            self.findChild(QPushButton,_robot).setText("未插入报警")
         elif self.monitorServer.robotState[_robot]==RobotState.OFFLINE:
-            self.findChild(QLabel,_robot).setStyleSheet('background:yellow')
-            self.findChild(QLabel,_robot).setText("离线")
+            self.findChild(QPushButton,_robot).setStyleSheet('background:yellow')
+            self.findChild(QPushButton,_robot).setText("离线")
         elif self.monitorServer.robotState[_robot]==RobotState.ONLINE:
-            self.findChild(QLabel,_robot).setStyleSheet('background:green')
-            self.findChild(QLabel,_robot).setText("正常")
+            self.findChild(QPushButton,_robot).setStyleSheet('background:green')
+            self.findChild(QPushButton,_robot).setText("正常")
         elif self.monitorServer.robotState[_robot]==RobotState.STOP:
-            self.findChild(QLabel,_robot).setStyleSheet('background:red')
-            self.findChild(QLabel,_robot).setText("停止")
+            self.findChild(QPushButton,_robot).setStyleSheet('background:red')
+            self.findChild(QPushButton,_robot).setText("停止")
         elif self.monitorServer.robotState[_robot]==RobotState.PAUSE:
-            self.findChild(QLabel,_robot).setStyleSheet('background:red')
-            self.findChild(QLabel,_robot).setText("中止")
+            self.findChild(QPushButton,_robot).setStyleSheet('background:red')
+            self.findChild(QPushButton,_robot).setText("中止")
         pass
 
     def logoIni(self):
@@ -192,6 +214,83 @@ class GUI(QWidget):
                                       QMessageBox.Yes)
         if choose == QMessageBox.No:
             a0.ignore()
+
+    def changeLabelStylesheet(self,_label,_text,_flag):
+        _label.setText(_text)
+        pass
+
+    def editButtonIni(self):
+        _buttonWidth=100
+        _buttonHeight=50
+
+        self.otaButton=QPushButton(self)
+        self.clearButton=QPushButton(self)
+        self.confirmButton=QPushButton(self)
+        self.monitorButton=QPushButton(self)
+
+
+        self.otaButton.clicked.connect(self.otaButtonClicked)
+        self.clearButton.clicked.connect(self.clearButtonClicked)
+        self.confirmButton.clicked.connect(self.confirmButtonClicked)
+        self.monitorButton.clicked.connect(self.monitorButtonClicked)
+
+        self.otaButton.setText("OTA")
+        self.clearButton.setText("CLEAR")
+        self.confirmButton.setText("CONFIRM")
+        self.monitorButton.setText("MONITOR")
+
+        self.otaButton.setGeometry(50,500,_buttonWidth,_buttonHeight)
+        self.monitorButton.setGeometry(200,500,_buttonWidth,_buttonHeight)
+        self.clearButton.setGeometry(50,600,_buttonWidth,_buttonHeight)
+        self.confirmButton.setGeometry(200,600,_buttonWidth,_buttonHeight)
+        _buttons=[]
+        _buttons.append(self.otaButton)
+        _buttons.append(self.monitorButton)
+        _buttons.append(self.clearButton)
+        _buttons.append(self.confirmButton)
+        self.setbuttonStyleSheet(_buttons)
+    
+    def deviceButtonClicked(self,_str):
+        print(_str+' clicked')
+        pass
+
+    def setbuttonStyleSheet(self,_buttons):
+        for _button in _buttons:
+            font = QtGui.QFont()
+            font.setPointSize(15)
+            font.setBold(True)
+            font.setWeight(75)
+            _button.setFont(font)
+            _button.setStyleSheet("QPushButton{color:black}"
+                                  "QPushButton:hover{color:red}"
+                                  "QPushButton{background-color:rgb(78,255,255)}"
+                                  "QPushButton{border:2px}"
+                                  "QPushButton{border-radius:10px}"
+                                  "QPushButton{padding:2px 4px}")
+    def dataIni(self):
+        self.runMode='monitor'
+        self.monitorList=[]
+        self.otaList=[]
+        self.choosingOtaList=[]
+        self.choosingMonitorList=[]
+
+    def confirmButtonClicked(self):
+        print('confirm button clicked')
+        pass
+
+    def clearButtonClicked(self):
+        print('clear button clicked')
+        self.updateRobotLabel()
+        pass
+
+    def otaButtonClicked(self):
+        print('ota button clicked')
+        pass
+
+    def monitorButtonClicked(self):
+        print('monitor button clicked')
+        pass
+
 
 if __name__ == '__main__':
     app=QApplication(sys.argv)

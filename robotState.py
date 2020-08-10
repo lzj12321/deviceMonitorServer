@@ -8,3 +8,5 @@ class RobotState(IntEnum):
     CATCH_ERROR=4
     STOP=5
     PAUSE=6
+    OTA=7
+    MONITOR=8

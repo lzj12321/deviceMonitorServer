@@ -771,3 +771,289 @@
 2020-08-10 11:25:41,080 - server initialize
 2020-08-10 11:25:41,097 - timer initialize
 2020-08-10 11:25:41,102 - mysql initialize
+2020-08-10 13:01:11,422 - param initialize
+2020-08-10 13:01:11,452 - server initialize
+2020-08-10 13:01:11,473 - timer initialize
+2020-08-10 13:01:11,475 - mysql initialize
+2020-08-10 13:16:35,221 - param initialize
+2020-08-10 13:16:35,250 - server initialize
+2020-08-10 13:16:35,260 - timer initialize
+2020-08-10 13:16:35,269 - mysql initialize
+2020-08-10 13:17:27,253 - param initialize
+2020-08-10 13:17:27,282 - server initialize
+2020-08-10 13:17:27,291 - timer initialize
+2020-08-10 13:17:27,295 - mysql initialize
+2020-08-10 13:17:48,496 - param initialize
+2020-08-10 13:17:48,530 - server initialize
+2020-08-10 13:17:48,542 - timer initialize
+2020-08-10 13:17:48,547 - mysql initialize
+2020-08-10 13:19:48,500 - a new connection from 192.168.16.101
+2020-08-10 13:19:48,569 - xe_line1_ultra alter robot state to check
+2020-08-10 13:19:51,594 - xe_line1_ultra alter robot state to stop
+2020-08-10 13:22:56,198 - param initialize
+2020-08-10 13:22:56,231 - server initialize
+2020-08-10 13:22:56,243 - timer initialize
+2020-08-10 13:22:56,251 - mysql initialize
+2020-08-10 13:22:58,844 - a new connection from 192.168.16.101
+2020-08-10 13:22:58,912 - xe_line1_ultra alter robot state to check
+2020-08-10 13:23:02,043 - xe_line1_ultra alter robot state to stop
+2020-08-10 13:24:05,120 - param initialize
+2020-08-10 13:24:05,154 - server initialize
+2020-08-10 13:24:05,170 - timer initialize
+2020-08-10 13:24:05,179 - mysql initialize
+2020-08-10 13:24:06,783 - a new connection from 192.168.16.101
+2020-08-10 13:24:06,826 - xe_line1_ultra alter robot state to check
+2020-08-10 13:24:20,140 - xe_line1_ultra alter robot state to stop
+2020-08-10 13:34:21,884 - param initialize
+2020-08-10 13:34:21,933 - server initialize
+2020-08-10 13:34:21,951 - timer initialize
+2020-08-10 13:34:22,030 - mysql initialize
+2020-08-10 13:34:22,385 - a new connection from 192.168.16.101
+2020-08-10 13:34:22,786 - xe_line1_ultra alter robot state to check
+2020-08-10 13:34:27,551 - xe_line1_ultra alter robot state to stop
+2020-08-10 13:41:51,076 - param initialize
+2020-08-10 13:41:51,106 - server initialize
+2020-08-10 13:41:51,122 - timer initialize
+2020-08-10 13:41:51,131 - mysql initialize
+2020-08-10 13:41:53,242 - a new connection from 192.168.16.101
+2020-08-10 13:41:53,282 - xe_line1_ultra alter robot state to check
+2020-08-10 13:41:56,330 - xe_line1_ultra alter robot state to stop
+2020-08-10 13:44:14,268 - param initialize
+2020-08-10 13:44:14,308 - server initialize
+2020-08-10 13:44:14,318 - timer initialize
+2020-08-10 13:44:14,321 - mysql initialize
+2020-08-10 13:44:16,466 - a new connection from 192.168.16.101
+2020-08-10 13:44:16,498 - xe_line1_ultra alter robot state to check
+2020-08-10 13:44:30,089 - xe_line1_ultra alter robot state to stop
+2020-08-10 13:45:17,455 - param initialize
+2020-08-10 13:45:17,483 - server initialize
+2020-08-10 13:45:17,493 - timer initialize
+2020-08-10 13:45:17,498 - mysql initialize
+2020-08-10 13:45:18,836 - a new connection from 192.168.16.101
+2020-08-10 13:45:18,867 - xe_line1_ultra alter robot state to check
+2020-08-10 13:45:28,430 - xe_line1_ultra alter robot state to stop
+2020-08-10 13:45:59,191 - param initialize
+2020-08-10 13:45:59,224 - server initialize
+2020-08-10 13:45:59,236 - timer initialize
+2020-08-10 13:45:59,244 - mysql initialize
+2020-08-10 13:46:02,161 - a new connection from 192.168.16.101
+2020-08-10 13:46:02,193 - xe_line1_ultra alter robot state to check
+2020-08-10 13:46:09,814 - xe_line1_ultra alter robot state to stop
+2020-08-10 13:47:24,676 - a new connection from 192.168.16.107
+2020-08-10 13:47:24,707 - xe_line3_ultra alter robot state to check
+2020-08-10 13:47:27,761 - xe_line3_ultra alter robot state to stop
+2020-08-10 13:50:01,456 - param initialize
+2020-08-10 13:50:01,487 - server initialize
+2020-08-10 13:50:01,498 - timer initialize
+2020-08-10 13:50:01,508 - mysql initialize
+2020-08-10 13:50:03,196 - a new connection from 192.168.16.101
+2020-08-10 13:50:03,232 - xe_line1_ultra alter robot state to check
+2020-08-10 13:50:03,237 - a new connection from 192.168.16.107
+2020-08-10 13:50:03,259 - xe_line3_ultra alter robot state to check
+2020-08-10 13:50:04,158 - xe_line1_ultra alter robot state to stop
+2020-08-10 13:50:08,117 - xe_line3_ultra alter robot state to stop
+2020-08-10 13:57:41,537 - param initialize
+2020-08-10 13:57:41,568 - server initialize
+2020-08-10 13:57:41,579 - timer initialize
+2020-08-10 13:57:41,586 - mysql initialize
+2020-08-10 13:57:42,865 - a new connection from 192.168.16.101
+2020-08-10 13:57:42,893 - xe_line1_ultra alter robot state to check
+2020-08-10 13:57:42,966 - a new connection from 192.168.16.107
+2020-08-10 13:57:42,987 - xe_line3_ultra alter robot state to check
+2020-08-10 13:57:48,394 - xe_line1_ultra alter robot state to stop
+2020-08-10 13:57:50,239 - xe_line3_ultra alter robot state to stop
+2020-08-10 13:57:58,795 - param initialize
+2020-08-10 13:57:58,833 - server initialize
+2020-08-10 13:57:58,846 - timer initialize
+2020-08-10 13:57:58,849 - mysql initialize
+2020-08-10 13:58:01,016 - a new connection from 192.168.16.107
+2020-08-10 13:58:01,055 - xe_line3_ultra alter robot state to check
+2020-08-10 13:58:01,207 - a new connection from 192.168.16.101
+2020-08-10 13:58:01,240 - xe_line1_ultra alter robot state to check
+2020-08-10 13:58:24,459 - param initialize
+2020-08-10 13:58:24,503 - server initialize
+2020-08-10 13:58:24,515 - timer initialize
+2020-08-10 13:58:24,519 - mysql initialize
+2020-08-10 13:58:25,619 - a new connection from 192.168.16.101
+2020-08-10 13:58:25,652 - xe_line1_ultra alter robot state to check
+2020-08-10 13:58:25,702 - a new connection from 192.168.16.107
+2020-08-10 13:58:25,716 - xe_line3_ultra alter robot state to check
+2020-08-10 13:58:29,886 - xe_line1_ultra alter robot state to stop
+2020-08-10 13:58:33,876 - xe_line3_ultra alter robot state to stop
+2020-08-10 13:58:49,838 - param initialize
+2020-08-10 13:58:49,866 - server initialize
+2020-08-10 13:58:49,880 - timer initialize
+2020-08-10 13:58:49,885 - mysql initialize
+2020-08-10 13:58:50,510 - a new connection from 192.168.16.101
+2020-08-10 13:58:50,538 - xe_line1_ultra alter robot state to check
+2020-08-10 13:58:50,597 - a new connection from 192.168.16.107
+2020-08-10 13:58:50,617 - xe_line3_ultra alter robot state to check
+2020-08-10 14:00:24,276 - param initialize
+2020-08-10 14:00:24,311 - server initialize
+2020-08-10 14:00:24,322 - timer initialize
+2020-08-10 14:00:24,331 - mysql initialize
+2020-08-10 14:00:24,565 - a new connection from 192.168.16.107
+2020-08-10 14:00:24,871 - xe_line3_ultra alter robot state to check
+2020-08-10 14:00:25,524 - a new connection from 192.168.16.101
+2020-08-10 14:00:25,557 - xe_line1_ultra alter robot state to check
+2020-08-10 14:00:27,511 - xe_line3_ultra alter robot state to stop
+2020-08-10 14:00:28,604 - xe_line1_ultra alter robot state to stop
+2020-08-10 14:00:59,550 - param initialize
+2020-08-10 14:00:59,583 - server initialize
+2020-08-10 14:00:59,597 - timer initialize
+2020-08-10 14:00:59,599 - mysql initialize
+2020-08-10 14:01:00,291 - a new connection from 192.168.16.101
+2020-08-10 14:01:00,323 - xe_line1_ultra alter robot state to check
+2020-08-10 14:01:02,318 - a new connection from 192.168.16.107
+2020-08-10 14:01:02,339 - xe_line3_ultra alter robot state to check
+2020-08-10 14:01:02,508 - xe_line1_ultra alter robot state to stop
+2020-08-10 14:01:03,887 - xe_line3_ultra alter robot state to stop
+2020-08-10 14:01:39,993 - param initialize
+2020-08-10 14:01:40,042 - server initialize
+2020-08-10 14:01:40,058 - timer initialize
+2020-08-10 14:01:40,061 - mysql initialize
+2020-08-10 14:01:42,720 - a new connection from 192.168.16.107
+2020-08-10 14:01:42,752 - xe_line3_ultra alter robot state to check
+2020-08-10 14:01:42,809 - a new connection from 192.168.16.101
+2020-08-10 14:01:42,818 - xe_line1_ultra alter robot state to check
+2020-08-10 14:01:54,291 - xe_line1_ultra alter robot state to stop
+2020-08-10 14:01:55,712 - xe_line3_ultra alter robot state to stop
+2020-08-10 14:02:10,353 - param initialize
+2020-08-10 14:02:10,383 - server initialize
+2020-08-10 14:02:10,397 - timer initialize
+2020-08-10 14:02:10,401 - mysql initialize
+2020-08-10 14:02:11,577 - a new connection from 192.168.16.107
+2020-08-10 14:02:12,875 - a new connection from 192.168.16.101
+2020-08-10 14:02:12,913 - xe_line1_ultra alter robot state to check
+2020-08-10 14:02:13,590 - xe_line3_ultra alter robot state to check
+2020-08-10 14:02:14,569 - xe_line3_ultra alter robot state to stop
+2020-08-10 14:02:15,356 - xe_line1_ultra alter robot state to stop
+2020-08-10 14:08:56,205 - param initialize
+2020-08-10 14:08:56,243 - server initialize
+2020-08-10 14:08:56,255 - timer initialize
+2020-08-10 14:08:56,259 - mysql initialize
+2020-08-10 14:08:57,574 - a new connection from 192.168.16.101
+2020-08-10 14:08:57,613 - xe_line1_ultra alter robot state to check
+2020-08-10 14:08:59,207 - a new connection from 192.168.16.107
+2020-08-10 14:08:59,228 - xe_line3_ultra alter robot state to check
+2020-08-10 14:09:00,633 - xe_line1_ultra alter robot state to stop
+2020-08-10 14:09:02,282 - xe_line3_ultra alter robot state to stop
+2020-08-10 14:09:15,484 - param initialize
+2020-08-10 14:09:15,519 - server initialize
+2020-08-10 14:09:15,532 - timer initialize
+2020-08-10 14:09:15,536 - mysql initialize
+2020-08-10 14:09:18,021 - a new connection from 192.168.16.101
+2020-08-10 14:09:18,055 - xe_line1_ultra alter robot state to check
+2020-08-10 14:09:18,444 - a new connection from 192.168.16.107
+2020-08-10 14:09:18,534 - xe_line3_ultra alter robot state to check
+2020-08-10 14:10:28,056 - param initialize
+2020-08-10 14:10:28,102 - server initialize
+2020-08-10 14:10:28,114 - timer initialize
+2020-08-10 14:10:28,115 - mysql initialize
+2020-08-10 14:10:33,606 - a new connection from 192.168.16.107
+2020-08-10 14:10:33,647 - xe_line3_ultra alter robot state to check
+2020-08-10 14:10:38,715 - a new connection from 192.168.16.101
+2020-08-10 14:10:38,749 - xe_line1_ultra alter robot state to check
+2020-08-10 14:10:39,385 - xe_line3_ultra alter robot state to stop
+2020-08-10 14:10:41,786 - xe_line1_ultra alter robot state to stop
+2020-08-10 14:23:50,281 - param initialize
+2020-08-10 14:23:50,317 - server initialize
+2020-08-10 14:23:50,327 - timer initialize
+2020-08-10 14:23:50,329 - mysql initialize
+2020-08-10 14:36:36,252 - param initialize
+2020-08-10 14:36:36,283 - server initialize
+2020-08-10 14:36:36,306 - timer initialize
+2020-08-10 14:36:36,308 - mysql initialize
+2020-08-10 14:36:37,655 - a new connection from 192.168.16.101
+2020-08-10 14:36:37,674 - xe_line1_ultra alter robot state to check
+2020-08-10 14:36:50,575 - param initialize
+2020-08-10 14:36:50,618 - server initialize
+2020-08-10 14:36:50,629 - timer initialize
+2020-08-10 14:36:50,633 - mysql initialize
+2020-08-10 14:36:51,740 - a new connection from 192.168.16.107
+2020-08-10 14:36:51,775 - xe_line3_ultra alter robot state to check
+2020-08-10 14:36:52,005 - a new connection from 192.168.16.101
+2020-08-10 14:36:52,040 - xe_line1_ultra alter robot state to check
+2020-08-10 14:36:52,088 - xe_line1_ultra alter robot state to stop
+2020-08-10 14:36:55,024 - xe_line3_ultra alter robot state to stop
+2020-08-10 14:38:34,886 - param initialize
+2020-08-10 14:38:34,914 - server initialize
+2020-08-10 14:38:34,925 - timer initialize
+2020-08-10 14:38:34,929 - mysql initialize
+2020-08-10 14:38:39,604 - a new connection from 192.168.16.107
+2020-08-10 14:38:39,627 - xe_line3_ultra alter robot state to check
+2020-08-10 14:38:49,837 - param initialize
+2020-08-10 14:38:49,867 - server initialize
+2020-08-10 14:38:49,883 - timer initialize
+2020-08-10 14:38:49,885 - mysql initialize
+2020-08-10 14:38:50,842 - a new connection from 192.168.16.107
+2020-08-10 14:38:53,874 - xe_line3_ultra alter robot state to check
+2020-08-10 14:38:53,930 - xe_line3_ultra alter robot state to stop
+2020-08-10 14:39:00,270 - a new connection from 192.168.16.101
+2020-08-10 14:39:00,285 - xe_line1_ultra alter robot state to check
+2020-08-10 14:39:03,571 - xe_line1_ultra alter robot state to stop
+2020-08-10 14:39:55,833 - param initialize
+2020-08-10 14:39:55,864 - server initialize
+2020-08-10 14:39:55,874 - timer initialize
+2020-08-10 14:39:55,877 - mysql initialize
+2020-08-10 14:39:56,529 - a new connection from 192.168.16.107
+2020-08-10 14:39:56,595 - a new connection from 192.168.16.101
+2020-08-10 14:39:56,619 - xe_line1_ultra alter robot state to check
+2020-08-10 14:39:59,489 - xe_line3_ultra alter robot state to check
+2020-08-10 14:40:06,930 - xe_line1_ultra alter robot state to stop
+2020-08-10 14:40:10,956 - xe_line3_ultra alter robot state to stop
+2020-08-10 14:46:26,963 - param initialize
+2020-08-10 14:46:26,992 - server initialize
+2020-08-10 14:46:27,002 - timer initialize
+2020-08-10 14:46:27,009 - mysql initialize
+2020-08-10 14:46:28,489 - a new connection from 192.168.16.101
+2020-08-10 14:47:27,571 - param initialize
+2020-08-10 14:47:27,612 - server initialize
+2020-08-10 14:47:27,624 - timer initialize
+2020-08-10 14:47:27,628 - mysql initialize
+2020-08-10 14:47:29,298 - a new connection from 192.168.16.101
+2020-08-10 14:47:29,356 - xe_line1_ultra alter robot state to check
+2020-08-10 14:47:29,395 - a new connection from 192.168.16.107
+2020-08-10 14:48:05,772 - param initialize
+2020-08-10 14:48:05,806 - server initialize
+2020-08-10 14:48:05,819 - timer initialize
+2020-08-10 14:48:05,823 - mysql initialize
+2020-08-10 14:48:06,154 - a new connection from 192.168.16.107
+2020-08-10 14:48:09,169 - xe_line3_ultra alter robot state to check
+2020-08-10 14:48:11,993 - a new connection from 192.168.16.101
+2020-08-10 14:48:12,017 - xe_line1_ultra alter robot state to check
+2020-08-10 14:48:14,220 - xe_line3_ultra alter robot state to stop
+2020-08-10 14:49:25,519 - param initialize
+2020-08-10 14:49:25,557 - server initialize
+2020-08-10 14:49:25,568 - timer initialize
+2020-08-10 14:49:25,575 - mysql initialize
+2020-08-10 14:49:27,052 - a new connection from 192.168.16.107
+2020-08-10 14:49:27,081 - xe_line3_ultra alter robot state to check
+2020-08-10 14:49:27,132 - a new connection from 192.168.16.101
+2020-08-10 14:49:27,159 - xe_line1_ultra alter robot state to check
+2020-08-10 14:49:30,220 - xe_line3_ultra alter robot state to stop
+2020-08-10 14:49:30,247 - xe_line1_ultra alter robot state to stop
+2020-08-10 14:50:50,579 - param initialize
+2020-08-10 14:50:50,609 - server initialize
+2020-08-10 14:50:50,620 - timer initialize
+2020-08-10 14:50:50,624 - mysql initialize
+2020-08-10 14:51:23,504 - param initialize
+2020-08-10 14:51:23,537 - server initialize
+2020-08-10 14:51:23,554 - timer initialize
+2020-08-10 14:51:23,556 - mysql initialize
+2020-08-10 14:51:28,247 - a new connection from 192.168.16.101
+2020-08-10 14:51:31,365 - xe_line1_ultra alter robot state to check
+2020-08-10 14:51:31,578 - xe_line1_ultra alter robot state to stop
+2020-08-10 14:51:52,060 - a new connection from 192.168.16.107
+2020-08-10 14:51:52,102 - xe_line3_ultra alter robot state to check
+2020-08-10 14:51:57,457 - xe_line3_ultra alter robot state to stop
+2020-08-10 14:55:59,514 - param initialize
+2020-08-10 14:55:59,546 - server initialize
+2020-08-10 14:55:59,558 - timer initialize
+2020-08-10 14:55:59,562 - mysql initialize
+2020-08-10 14:56:00,880 - a new connection from 192.168.16.101
+2020-08-10 14:56:00,919 - xe_line1_ultra alter robot state to check
+2020-08-10 14:56:00,957 - a new connection from 192.168.16.107
+2020-08-10 14:56:00,971 - xe_line3_ultra alter robot state to check
+2020-08-10 14:56:03,955 - xe_line1_ultra alter robot state to stop
+2020-08-10 14:56:04,027 - xe_line3_ultra alter robot state to stop

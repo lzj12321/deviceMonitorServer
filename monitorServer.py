@@ -30,12 +30,16 @@ class MonitorServer(QObject):
         
         ######## initializi robot && socket#########
         self.robotOnlineCheckFlag={}
+        self.monitoringRobot=[]
+        self.otaStateRobots=[]
+        self.waitOtaCheckRobots=[]
         self.robotState={}
         self.onlineRobotIp={}
         self.ipSocket={}
         self.workshop=self.params['workshop']
         self._robots=self.params['robot'].split(',')
         for _robot in self._robots:
+            self.monitoringRobot.append(_robot)
             self.robotOnlineCheckFlag[_robot]=False
             self.robotState[_robot]=RobotState.OFFLINE
         pass
@@ -54,6 +58,12 @@ class MonitorServer(QObject):
         self.mysqlTool=MysqlTool()
         # if not self.mysqlTool._connectState:
             # self.outLog("Can't connect to mysql server")
+
+
+    def setRobotToOtaState(self,_otaRobots):
+        self.waitOtaCheckRobots=_otaRobots
+        
+        pass
 
     def checkTimerTimeout(self):
         #### only detect offline time more than three times it will close the connection #########
@@ -160,6 +170,14 @@ class MonitorServer(QObject):
                     _robotState=RobotState.CATCH_ERROR
                 elif _validMsg=='hipot':
                     _robotState=RobotState.HIPOT
+                elif _validMsg=='ota_check':
+                    if _robotFlag in self.waitOtaCheckRobots:
+                        _robotState=RobotState.OTA
+                        self.waitOtaCheckRobots.remove(_robotFlag)
+                        self.otaStateRobots.append(_robotFlag)
+
+                elif _validMsg=='monitor_check':
+                    _robotState=RobotState.ONLINE
                 if self.robotState[_robotFlag]!=_robotState:
                     self.saveRobotStateChangeLog(_robotFlag,_validMsg)
                     self.robotState[_robotFlag]=_robotState
