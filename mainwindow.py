@@ -329,9 +329,10 @@ class GUI(QWidget):
         # self.choosingMonitorList.clear()
         self.runMode=MonitorState.CHOOSING_OTA_STATE
         for _robot in self.monitorServer.robotState.keys():
-            if _robot not in self.choosingMonitorList:
-                print(_robot)
+            if _robot not in self.choosingOtaList:
                 self.findChild(QPushButton,_robot).setStyleSheet('background:gray')
+            else:
+                self.findChild(QPushButton,_robot).setStyleSheet('background-color:rgb(78,155,255)')
         pass
 
     def monitorButtonClicked(self):
@@ -342,9 +343,11 @@ class GUI(QWidget):
         # self.choosingMonitorList.clear()
         self.runMode=MonitorState.CHOOSING_MONITOR_STATE
         for _robot in self.monitorServer.robotState.keys():
-            if _robot not in self.choosingOtaList:
-                print(_robot)
+            if _robot not in self.choosingMonitorList:
                 self.findChild(QPushButton,_robot).setStyleSheet('background:gray')
+            else:
+                self.findChild(QPushButton,_robot).setStyleSheet('background-color:rgb(78,155,255)')
+
         pass
 
     def updateAllDeviceLabel(self):
