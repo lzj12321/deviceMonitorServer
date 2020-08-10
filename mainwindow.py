@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import QWidget,QApplication, QInputDialog, QLineEdit,QLabel
 import sys
 from monitorServer import MonitorServer
 from yamlTool import Yaml_Tool
-from robotState import RobotState
+from robotState import RobotState,MonitorState
 from PyQt5.QtGui import QPixmap
 
 
@@ -108,6 +108,7 @@ class GUI(QWidget):
         self.dataIni()
         self.editButtonIni()
         self.runMonitorServer()
+        self.updateAllDeviceLabel()
 
     def deviceLabelIni(self):
         labelWidth=100
@@ -124,11 +125,12 @@ class GUI(QWidget):
                 label_y=80
                 label_x=label_x+labelWidth+20
                 _label.setText(str(int(i/5+1))+'拉')
+                _label.setEnabled(False)
                 _label.setStyleSheet("background-color:rgb(78,255,255)")
             else:
-                _label.setObjectName(self.objectNames[objectIndex])
+                _label.setObjectName(self.monitorDevices[objectIndex])
                 objectIndex+=1
-                _label.setStyleSheet("background-color:yellow")
+                _label.setStyleSheet("background-color:gray")
                 _label.setText("离线")
                 _label.clickedButton.connect(self.deviceButtonClicked)
 
@@ -162,6 +164,7 @@ class GUI(QWidget):
         self.monitorServer=MonitorServer()
         self.monitorServer.appendRunMsg.connect(self.addRunMessage)
         self.monitorServer.updateRobotState.connect(self.updateRobotLabel)
+        self.monitorServer.monitoringRobot=self.monitorDevices
         self.monitorServer.run()
 
     def getObjectNames(self):
@@ -173,30 +176,34 @@ class GUI(QWidget):
 
         yamlTool=Yaml_Tool()
         params=yamlTool.getValue(paramPath)
-        self.objectNames=params['robot'].split(',')
+        self.monitorDevices=params['robot'].split(',')
 
     def updateRobotLabel(self,_robot):
-        if self.monitorServer.robotState[_robot]==RobotState.ANFANG:
-            self.findChild(QPushButton,_robot).setStyleSheet('background:red')
-            self.findChild(QPushButton,_robot).setText("安防报警")
-        elif self.monitorServer.robotState[_robot]==RobotState.HIPOT:
-            self.findChild(QPushButton,_robot).setStyleSheet('background:red')
-            self.findChild(QPushButton,_robot).setText("高压报警")
-        elif self.monitorServer.robotState[_robot]==RobotState.CATCH_ERROR:
-            self.findChild(QPushButton,_robot).setStyleSheet('background:red')
-            self.findChild(QPushButton,_robot).setText("未插入报警")
-        elif self.monitorServer.robotState[_robot]==RobotState.OFFLINE:
-            self.findChild(QPushButton,_robot).setStyleSheet('background:yellow')
+        lableBgColor='background:gray'
+        if self.monitorServer.robotState[_robot]==RobotState.OFFLINE:
+            lableBgColor='background:yellow'
             self.findChild(QPushButton,_robot).setText("离线")
         elif self.monitorServer.robotState[_robot]==RobotState.ONLINE:
-            self.findChild(QPushButton,_robot).setStyleSheet('background:green')
+            lableBgColor='background:green'
             self.findChild(QPushButton,_robot).setText("正常")
         elif self.monitorServer.robotState[_robot]==RobotState.STOP:
-            self.findChild(QPushButton,_robot).setStyleSheet('background:red')
+            lableBgColor='background:red'
             self.findChild(QPushButton,_robot).setText("停止")
         elif self.monitorServer.robotState[_robot]==RobotState.PAUSE:
-            self.findChild(QPushButton,_robot).setStyleSheet('background:red')
+            lableBgColor='background:red'
             self.findChild(QPushButton,_robot).setText("中止")
+        elif self.monitorServer.robotState[_robot]==RobotState.WAIT_OTA_CHECK:
+            lableBgColor='background-color:rgb(78,255,155)'
+            self.findChild(QPushButton,_robot).setText("OTAING")
+        elif self.monitorServer.robotState[_robot]==RobotState.OTA:
+            lableBgColor='background:blue'
+            self.findChild(QPushButton,_robot).setText("OTA")
+
+        if self.runMode==MonitorState.MONITOR_STATE:
+            self.findChild(QPushButton,_robot).setStyleSheet(lableBgColor)
+
+        if _robot not in self.monitorServer.monitoringRobot:
+            self.findChild(QPushButton,_robot).setStyleSheet("background-color:gray")
         pass
 
     def logoIni(self):
@@ -250,8 +257,23 @@ class GUI(QWidget):
         _buttons.append(self.confirmButton)
         self.setbuttonStyleSheet(_buttons)
     
-    def deviceButtonClicked(self,_str):
-        print(_str+' clicked')
+    def deviceButtonClicked(self,_device):
+        # print(_str+' clicked')
+        if self.runMode==MonitorState.MONITOR_STATE:
+            return
+        if _device in self.choosingOtaList or _device in self.choosingMonitorList:
+            self.findChild(QPushButton,_device).setStyleSheet('background-color:gray')   
+            if _device in self.choosingMonitorList:
+                self.choosingMonitorList.remove(_device)
+            else:
+                self.choosingOtaList.remove(_device)
+            return
+            
+        self.findChild(QPushButton,_device).setStyleSheet('background-color:rgb(78,155,255)')
+        if self.runMode==MonitorState.CHOOSING_OTA_STATE:
+            self.choosingOtaList.append(_device)
+        elif self.runMode==MonitorState.CHOOSING_MONITOR_STATE:
+            self.choosingMonitorList.append(_device)
         pass
 
     def setbuttonStyleSheet(self,_buttons):
@@ -268,28 +290,66 @@ class GUI(QWidget):
                                   "QPushButton{border-radius:10px}"
                                   "QPushButton{padding:2px 4px}")
     def dataIni(self):
-        self.runMode='monitor'
-        self.monitorList=[]
-        self.otaList=[]
+        self.runMode=MonitorState.MONITOR_STATE
         self.choosingOtaList=[]
         self.choosingMonitorList=[]
 
     def confirmButtonClicked(self):
         print('confirm button clicked')
+        if self.runMode==MonitorState.MONITOR_STATE:
+            return
+        elif self.runMode==MonitorState.CHOOSING_MONITOR_STATE:
+            print(self.choosingMonitorList)
+            self.monitorServer.monitoringRobot=self.choosingMonitorList
+            self.monitorServer.setRobotToMonitorState()
+            self.choosingMonitorList.clear()
+            pass
+        elif self.runMode==MonitorState.CHOOSING_OTA_STATE:
+            print(self.choosingOtaList)
+            self.monitorServer.setRobotToOtaState(self.choosingOtaList)
+            self.choosingOtaList.clear()
+            pass
+        self.runMode=MonitorState.MONITOR_STATE
+        self.updateAllDeviceLabel()
         pass
 
     def clearButtonClicked(self):
         print('clear button clicked')
-        self.updateRobotLabel()
+        self.runMode=MonitorState.MONITOR_STATE
+        self.choosingMonitorList=self.monitorServer.monitoringRobot
+        self.choosingOtaList=self.monitorServer.otaStateRobots
+        self.updateAllDeviceLabel()
         pass
 
     def otaButtonClicked(self):
         print('ota button clicked')
+        self.choosingMonitorList=self.monitorServer.monitoringRobot
+        self.choosingOtaList=self.monitorServer.otaStateRobots
+        # self.choosingOtaList.clear()
+        # self.choosingMonitorList.clear()
+        self.runMode=MonitorState.CHOOSING_OTA_STATE
+        for _robot in self.monitorServer.robotState.keys():
+            if _robot not in self.choosingMonitorList:
+                print(_robot)
+                self.findChild(QPushButton,_robot).setStyleSheet('background:gray')
         pass
 
     def monitorButtonClicked(self):
         print('monitor button clicked')
+        self.choosingMonitorList=self.monitorServer.monitoringRobot
+        self.choosingOtaList=self.monitorServer.otaStateRobots
+        # self.choosingOtaList.clear()
+        # self.choosingMonitorList.clear()
+        self.runMode=MonitorState.CHOOSING_MONITOR_STATE
+        for _robot in self.monitorServer.robotState.keys():
+            if _robot not in self.choosingOtaList:
+                print(_robot)
+                self.findChild(QPushButton,_robot).setStyleSheet('background:gray')
         pass
+
+    def updateAllDeviceLabel(self):
+        for _robot in self.monitorServer.robotState.keys():
+            self.updateRobotLabel(_robot)
 
 
 if __name__ == '__main__':

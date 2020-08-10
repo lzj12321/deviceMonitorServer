@@ -62,7 +62,26 @@ class MonitorServer(QObject):
 
     def setRobotToOtaState(self,_otaRobots):
         self.waitOtaCheckRobots=_otaRobots
-        
+        for _robot in self.waitOtaCheckRobots:
+            if _robot in self.otaStateRobots:
+                return
+            if _robot in self.onlineRobotIp.keys():
+                self.robotState[_robot]=RobotState.WAIT_OTA_CHECK
+                print('send ota msg to:'+_robot)
+                self.ipSocket[self.onlineRobotIp[_robot]].sendMsg('ota')
+                pass
+            else:
+                self.appendRunMsg.emit('cant set '+_robot+' into ota mode because it not online!')
+        pass
+
+    def setRobotToMonitorState(self):
+        for _robot in self.monitoringRobot:
+            if _robot in self.otaStateRobots:
+                self.otaStateRobots.remove(_robot)
+            if _robot in self.onlineRobotIp.keys():
+                self.ipSocket[self.onlineRobotIp[_robot]].sendMsg('monitor')
+            else:
+                self.appendRunMsg.emit('cant set '+_robot+' into monitor model because it not on line!')
         pass
 
     def checkTimerTimeout(self):
@@ -171,9 +190,10 @@ class MonitorServer(QObject):
                 elif _validMsg=='hipot':
                     _robotState=RobotState.HIPOT
                 elif _validMsg=='ota_check':
+                    _robotState=RobotState.OTA
                     if _robotFlag in self.waitOtaCheckRobots:
-                        _robotState=RobotState.OTA
                         self.waitOtaCheckRobots.remove(_robotFlag)
+                    if _robotFlag not in self.otaStateRobots:
                         self.otaStateRobots.append(_robotFlag)
 
                 elif _validMsg=='monitor_check':
@@ -189,6 +209,7 @@ class MonitorServer(QObject):
         else:
             self.outLog('receivd a error msg:'+msg)
         pass
+
 
 if __name__ == '__main__':
     server=monitorServer()

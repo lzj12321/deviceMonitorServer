@@ -36,7 +36,7 @@
 #define OTA_MODE 1
 
 /* robot serialNum */
-const String robotFlag = "xe_line3_ultra";
+const String robotFlag = "xe_line2_ultra";
 
 /* work mode and firmWare version */
 unsigned int workMode = MONITOR_MODE;
@@ -226,7 +226,7 @@ void monitorRun() {
     if (detectNormalTime > (MIN_DETECTED_SIGNAL_TIME * 5))
     {
       currentRobotState = NORMAL;
-      sendMsg(checkMsg);
+      sendMsg(monitorCheckMsg);
       detectNormalTime = 0;
     }
   }
@@ -239,7 +239,7 @@ void otaRun() {
   if (detectNormalTime > (MIN_DETECTED_SIGNAL_TIME * 5))
   {
     currentRobotState = NORMAL;
-    sendMsg(checkMsg);
+    sendMsg(otaCheckMsg);
     detectNormalTime = 0;
     detectPauseSignalTime = 0;
     detectStopSignalTime = 0;
