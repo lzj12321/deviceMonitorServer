@@ -11,12 +11,13 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtCore import *
-from PyQt5.QtWidgets import QWidget,QApplication, QInputDialog, QLineEdit,QLabel,QFrame,QTextEdit,QMessageBox,QPushButton
+from PyQt5.QtWidgets import QWidget,QApplication, QInputDialog, QLineEdit,QLabel,QFrame,QTextEdit,QMessageBox,QPushButton,QDialog
 import sys
 from monitorServer import MonitorServer
 from yamlTool import Yaml_Tool
 from robotState import RobotState,MonitorState
 from PyQt5.QtGui import QPixmap
+from deviceDialog import DeviceDialog
 import copy
 
 
@@ -254,8 +255,18 @@ class GUI(QWidget):
         _buttons.append(self.clearButton)
         _buttons.append(self.confirmButton)
         self.setbuttonStyleSheet(_buttons)
+
+    def showDeviceDialog(self,_device):
+        _deviceDialog=DeviceDialog(self)
+        _deviceDialog.setDevice(_device)
+        _deviceDialog.show()
+        pass
+
+    def testConnect(self,_device):
+        print(_device)
     
     def deviceButtonClicked(self,_device):
+        self.showDeviceDialog(_device)
         # print(_str+' clicked')
         if self.runMode==MonitorState.MONITOR_STATE:
             return

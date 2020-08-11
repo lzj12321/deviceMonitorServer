@@ -175,8 +175,8 @@ class MonitorServer(QObject):
         pass
 
     def process_monitor_check_msg(self,_robotFlag):
-        if _robotFlag not in self.monitoringRobot:
-            self.monitoringRobot.append(_robotFlag)
+        # if _robotFlag not in self.monitoringRobot:
+            # self.monitoringRobot.append(_robotFlag)
         if _robotFlag in self.otaStateRobots:
             self.otaStateRobots.remove(_robotFlag)
         return RobotState.ONLINE
