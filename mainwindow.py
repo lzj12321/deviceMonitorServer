@@ -266,9 +266,9 @@ class GUI(QWidget):
         print(_device)
     
     def deviceButtonClicked(self,_device):
-        self.showDeviceDialog(_device)
         # print(_str+' clicked')
         if self.runMode==MonitorState.MONITOR_STATE:
+            self.showDeviceDialog(_device)
             return
 
         if _device in self.choosingOtaList and self.runMode==MonitorState.CHOOSING_OTA_STATE:

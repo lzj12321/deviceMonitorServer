@@ -95,6 +95,12 @@ class MonitorServer(QObject):
                     self.saveRobotStateChangeLog(_robot,'offline')
                     self.updateRobotState.emit(_robot)
                     self.closeRobotConnection(_robot)
+
+            ##remove the device from the ota or monitor list if it has disconnect from server##
+                    # if _robot not in self.otaStateRobots:
+                    #     self.otaStateRobots.remove(_robot)
+                    # if _robot in self.monitoringRobot:
+                    #     self.monitoringRobot.remove(_robot)
             self.robotOnlineCheckFlag[_robot]=False
         pass
 
@@ -186,7 +192,6 @@ class MonitorServer(QObject):
 
     def processMsgFromRobot(self,msg,sockIp):
         print('msg:'+msg)
-        # self.outLog(msg)
         _msgs=msg.split(':')
         if len(_msgs)==2:
             _robotFlag=msg.split(':')[0]

@@ -19,7 +19,7 @@
 #include <WiFiServerSecureBearSSL.h>
 #include <WiFiUdp.h>
 
-/* states declartion */
+/* work states declartion */
 #define ANFANG 0
 #define CATCH_ERROR 1
 #define HIPOT 2
@@ -35,66 +35,61 @@
 #define MONITOR_MODE 0
 #define OTA_MODE 1
 
-/* robot serialNum */
-const String robotFlag = "xe_line4_ultra";
+struct stru_netWorkParam{
+  String ssid="NETGEAR";
+  String ssidPasswd="sj13607071774";
+  String serverIp="10.0.0.11";
+  unsigned int serverPort=8888; 
+};
 
-/* work mode and firmWare version */
-unsigned int workMode = MONITOR_MODE;
-const String firmWareVersion = "0.1";
+struct stru_deviceParam{
+  String deviceSerial="xe_line3_robot1";
+  String firmWareVersion="1";
+  unsigned int workMode=MONITOR_MODE;
+  unsigned int workState=NORMAL;
+};
 
-/* wifi param */
-char *ssid     = "TEXE-Robot";//wifi ssid
-char *password = "JX_TELUA";//wifi password
+struct stru_ioParam{
+  unsigned int stopIO=14;
+  unsigned int pauseIO=12;
+};
 
-/* server param */
+struct stru_msgParam{
+  const String splitFlag = ":";
+  const String stopMsg = "stop";
+  const String pauseMsg = "pause";
+  const String otaCheckMsg = "ota_check";
+  const String monitorCheckMsg = "monitor_check";
+};
+
+
+
+/* device param */
+struct stru_deviceParam deviceParam;
+
+/* network param */
 WiFiClient client;
-const char *host = "192.168.16.106";//server ip
-const int tcpPort = 8888;//server port
+struct stru_netWorkParam networkParam;
 
 /* io param */
-const int hipotIO = 34;
-const int catchErrorIO = 35;
-const int anfangIO = 39;
-const int stopIO = 14;
-const int pauseIO = 12;
+struct stru_ioParam ioParam;
 
 /* msg param */
-const String splitFlag = ":";
-const String anfangMsg = "anfang";
-const String hipotMsg = "hipot";
-const String catchErrorMsg = "catchError";
-const String checkMsg = "check";
-const String stopMsg = "stop";
-const String pauseMsg = "pause";
-const String otaCheckMsg = "ota_check";
-const String monitorCheckMsg = "monitor_check";
-const String unknowWorkModeMsg="unknownWorkmode";
+struct stru_msgParam msgParam;
 
 /* Timer param*/
-int checkInterval = 300;
-int currentRobotState = NORMAL;
+int loopInterval = 300;
 int detectNormalTime = 0;
 int detectStopSignalTime = 0;
 int detectPauseSignalTime = 0;
 int retryConnectWifiTime = 0;
 int retryConnectServerTime = 0;
 
-void setup()
-{
-  // pinMode(4, OUTPUT);
-  // digitalWrite(4, HIGH);
-  // pinMode(hipotIO,INPUT);
-  // pinMode(catchErrorIO,INPUT);
-  // pinMode(anfangIO,INPUT);
-  pinMode(stopIO, INPUT);
-  pinMode(pauseIO, INPUT);
-
-  Serial.begin(9600);
-  delay(50);
-  Serial.println("test ota");
+//loop connect the wifi until connected//
+void connectWifi(){
   Serial.print("Connecting to ");
-  Serial.print(ssid);
-  WiFi.begin(ssid, password);
+  Serial.print(networkParam.ssid);
+  WiFi.begin(networkParam.ssid, networkParam.ssidPasswd);
   while (WiFi.status() != WL_CONNECTED)
   {
     Serial.print(".");
@@ -109,17 +104,16 @@ void setup()
   Serial.println("WiFi connected");
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());//WiFi.localIP()返回8266获得的ip地址
-  otaIni();
 }
 
-void loop()
-{
-  while (!client.connected())//几个非连接的异常处理
+//loop connect the server until connected//
+void connectServer(){
+   while (!client.connected())//几个非连接的异常处理
   {
-    if (!client.connect(host, tcpPort))
+    if (!client.connect(networkParam.serverIp, networkParam.serverPort))
     {
       Serial.print("connecting server:");
-      Serial.println(host);
+      Serial.println(networkParam.serverIp);
       retryConnectServerTime++;
       if (retryConnectServerTime > MAX_CONNECT_SERVER_TIME) {
         Serial.println("restart the chip now!");
@@ -129,61 +123,95 @@ void loop()
     }
     else {
       retryConnectServerTime = 0;
-      if(workMode==MONITOR_MODE){
-        sendMsg(monitorCheckMsg);
+      if(deviceParam.workMode==MONITOR_MODE){
+        sendMsg(msgParam.monitorCheckMsg);
       }
-      else if(workMode==OTA_MODE){
-        sendMsg(otaCheckMsg);
+      else if(deviceParam.workMode==OTA_MODE){
+        sendMsg(msgParam.otaCheckMsg);
       }
       else{
-        sendMsg(unknowWorkModeMsg);
         ESP.restart();
       }
       Serial.print("connected server:");
-      Serial.println(host);
+      Serial.println(networkParam.serverIp);
     }
   }
+}
 
-  while (client.connected()) {
-    String msg = readMsg();
-    if (msg == "ota")
+//initialize io//
+void initializeIO(){
+  pinMode(ioParam.stopIO, INPUT);
+  pinMode(ioParam.pauseIO, INPUT);
+}
+
+void setup()
+{
+  /*intialize the io mode*/
+  initializeIO();
+
+  //initialize serial//
+  Serial.begin(115200);
+  delay(50);
+
+  //connect wifi//
+  connectWifi();
+}
+
+void processMsgFromServer(String msg){
+  if (msg == "ota")
     {
-      if (workMode != OTA_MODE) {
+      if (deviceParam.workMode != OTA_MODE) {
+        //initialize the ota env//
+        OTA_Mode_Ini();
         Serial.println("enter ota mode");
-        workMode = OTA_MODE;
+        deviceParam.workMode = OTA_MODE;
       }
-      sendMsg(otaCheckMsg);
+      sendMsg(msgParam.otaCheckMsg);
     }
-    else if (msg == "monitor") {
-      if (workMode != MONITOR_MODE) {
+    else if (msg == "monitor"){
+      if (deviceParam.workMode != MONITOR_MODE) {
         Serial.println("enter monitor mode");
-        workMode = MONITOR_MODE;
+        deviceParam.workMode = MONITOR_MODE;
       }
-      sendMsg(monitorCheckMsg);
+      sendMsg(msgParam.monitorCheckMsg);
+    }
+    else if(msg=="restart"){
+      Serial.println("restart!");
+      ESP.restart();
     }
     else if (msg != "") {
       Serial.println("unknown order:" + msg);
     }
+}
 
-    switch (workMode) {
+void loop()
+{
+  /* connect wifi*/
+  connectServer();
+
+  while (client.connected()) {
+    String msg = readMsg();
+    processMsgFromServer(msg);
+
+    switch (deviceParam.workMode) {
       case MONITOR_MODE: {
-          monitorRun();
+          MONITOR_Mode_Run();
           break;
         }
       case OTA_MODE: {
-          otaRun();
+          OTA_Mode_Run();
           break;
         }
       default: {
           Serial.println("no task mode");
         }
     }
-      delay(checkInterval);
+    delay(loopInterval);
   }
 }
 
 void sendMsg(const String msg) {
-  String result = robotFlag + splitFlag + msg;
+  String result = deviceParam.deviceSerial + msgParam.splitFlag + msg;
   client.write(result.c_str());
   client.flush();
 }
@@ -203,26 +231,26 @@ String readMsg() {
   }
 }
 
-void monitorRun() {
-  if (digitalRead(stopIO))
+void MONITOR_Mode_Run() {
+  if (digitalRead(ioParam.stopIO))
   {
     ++detectStopSignalTime;
     detectPauseSignalTime = 0;
-    if ((currentRobotState != STOP && (detectStopSignalTime > MIN_DETECTED_SIGNAL_TIME)) || detectStopSignalTime > ( MIN_DETECTED_SIGNAL_TIME * 5)) {
+    if ((deviceParam.workState != STOP && (detectStopSignalTime > MIN_DETECTED_SIGNAL_TIME)) || detectStopSignalTime > ( MIN_DETECTED_SIGNAL_TIME * 5)) {
       detectNormalTime = 0;
-      currentRobotState = STOP;
-      sendMsg(stopMsg);
+      deviceParam.workState = STOP;
+      sendMsg(msgParam.stopMsg);
       detectStopSignalTime = 0;
     }
   }
-  else if (digitalRead(pauseIO))
+  else if (digitalRead(ioParam.pauseIO))
   {
     ++detectPauseSignalTime;
     detectStopSignalTime = 0;
-    if ((currentRobotState != PAUSE && (detectPauseSignalTime > MIN_DETECTED_SIGNAL_TIME)) || detectPauseSignalTime > (MIN_DETECTED_SIGNAL_TIME * 5)) {
+    if ((deviceParam.workState != PAUSE && (detectPauseSignalTime > MIN_DETECTED_SIGNAL_TIME)) || detectPauseSignalTime > (MIN_DETECTED_SIGNAL_TIME * 5)) {
       detectNormalTime = 0;
-      currentRobotState = PAUSE;
-      sendMsg(pauseMsg);
+      deviceParam.workState = PAUSE;
+      sendMsg(msgParam.pauseMsg);
       detectPauseSignalTime = 0;
     }
   }
@@ -233,27 +261,27 @@ void monitorRun() {
     detectNormalTime++;
     if (detectNormalTime > (MIN_DETECTED_SIGNAL_TIME * 5))
     {
-      currentRobotState = NORMAL;
-      sendMsg(monitorCheckMsg);
+      deviceParam.workState = NORMAL;
+      sendMsg(msgParam.monitorCheckMsg);
       detectNormalTime = 0;
     }
   }
 }
 
-void otaRun() {
+void OTA_Mode_Run() {
   ArduinoOTA.handle();
   detectNormalTime++;
   if (detectNormalTime > (MIN_DETECTED_SIGNAL_TIME * 5))
   {
-    currentRobotState = NORMAL;
-    sendMsg(otaCheckMsg);
+    deviceParam.workState = NORMAL;
+    sendMsg(msgParam.otaCheckMsg);
     detectNormalTime = 0;
     detectPauseSignalTime = 0;
     detectStopSignalTime = 0;
   }
 }
 
-void otaIni() {
+void OTA_Mode_Ini() {
   ArduinoOTA.onStart([]() {
     String type;
     if (ArduinoOTA.getCommand() == U_FLASH) {
