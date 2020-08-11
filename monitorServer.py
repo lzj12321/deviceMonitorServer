@@ -123,7 +123,6 @@ class MonitorServer(QObject):
         self.timerIni()
         self.mysqlToolIni()
         
-
     def newConnection(self):
         print("a new connection")
         newSock=self.serverSocket.nextPendingConnection()
@@ -149,6 +148,40 @@ class MonitorServer(QObject):
         time=QDate.currentDate().toString('yyyy-MM-dd')+str('.log')
         log = Logger()
         log.outputLog('log/'+time,logMsg)
+        pass
+
+    def process_unknownWorkmode_msg(self,_robotFlag):
+        return RobotState.UNKNOWN_WORKMODE
+        pass
+
+    def process_stop_msg(self,_robotFlag):
+        if _robotFlag in self.otaStateRobots:
+            self.otaStateRobots.remove(_robotFlag)
+        return RobotState.STOP
+        pass
+
+    def process_pause_msg(self,_robotFlag):
+        if _robotFlag in self.otaStateRobots:
+            self.otaStateRobots.remove(_robotFlag)
+        return RobotState.PAUSE
+        pass
+
+    def process_ota_check_msg(self,_robotFlag):
+        if _robotFlag not in self.otaStateRobots:
+            self.otaStateRobots.append(_robotFlag)
+        if _robotFlag in self.monitoringRobot:
+            self.monitoringRobot.remove(_robotFlag)
+        return RobotState.OTA
+        pass
+
+    def process_monitor_check_msg(self,_robotFlag):
+        if _robotFlag not in self.monitoringRobot:
+            self.monitoringRobot.append(_robotFlag)
+        if _robotFlag in self.otaStateRobots:
+            self.otaStateRobots.remove(_robotFlag)
+        return RobotState.ONLINE
+        # if self.robotState[_robotFlag]==RobotState.OTA:
+            # _robotState=RobotState.ONLINE
         pass
 
     def processMsgFromRobot(self,msg,sockIp):
@@ -177,34 +210,19 @@ class MonitorServer(QObject):
             _robotState=self.robotState[_robotFlag]
             if _robotFlag in self.robotOnlineCheckFlag.keys():
                 self.robotOnlineCheckFlag[_robotFlag]=True
-                if _validMsg=='check':
-                    _robotState=RobotState.ONLINE
-                    if _robotFlag in self.otaStateRobots:
-                        self.otaStateRobots.remove(_robotFlag)
-                elif _validMsg=='stop':
-                    _robotState=RobotState.STOP
-                    if _robotFlag in self.otaStateRobots:
-                        self.otaStateRobots.remove(_robotFlag)
+                if _validMsg=='stop':
+                    _robotState=self.process_stop_msg(_robotFlag)
                 elif _validMsg=='pause':
-                    _robotState=RobotState.PAUSE
-                    if _robotFlag in self.otaStateRobots:
-                        self.otaStateRobots.remove(_robotFlag)
+                    _robotState=self.process_pause_msg(_robotFlag)
                 elif _validMsg=='ota_check':
-                    _robotState=RobotState.OTA
-                    if _robotFlag not in self.otaStateRobots:
-                        self.otaStateRobots.append(_robotFlag)
-                    if _robotFlag in self.monitoringRobot:
-                        self.monitoringRobot.remove(_robotFlag)
+                    _robotState=self.process_ota_check_msg(_robotFlag)
                 elif _validMsg=='monitor_check':
-                    if _robotFlag not in self.monitoringRobot:
-                        self.monitoringRobot.append(_robotFlag)
-                    if _robotFlag in self.otaStateRobots:
-                        self.otaStateRobots.remove(_robotFlag)
-                    if self.robotState[_robotFlag]==RobotState.OTA:
-                        _robotState=RobotState.ONLINE
+                    _robotState=self.process_monitor_check_msg(_robotFlag)
+                elif _validMsg=='unknownWorkmode':
+                    _robotState=self.process_unknownWorkmode_msg(_robotFlag)
                 else:
+                    self.outLog('receivd a error msg without valid msg:'+msg)
                     return
-                    
                 if self.robotState[_robotFlag]!=_robotState:
                     self.saveRobotStateChangeLog(_robotFlag,_validMsg)
                     self.robotState[_robotFlag]=_robotState
@@ -212,11 +230,11 @@ class MonitorServer(QObject):
                     self.addRunMessage(_robotFlag+':'+_validMsg)
                     self.outLog(_robotFlag+' alter robot state to '+_validMsg)
             else:
-                self.outLog('receivd a error msg:'+msg)
+                self.outLog('receivd a error msg without valid robot:'+msg)
         else:
             self.outLog('receivd a error msg:'+msg)
         pass
-
+    
 
 if __name__ == '__main__':
     server=monitorServer()

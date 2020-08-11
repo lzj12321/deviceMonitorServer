@@ -33,7 +33,6 @@ class myButton(QPushButton):
 
 
 class GUI(QWidget):
-    test123=pyqtSignal(str)
     def __init__(self):
         super(GUI,self).__init__()
         self.getObjectNames()
@@ -101,7 +100,6 @@ class GUI(QWidget):
         self.label_38.setFont(font)
         self.label_38.setAlignment(QtCore.Qt.AlignCenter)
         self.label_38.setObjectName("label_37")
-
 
         self.retranslateUi(self)
         QtCore.QMetaObject.connectSlotsByName(self)
@@ -196,6 +194,12 @@ class GUI(QWidget):
         elif self.monitorServer.robotState[_robot]==RobotState.OTA:
             lableBgColor='background:blue'
             self.findChild(QPushButton,_robot).setText("OTA")
+        elif self.monitorServer.robotState[_robot]==RobotState.UNKNOWN_WORKMODE:
+            lableBgColor='background:red'
+            self.findChild(QPushButton,_robot).setText("UNKNOWN")
+        else:
+            lableBgColor='background:dark'
+
 
         if self.runMode==MonitorState.MONITOR_STATE:
             self.findChild(QPushButton,_robot).setStyleSheet(lableBgColor)
@@ -219,10 +223,6 @@ class GUI(QWidget):
                                       QMessageBox.No)
         if choose == QMessageBox.No:
             a0.ignore()
-
-    def changeLabelStylesheet(self,_label,_text,_flag):
-        _label.setText(_text)
-        pass
 
     def editButtonIni(self):
         _buttonWidth=100
@@ -293,6 +293,7 @@ class GUI(QWidget):
                                   "QPushButton{border:2px}"
                                   "QPushButton{border-radius:10px}"
                                   "QPushButton{padding:2px 4px}")
+
     def dataIni(self):
         self.runMode=MonitorState.MONITOR_STATE
         self.choosingOtaList=[]
@@ -319,8 +320,8 @@ class GUI(QWidget):
     def clearButtonClicked(self):
         print('clear button clicked')
         self.runMode=MonitorState.MONITOR_STATE
-        self.choosingMonitorList=copy.deepcopy(self.monitorServer.monitoringRobot)
-        self.choosingOtaList=copy.deepcopy(self.monitorServer.otaStateRobots)
+        # self.choosingMonitorList=copy.deepcopy(self.monitorServer.monitoringRobot)
+        # self.choosingOtaList=copy.deepcopy(self.monitorServer.otaStateRobots)
         self.updateAllDeviceLabel()
         pass
 

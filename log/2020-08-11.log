@@ -1,0 +1,107 @@
+2020-08-11 07:55:32,272 - param initialize
+2020-08-11 07:55:32,316 - server initialize
+2020-08-11 07:55:32,341 - timer initialize
+2020-08-11 07:55:32,343 - mysql initialize
+2020-08-11 08:31:39,240 - param initialize
+2020-08-11 08:31:39,264 - server initialize
+2020-08-11 08:31:39,283 - timer initialize
+2020-08-11 08:31:39,289 - mysql initialize
+2020-08-11 08:35:26,815 - param initialize
+2020-08-11 08:35:26,851 - server initialize
+2020-08-11 08:35:26,861 - timer initialize
+2020-08-11 08:35:26,862 - mysql initialize
+2020-08-11 08:38:06,792 - a new connection from 192.168.16.109
+2020-08-11 08:38:06,808 - xe_line3_ultra alter robot state to check
+2020-08-11 08:38:09,896 - xe_line3_ultra alter robot state to stop
+2020-08-11 08:38:14,521 - xe_line3_ultra alter robot state to ota_check
+2020-08-11 08:38:22,453 - xe_line3_ultra alter robot state to monitor_check
+2020-08-11 08:38:33,318 - xe_line3_ultra alter robot state to stop
+2020-08-11 08:54:26,862 - xe_line3_ultra alter robot state to offline!
+2020-08-11 08:54:26,925 - close the connection with 192.168.16.109
+2020-08-11 09:12:44,499 - a new connection from 192.168.16.109
+2020-08-11 09:12:44,553 - xe_line3_ultra alter robot state to check
+2020-08-11 09:12:49,099 - xe_line3_ultra alter robot state to stop
+2020-08-11 09:18:03,609 - param initialize
+2020-08-11 09:18:03,655 - server initialize
+2020-08-11 09:18:03,667 - timer initialize
+2020-08-11 09:18:03,670 - mysql initialize
+2020-08-11 09:18:04,548 - a new connection from 192.168.16.109
+2020-08-11 09:18:04,551 - receivd a error msg without valid msg:xe_line3_ultra:check
+2020-08-11 09:18:17,370 - xe_line3_ultra alter robot state to stop
+2020-08-11 09:21:49,879 - param initialize
+2020-08-11 09:21:49,918 - server initialize
+2020-08-11 09:21:49,943 - timer initialize
+2020-08-11 09:21:49,951 - mysql initialize
+2020-08-11 09:21:52,471 - a new connection from 192.168.16.109
+2020-08-11 09:21:52,520 - xe_line3_ultra alter robot state to monitor_check
+2020-08-11 09:21:55,599 - xe_line3_ultra alter robot state to stop
+2020-08-11 09:22:38,301 - xe_line3_ultra alter robot state to ota_check
+2020-08-11 09:43:28,103 - xe_line3_ultra alter robot state to monitor_check
+2020-08-11 09:43:31,194 - xe_line3_ultra alter robot state to stop
+2020-08-11 09:43:34,561 - xe_line3_ultra alter robot state to monitor_check
+2020-08-11 09:43:46,575 - xe_line3_ultra alter robot state to stop
+2020-08-11 09:47:33,308 - xe_line3_ultra alter robot state to monitor_check
+2020-08-11 09:47:37,751 - xe_line3_ultra alter robot state to stop
+2020-08-11 09:48:36,080 - param initialize
+2020-08-11 09:48:36,115 - server initialize
+2020-08-11 09:48:36,126 - timer initialize
+2020-08-11 09:48:36,137 - mysql initialize
+2020-08-11 09:48:37,956 - a new connection from 192.168.16.109
+2020-08-11 09:48:38,000 - xe_line3_ultra alter robot state to monitor_check
+2020-08-11 09:48:39,551 - xe_line3_ultra alter robot state to stop
+2020-08-11 09:55:08,961 - param initialize
+2020-08-11 09:55:08,996 - server initialize
+2020-08-11 09:55:09,009 - timer initialize
+2020-08-11 09:55:09,021 - mysql initialize
+2020-08-11 09:55:10,159 - a new connection from 192.168.16.109
+2020-08-11 09:55:10,198 - xe_line3_ultra alter robot state to monitor_check
+2020-08-11 09:55:13,236 - xe_line3_ultra alter robot state to stop
+2020-08-11 09:55:16,294 - xe_line3_ultra alter robot state to ota_check
+2020-08-11 09:55:23,807 - param initialize
+2020-08-11 09:55:23,851 - server initialize
+2020-08-11 09:55:23,861 - timer initialize
+2020-08-11 09:55:23,869 - mysql initialize
+2020-08-11 09:55:25,980 - a new connection from 192.168.16.109
+2020-08-11 09:55:26,050 - xe_line3_ultra alter robot state to ota_check
+2020-08-11 09:56:16,498 - param initialize
+2020-08-11 09:56:16,530 - server initialize
+2020-08-11 09:56:16,550 - timer initialize
+2020-08-11 09:56:16,554 - mysql initialize
+2020-08-11 09:56:18,147 - a new connection from 192.168.16.109
+2020-08-11 09:56:18,174 - xe_line3_ultra alter robot state to ota_check
+2020-08-11 09:56:21,517 - xe_line3_ultra alter robot state to monitor_check
+2020-08-11 09:56:24,595 - xe_line3_ultra alter robot state to stop
+2020-08-11 09:56:28,810 - xe_line3_ultra alter robot state to monitor_check
+2020-08-11 09:56:39,960 - xe_line3_ultra alter robot state to stop
+2020-08-11 10:28:43,348 - param initialize
+2020-08-11 10:28:43,380 - server initialize
+2020-08-11 10:28:43,399 - timer initialize
+2020-08-11 10:28:43,407 - mysql initialize
+2020-08-11 10:28:45,860 - a new connection from 192.168.16.109
+2020-08-11 10:28:45,899 - xe_line3_ultra alter robot state to monitor_check
+2020-08-11 10:28:47,983 - a new connection from 192.168.16.102
+2020-08-11 10:28:48,037 - xe_line4_ultra alter robot state to monitor_check
+2020-08-11 10:28:49,056 - xe_line3_ultra alter robot state to stop
+2020-08-11 10:28:51,065 - xe_line4_ultra alter robot state to stop
+2020-08-11 10:28:54,436 - xe_line3_ultra alter robot state to ota_check
+2020-08-11 10:28:56,567 - xe_line4_ultra alter robot state to ota_check
+2020-08-11 10:29:09,870 - xe_line3_ultra alter robot state to monitor_check
+2020-08-11 10:29:11,208 - xe_line4_ultra alter robot state to monitor_check
+2020-08-11 10:29:12,917 - xe_line3_ultra alter robot state to stop
+2020-08-11 10:29:19,572 - xe_line3_ultra alter robot state to ota_check
+2020-08-11 10:29:21,786 - xe_line4_ultra alter robot state to stop
+2020-08-11 10:29:26,297 - xe_line4_ultra alter robot state to ota_check
+2020-08-11 10:29:29,346 - xe_line4_ultra alter robot state to monitor_check
+2020-08-11 10:29:40,284 - xe_line4_ultra alter robot state to stop
+2020-08-11 10:33:51,877 - param initialize
+2020-08-11 10:33:51,905 - server initialize
+2020-08-11 10:33:51,933 - timer initialize
+2020-08-11 10:33:51,936 - mysql initialize
+2020-08-11 10:33:52,596 - a new connection from 192.168.16.109
+2020-08-11 10:33:52,632 - xe_line3_ultra alter robot state to monitor_check
+2020-08-11 10:33:53,872 - a new connection from 192.168.16.102
+2020-08-11 10:33:53,918 - xe_line4_ultra alter robot state to monitor_check
+2020-08-11 10:33:55,416 - xe_line3_ultra alter robot state to stop
+2020-08-11 10:33:56,986 - xe_line4_ultra alter robot state to stop
+2020-08-11 10:34:35,526 - xe_line4_ultra alter robot state to ota_check
+2020-08-11 10:34:35,694 - xe_line3_ultra alter robot state to ota_check

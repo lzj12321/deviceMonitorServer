@@ -36,19 +36,19 @@
 #define OTA_MODE 1
 
 /* robot serialNum */
-const String robotFlag = "xe_line3_ultra";
+const String robotFlag = "xe_line4_ultra";
 
 /* work mode and firmWare version */
 unsigned int workMode = MONITOR_MODE;
 const String firmWareVersion = "0.1";
 
 /* wifi param */
-char *ssid     = "NETGEAR";//wifi ssid
-char *password = "sj13607071774";//wifi password
+char *ssid     = "TEXE-Robot";//wifi ssid
+char *password = "JX_TELUA";//wifi password
 
 /* server param */
 WiFiClient client;
-const char *host = "10.0.0.11";//server ip
+const char *host = "192.168.16.106";//server ip
 const int tcpPort = 8888;//server port
 
 /* io param */
@@ -68,6 +68,7 @@ const String stopMsg = "stop";
 const String pauseMsg = "pause";
 const String otaCheckMsg = "ota_check";
 const String monitorCheckMsg = "monitor_check";
+const String unknowWorkModeMsg="unknownWorkmode";
 
 /* Timer param*/
 int checkInterval = 300;
@@ -111,7 +112,6 @@ void setup()
   otaIni();
 }
 
-
 void loop()
 {
   while (!client.connected())//几个非连接的异常处理
@@ -129,7 +129,16 @@ void loop()
     }
     else {
       retryConnectServerTime = 0;
-      sendMsg(checkMsg);
+      if(workMode==MONITOR_MODE){
+        sendMsg(monitorCheckMsg);
+      }
+      else if(workMode==OTA_MODE){
+        sendMsg(otaCheckMsg);
+      }
+      else{
+        sendMsg(unknowWorkModeMsg);
+        ESP.restart();
+      }
       Serial.print("connected server:");
       Serial.println(host);
     }
@@ -169,6 +178,7 @@ void loop()
           Serial.println("no task mode");
         }
     }
+      delay(checkInterval);
   }
 }
 
@@ -192,8 +202,6 @@ String readMsg() {
     return "";
   }
 }
-
-
 
 void monitorRun() {
   if (digitalRead(stopIO))
@@ -230,7 +238,6 @@ void monitorRun() {
       detectNormalTime = 0;
     }
   }
-  delay(checkInterval);
 }
 
 void otaRun() {
@@ -244,7 +251,6 @@ void otaRun() {
     detectPauseSignalTime = 0;
     detectStopSignalTime = 0;
   }
-  delay(checkInterval);
 }
 
 void otaIni() {

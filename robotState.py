@@ -10,6 +10,7 @@ class RobotState(IntEnum):
     PAUSE=6
     OTA=7
     MONITOR=8
+    UNKNOWN_WORKMODE=9
 
 
 class MonitorState(IntEnum):
