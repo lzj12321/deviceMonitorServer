@@ -190,6 +190,15 @@ class MonitorServer(QObject):
             # _robotState=RobotState.ONLINE
         pass
 
+    def process_idle_check_msg(self,_robotFlag):
+        if _robot not in self.otaStateRobots:
+            self.otaStateRobots.remove(_robotFlag)
+        if _robot in self.monitoringRobot:
+            self.monitoringRobot.remove(_robotFlag)
+        return RObotState.IDLE
+
+        pass
+
     def processMsgFromRobot(self,msg,sockIp):
         print('msg:'+msg)
         _msgs=msg.split(':')
@@ -223,6 +232,8 @@ class MonitorServer(QObject):
                     _robotState=self.process_ota_check_msg(_robotFlag)
                 elif _validMsg=='monitor_check':
                     _robotState=self.process_monitor_check_msg(_robotFlag)
+                elif _validMsg=='idle_check':
+                    _robotState=self.process_idle_check_msg(_robotFlag)
                 elif _validMsg=='unknownWorkmode':
                     _robotState=self.process_unknownWorkmode_msg(_robotFlag)
                 else:

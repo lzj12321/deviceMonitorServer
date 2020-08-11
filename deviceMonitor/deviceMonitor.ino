@@ -19,14 +19,15 @@
 #include <WiFiServerSecureBearSSL.h>
 #include <WiFiUdp.h>
 
+
+// enum WORK_STATE{
+//   CATCH_ERROR,HIPOT,NORMAL,STOP,PAUSE
+// }
+
 /* work states declartion */
-#define ANFANG 0
-#define CATCH_ERROR 1
-#define HIPOT 2
 #define NORMAL 3
 #define STOP 4
 #define PAUSE 5
-
 
 #define MAX_CONNECT_WIFI_TIME 5
 #define MAX_CONNECT_SERVER_TIME 10
@@ -34,6 +35,7 @@
 
 #define MONITOR_MODE 0
 #define OTA_MODE 1
+#define IDLE_MODE 2
 
 struct stru_netWorkParam{
   String ssid="NETGEAR";
@@ -58,11 +60,19 @@ struct stru_msgParam{
   const String splitFlag = ":";
   const String stopMsg = "stop";
   const String pauseMsg = "pause";
+  const String restartMsg="restart";
+  const String setMonitorMsg="monitor";
+  const String setIdleMsg="idle";
+  const String setOtaMsg="ota";
   const String otaCheckMsg = "ota_check";
   const String monitorCheckMsg = "monitor_check";
+  const String idleCheckMsg="idle_check";
 };
 
-
+struct stru_productParam{
+  unsigned int productedNum=0;
+  String productModel="";
+};
 
 /* device param */
 struct stru_deviceParam deviceParam;
@@ -158,9 +168,9 @@ void setup()
 }
 
 void processMsgFromServer(String msg){
-  if (msg == "ota")
+  if (msg == msgParam.setOtaMsg)
     {
-      if (deviceParam.workMode != OTA_MODE) {
+      if (deviceParam.workMode != OTA_MODE){
         //initialize the ota env//
         OTA_Mode_Ini();
         Serial.println("enter ota mode");
@@ -168,14 +178,21 @@ void processMsgFromServer(String msg){
       }
       sendMsg(msgParam.otaCheckMsg);
     }
-    else if (msg == "monitor"){
+    else if (msg == msgParam.setMonitorMsg){
       if (deviceParam.workMode != MONITOR_MODE) {
         Serial.println("enter monitor mode");
         deviceParam.workMode = MONITOR_MODE;
       }
       sendMsg(msgParam.monitorCheckMsg);
     }
-    else if(msg=="restart"){
+    else if(msg== msgParam.setIdleMsg){
+      if(deviceParam.workMode!=IDLE_MODE){
+        Serial.println("enter idle mode");
+        deviceParam.workMode=IDLE_MODE;
+      }
+      sendMsg(msgParam.idleCheckMsg);
+    }
+    else if(msg==msgParam.restartMsg){
       Serial.println("restart!");
       ESP.restart();
     }
@@ -202,6 +219,9 @@ void loop()
           OTA_Mode_Run();
           break;
         }
+      case IDLE_MODE:{
+        IDLE_Mode_Run();
+      }
       default: {
           Serial.println("no task mode");
         }
@@ -314,4 +334,10 @@ void OTA_Mode_Ini() {
     }
   });
   ArduinoOTA.begin();
+}
+
+void IDLE_Mode_Run(){
+  sendMsg(idleCheckMsg);
+  delay(200);
+  // Serial.println("")
 }

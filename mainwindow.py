@@ -185,7 +185,7 @@ class GUI(QWidget):
             self.findChild(QPushButton,_robot).setText("离线")
         elif self.monitorServer.robotState[_robot]==RobotState.ONLINE:
             lableBgColor='background:green'
-            self.findChild(QPushButton,_robot).setText("正常")
+            self.findChild(QPushButton,_robot).setText("监控")
         elif self.monitorServer.robotState[_robot]==RobotState.STOP:
             lableBgColor='background:red'
             self.findChild(QPushButton,_robot).setText("停止")
@@ -198,6 +198,9 @@ class GUI(QWidget):
         elif self.monitorServer.robotState[_robot]==RobotState.UNKNOWN_WORKMODE:
             lableBgColor='background:red'
             self.findChild(QPushButton,_robot).setText("UNKNOWN")
+        elif self.monitorServer.robotState[_robot]==RobotState.IDLE:
+            lableBgColor='background:gray'
+            self.findChild(QPushButton,_robot).setText("IDLE")
         else:
             lableBgColor='background:dark'
 
