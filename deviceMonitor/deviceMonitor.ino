@@ -1,3 +1,4 @@
+#include <EEPROM.h>
 #include <ArduinoOTA.h>
 #include <BearSSLHelpers.h>
 #include <CertStoreBearSSL.h>
@@ -38,16 +39,16 @@
 #define IDLE_MODE 2
 
 struct stru_netWorkParam{
-  String ssid="NETGEAR";
-  String ssidPasswd="sj13607071774";
-  String serverIp="10.0.0.11";
+  String ssid="TEXE-Robot";
+  String ssidPasswd="JX_TELUA";
+  String serverIp="192.168.16.106";
   unsigned int serverPort=8888; 
 };
 
 struct stru_deviceParam{
   String deviceSerial="xe_line3_robot1";
   String firmWareVersion="1";
-  unsigned int workMode=MONITOR_MODE;
+  int workMode=MONITOR_MODE;
   unsigned int workState=NORMAL;
 };
 
@@ -136,8 +137,11 @@ void connectServer(){
       if(deviceParam.workMode==MONITOR_MODE){
         sendMsg(msgParam.monitorCheckMsg);
       }
-      else if(deviceParam.workMode==OTA_MODE){
+      else if(deviceParam.workMode == OTA_MODE){
         sendMsg(msgParam.otaCheckMsg);
+      }
+      else if(deviceParam.workMode==IDLE_MODE){
+        sendMsg(msgParam.idleCheckMsg);
       }
       else{
         ESP.restart();
@@ -154,8 +158,15 @@ void initializeIO(){
   pinMode(ioParam.pauseIO, INPUT);
 }
 
+void initializeWorkmode(){
+  deviceParam.workMode=readWorkModeFromRom();
+}
+
 void setup()
 {
+  /*initialize EEPROM*/
+  EEPROM.begin(512);
+  
   /*intialize the io mode*/
   initializeIO();
 
@@ -165,6 +176,9 @@ void setup()
 
   //connect wifi//
   connectWifi();
+
+  //initialize workmode//
+  initializeWorkmode();
 }
 
 void processMsgFromServer(String msg){
@@ -175,6 +189,7 @@ void processMsgFromServer(String msg){
         OTA_Mode_Ini();
         Serial.println("enter ota mode");
         deviceParam.workMode = OTA_MODE;
+        writeWorkModeToRom(deviceParam.workMode);
       }
       sendMsg(msgParam.otaCheckMsg);
     }
@@ -182,6 +197,7 @@ void processMsgFromServer(String msg){
       if (deviceParam.workMode != MONITOR_MODE) {
         Serial.println("enter monitor mode");
         deviceParam.workMode = MONITOR_MODE;
+        writeWorkModeToRom(deviceParam.workMode);
       }
       sendMsg(msgParam.monitorCheckMsg);
     }
@@ -189,6 +205,7 @@ void processMsgFromServer(String msg){
       if(deviceParam.workMode!=IDLE_MODE){
         Serial.println("enter idle mode");
         deviceParam.workMode=IDLE_MODE;
+        writeWorkModeToRom(deviceParam.workMode);
       }
       sendMsg(msgParam.idleCheckMsg);
     }
@@ -337,7 +354,29 @@ void OTA_Mode_Ini() {
 }
 
 void IDLE_Mode_Run(){
-  sendMsg(idleCheckMsg);
-  delay(200);
+  sendMsg(msgParam.idleCheckMsg);
+  delay(5000);
   // Serial.println("")
+}
+
+int readWorkModeFromRom(){
+    int workModeAddress=1;
+    byte _value=EEPROM.read(workModeAddress);
+    Serial.print("work mode: ");
+    Serial.println(_value,DEC);
+    Serial.print("value: ");
+    Serial.println(int(_value));
+    delay(500);
+    return int(_value);
+}
+
+void writeWorkModeToRom(int workMode){
+    int addr = 1;
+    EEPROM.write(addr, workMode);
+    if (EEPROM.commit()) {
+      Serial.println("EEPROM successfully save work mode!");
+    } else {
+      Serial.println("ERROR! failed to save work mode!");
+    }
+    delay(100);
 }
