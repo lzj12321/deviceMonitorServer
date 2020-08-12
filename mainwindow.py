@@ -15,7 +15,7 @@ from PyQt5.QtWidgets import QWidget,QApplication, QInputDialog, QLineEdit,QLabel
 import sys
 from monitorServer import MonitorServer
 from yamlTool import Yaml_Tool
-from robotState import RobotState,MonitorState
+from deviceState import DeviceState,MonitorState
 from PyQt5.QtGui import QPixmap
 from deviceDialog import DeviceDialog
 import copy
@@ -153,7 +153,7 @@ class GUI(QWidget):
         self.label_37.setText(_translate("MainWindow", "C号手"))
         self.label_38.setText(_translate("MainWindow", "超声波"))
 
-    def alterRobotState(self,robotNumber,state):
+    def alterDeviceState(self,robotNumber,state):
         pass
 
     def addRunMessage(self,msg):
@@ -181,25 +181,25 @@ class GUI(QWidget):
 
     def updateRobotLabel(self,_device,_state):
         lableBgColor='background:gray'
-        if _state==RobotState.OFFLINE:
+        if _state==DeviceState.OFFLINE:
             lableBgColor='background:yellow'
             self.findChild(QPushButton,_device).setText("离线")
-        elif _state==RobotState.MONITOR:
+        elif _state==DeviceState.MONITOR:
             lableBgColor='background:green'
             self.findChild(QPushButton,_device).setText("监控")
-        elif _state==RobotState.STOP:
+        elif _state==DeviceState.STOP:
             lableBgColor='background:red'
             self.findChild(QPushButton,_device).setText("停止")
-        elif _state==RobotState.PAUSE:
+        elif _state==DeviceState.PAUSE:
             lableBgColor='background:red'
             self.findChild(QPushButton,_devicet).setText("中止")
-        elif _state==RobotState.OTA:
+        elif _state==DeviceState.OTA:
             lableBgColor='background:blue'
             self.findChild(QPushButton,_device).setText("OTA")
-        elif _state==RobotState.UNKNOWN_WORKMODE:
+        elif _state==DeviceState.UNKNOWN_WORKMODE:
             lableBgColor='background:red'
             self.findChild(QPushButton,_device).setText("未知")
-        elif _state==RobotState.IDLE:
+        elif _state==DeviceState.IDLE:
             lableBgColor='background:gray'
             self.findChild(QPushButton,_device).setText("空闲")
         else:

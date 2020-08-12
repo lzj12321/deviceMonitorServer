@@ -38,7 +38,7 @@ class MysqlTool:
             return False,-1
         pass
 
-    def saveRobotState(self,_workshop,_robotSerial,_robotState,_description):
+    def saveDeviceState(self,_workshop,_robotSerial,_robotState,_description):
         prevTime,SN=self.getPrevTimeAndSn(_workshop,_robotSerial)
         currTime=self.getServerTime()
         if not(prevTime=='null' or SN=='null'):

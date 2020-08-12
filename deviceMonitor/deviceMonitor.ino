@@ -37,16 +37,20 @@
 #define MONITOR_MODE 0
 #define OTA_MODE 1
 #define IDLE_MODE 2
+#define UNKNOWN_MODE 3
 
 struct stru_netWorkParam{
-  String ssid="TEXE-Robot";
-  String ssidPasswd="JX_TELUA";
-  String serverIp="192.168.16.106";
+//  String ssid="TEXE-Robot";
+//  String ssidPasswd="JX_TELUA";
+//  String serverIp="192.168.16.106";
+  String ssid="NETGEAR";
+  String ssidPasswd="sj13607071774";
+  String serverIp="10.0.0.11";
   unsigned int serverPort=8888; 
 };
 
 struct stru_deviceParam{
-  String deviceSerial="xe_line3_robot1";
+  String deviceSerial="xe_line3_robot3";
   String firmWareVersion="1";
   int workMode=MONITOR_MODE;
   unsigned int workState=NORMAL;
@@ -68,6 +72,7 @@ struct stru_msgParam{
   const String otaCheckMsg = "ota_check";
   const String monitorCheckMsg = "monitor_check";
   const String idleCheckMsg="idle_check";
+  const String unknownCheckMsg="unknown_check";
 };
 
 struct stru_productParam{
@@ -144,7 +149,9 @@ void connectServer(){
         sendMsg(msgParam.idleCheckMsg);
       }
       else{
-        ESP.restart();
+        deviceParam.workMode=UNKNOWN_MODE;
+        sendMsg(msgParam.unknownCheckMsg);
+        // ESP.restart();
       }
       Serial.print("connected server:");
       Serial.println(networkParam.serverIp);
@@ -241,6 +248,7 @@ void loop()
       }
       default: {
           Serial.println("no task mode");
+          delay(2000);
         }
     }
     delay(loopInterval);
@@ -350,6 +358,8 @@ void OTA_Mode_Ini() {
       Serial.println("End Failed");
     }
   });
+  ArduinoOTA.setHostname(deviceParam.deviceSerial.c_str());
+  ArduinoOTA.setRebootOnSuccess(true);
   ArduinoOTA.begin();
 }
 

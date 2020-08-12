@@ -1,6 +1,6 @@
 from enum import IntEnum
 
-class RobotState(IntEnum):
+class DeviceState(IntEnum):
     OFFLINE=0
     ONLINE=1
     HIPOT=2

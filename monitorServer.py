@@ -7,8 +7,7 @@ from PyQt5 import QtNetwork
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import pyqtSignal
 from loggerTool import Logger
-from robotState import RobotState
-import copy
+from deviceState import DeviceState
 from device import Device,StateMachine
 
 
@@ -33,7 +32,7 @@ class MonitorServer(QObject):
         ######## initializi robot && socket#########
         self.isCheckDeviceOnline={}
         self.devices={}
-        self.onlineRobotIp={}
+        self.onlineDeviceIp={}
         self.ipSocket={}
         self.workshop=self.params['workshop']
 
@@ -41,7 +40,7 @@ class MonitorServer(QObject):
         for _device in self.params['devices'].keys():
             self.isCheckDeviceOnline[_device]=False
             newDevice=Device(_device)
-            newDevice.bind(RobotState.OFFLINE,self.stateMachine.getFsm(RobotState.OFFLINE))
+            newDevice.bind(DeviceState.OFFLINE,self.stateMachine.getFsm(DeviceState.OFFLINE))
             self.devices[_device]=newDevice
             newDevice.stateChanged.connect(self.processDeviceStateChanged)
         pass
@@ -58,16 +57,14 @@ class MonitorServer(QObject):
     def mysqlToolIni(self):
         self.outLog('mysql initialize')
         self.mysqlTool=MysqlTool()
-        # if not self.mysqlTool._connectState:
-            # self.outLog("Can't connect to mysql server")
 
     def setRobotToOtaState(self,_otaRobots):
         for _robot in _otaRobots:
-            if self.devices[_robot].state==RobotState.OTA:
+            if self.devices[_robot].state==DeviceState.OTA:
                 continue
-            if _robot in self.onlineRobotIp.keys():
+            if _robot in self.onlineDeviceIp.keys():
                 print('send ota msg to:'+_robot)
-                self.ipSocket[self.onlineRobotIp[_robot]].sendMsg('ota')
+                self.ipSocket[self.onlineDeviceIp[_robot]].sendMsg('ota')
                 pass
             else:
                 self.appendRunMsg.emit('cant set '+_robot+' into ota mode because it not online!')
@@ -76,17 +73,17 @@ class MonitorServer(QObject):
     def setRobotToMonitorState(self,_monitorList):
         for _device in self.devices.keys():
             if _device in _monitorList:
-                if self.devices[_device].state==RobotState.MONITOR:
+                if self.devices[_device].state==DeviceState.MONITOR:
                     continue
-                if _device in self.onlineRobotIp.keys():
-                    self.ipSocket[self.onlineRobotIp[_device]].sendMsg('monitor')
+                if _device in self.onlineDeviceIp.keys():
+                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('monitor')
                     print('send monitor msg to '+_device)
                 else:
                     pass
                     # self.appendRunMsg.emit('cant set '+_device+' into monitor model because it not on line!')
-            elif self.devices[_device].state!=RobotState.OTA:
-                if _device in self.onlineRobotIp.keys():
-                    self.ipSocket[self.onlineRobotIp[_device]].sendMsg('idle')
+            elif self.devices[_device].state!=DeviceState.OTA:
+                if _device in self.onlineDeviceIp.keys():
+                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('idle')
                     print('send idle msg to '+_device)
                 else:
                     pass
@@ -97,27 +94,27 @@ class MonitorServer(QObject):
     def checkTimerTimeout(self):
         #### only detect offline time more than three times it will close the connection #########
         for _device in self.isCheckDeviceOnline.keys():
-            if self.devices[_device].state!=RobotState.OFFLINE:
+            if self.devices[_device].state!=DeviceState.OFFLINE:
                 if not self.isCheckDeviceOnline[_device]:
                     self.appendRunMsg.emit(_device+" offline!")
                     self.outLog(_device+' alter robot state to offline!')
-                    self.stateMachine.changeState(self.devices[_device],RobotState.OFFLINE)
+                    self.stateMachine.changeState(self.devices[_device],DeviceState.OFFLINE)
                     self.closeRobotConnection(_device)
             self.isCheckDeviceOnline[_device]=False
         pass
 
-    def closeRobotConnection(self,_robotFlag):
-        self.outLog("close the connection with "+self.onlineRobotIp[_robotFlag])
-        self.ipSocket[self.onlineRobotIp[_robotFlag]].close()
-        self.ipSocket.pop(self.onlineRobotIp[_robotFlag])
-        self.onlineRobotIp.pop(_robotFlag)
+    def closeRobotConnection(self,_device):
+        self.outLog("close the connection with "+self.onlineDeviceIp[_device])
+        self.ipSocket[self.onlineDeviceIp[_device]].close()
+        self.ipSocket.pop(self.onlineDeviceIp[_device])
+        self.onlineDeviceIp.pop(_device)
         pass
 
     def timerIni(self):
         self.outLog('timer initialize')
         checkTimer=QTimer(self)
         checkTimer.timeout.connect(self.checkTimerTimeout)
-        checkTimer.setInterval(20000)
+        checkTimer.setInterval(15000)
         checkTimer.start()
         pass
 
@@ -136,7 +133,7 @@ class MonitorServer(QObject):
         newSock=self.serverSocket.nextPendingConnection()
         _sock=Socket()
         _sock.setSocket(newSock)
-        _sock.receivedMsg.connect(self.processMsgFromRobot)
+        _sock.receivedMsg.connect(self.processMsgFromDevice)
 
         newSockIp = newSock.peerAddress().toString().split(':')[-1]
         self.outLog("a new connection from "+newSockIp)
@@ -145,10 +142,10 @@ class MonitorServer(QObject):
         self.ipSocket[newSockIp]=_sock
         pass
 
-    def saveRobotStateChangeLog(self,_robotFlag,_robotState):
+    def saveDeviceStateChangeLog(self,_device,_deviceState):
         description="null"
-        if not self.mysqlTool.saveRobotState(self.workshop,_robotFlag,str(_robotState),description):
-            self.outLog("save log to mysql server error!"+_robotFlag+' '+_robotState)
+        if not self.mysqlTool.saveDeviceState(self.workshop,_device,str(_deviceState),description):
+            self.outLog("save log to mysql server error!"+_device+' '+_deviceState)
         pass
 
     def outLog(self,logMsg):
@@ -157,72 +154,72 @@ class MonitorServer(QObject):
         log.outputLog('log/'+time,logMsg)
         pass
 
-    def process_unknownWorkmode_msg(self,_robotFlag):
+    def process_unknownWorkmode_msg(self,_device):
+        self.stateMachine.changeState(self.devices[_device],DeviceState.UNKNOWN_WORKMODE)
         pass
 
-    def process_stop_msg(self,_robotFlag):
-        self.stateMachine.changeState(self.devices[_robotFlag],RobotState.STOP)
+    def process_stop_msg(self,_device):
+        self.stateMachine.changeState(self.devices[_device],DeviceState.STOP)
         pass
 
-    def process_pause_msg(self,_robotFlag):
-        self.stateMachine.changeState(self.devices[_robotFlag],RobotState.PAUSE)
+    def process_pause_msg(self,_device):
+        self.stateMachine.changeState(self.devices[_device],DeviceState.PAUSE)
         pass
 
-    def process_ota_check_msg(self,_robotFlag):
-        self.stateMachine.changeState(self.devices[_robotFlag],RobotState.OTA)
+    def process_ota_check_msg(self,_device):
+        self.stateMachine.changeState(self.devices[_device],DeviceState.OTA)
         pass
 
-    def process_monitor_check_msg(self,_robotFlag):
-        self.stateMachine.changeState(self.devices[_robotFlag],RobotState.MONITOR)
+    def process_monitor_check_msg(self,_device):
+        self.stateMachine.changeState(self.devices[_device],DeviceState.MONITOR)
         pass
 
-    def process_idle_check_msg(self,_robotFlag):
-        self.stateMachine.changeState(self.devices[_robotFlag],RobotState.IDLE)
+    def process_idle_check_msg(self,_device):
+        self.stateMachine.changeState(self.devices[_device],DeviceState.IDLE)
         pass
 
     def processDeviceStateChanged(self,_device,_state):
         self.updateDeviceState.emit(_device,_state)
-        self.saveRobotStateChangeLog(_device,_state)
+        self.saveDeviceStateChangeLog(_device,_state)
         # self.addRunMessage(_device+':'+_validMsg)
         # print(_device+' alter robot state to '+str(_state))
         pass
 
-    def processMsgFromRobot(self,msg,sockIp):
-        print('                 msg                    :'+msg)
+    def processMsgFromDevice(self,msg,sockIp):
         _msgs=msg.split(':')
         if len(_msgs)==2:
-            _robotFlag=msg.split(':')[0]
+            _device=msg.split(':')[0]
             _validMsg=msg.split(':')[1]
 
             ######## update robot socket ##########
-            if _robotFlag in self.onlineRobotIp.keys():
+            if _device in self.onlineDeviceIp.keys():
                 ### the connected robot use the new ip to connect server ###
-                if sockIp != self.onlineRobotIp[_robotFlag]:
-                    if self.onlineRobotIp[_robotFlag] in self.ipSocket.keys():
-                        self.ipSocket[self.onlineRobotIp[_robotFlag]].close()
-                        self.ipSocket.pop(self.onlineRobotIp[_robotFlag])
+                if sockIp != self.onlineDeviceIp[_device]:
+                    if self.onlineDeviceIp[_device] in self.ipSocket.keys():
+                        self.ipSocket[self.onlineDeviceIp[_device]].close()
+                        self.ipSocket.pop(self.onlineDeviceIp[_device])
                     else:
-                        self.outLog("error self.onlineRobotIp[_robotFlag] in self.ipSocket.keys() "+sockIp+' '+_robotFlag)
-            elif _robotFlag in self.devices.keys():
-                self.onlineRobotIp[_robotFlag]=sockIp
+                        self.outLog("error self.onlineDeviceIp[_device] in self.ipSocket.keys() "+sockIp+' '+_device)
+            elif _device in self.devices.keys():
+                self.onlineDeviceIp[_device]=sockIp
             else:
                 self.outLog('receivd a error msg:'+msg)
                 return
 
-            if _robotFlag in self.devices.keys():
-                self.isCheckDeviceOnline[_robotFlag]=True
+            if _device in self.devices.keys():
+                self.isCheckDeviceOnline[_device]=True
                 if _validMsg=='stop':
-                    self.process_stop_msg(_robotFlag)
+                    self.process_stop_msg(_device)
                 elif _validMsg=='pause':
-                    self.process_pause_msg(_robotFlag)
+                    self.process_pause_msg(_device)
                 elif _validMsg=='ota_check':
-                    self.process_ota_check_msg(_robotFlag)
+                    self.process_ota_check_msg(_device)
                 elif _validMsg=='monitor_check':
-                    self.process_monitor_check_msg(_robotFlag)
+                    self.process_monitor_check_msg(_device)
                 elif _validMsg=='idle_check':
-                    self.process_idle_check_msg(_robotFlag)
-                elif _validMsg=='unknownWorkmode':
-                    self.process_unknownWorkmode_msg(_robotFlag)
+                    self.process_idle_check_msg(_device)
+                elif _validMsg=='unknown_check':
+                    self.process_unknownWorkmode_msg(_device)
                 else:
                     self.outLog('receivd a error msg without valid msg:'+msg)
                     return
@@ -236,7 +233,10 @@ class MonitorServer(QObject):
         _monitoringDevices=[]
         for _device in self.devices.keys():
             _state=self.devices[_device].state
-            if _state!=RobotState.IDLE and _state!=RobotState.OFFLINE and _state!=RobotState.OTA:
+            if _state!=DeviceState.IDLE and \
+                 _state!=DeviceState.OFFLINE and \
+                      _state!=DeviceState.OTA and \
+                          _state!=DeviceState.UNKNOWN_WORKMODE:
                 _monitoringDevices.append(_device)
         return _monitoringDevices
         pass
@@ -244,7 +244,7 @@ class MonitorServer(QObject):
     def getOtaDevice(self):
         _otaDevices=[]
         for _device in self.devices.keys():
-            if self.devices[_device].state==RobotState.OTA:
+            if self.devices[_device].state==DeviceState.OTA:
                 _otaDevices.append(_device)
         return _otaDevices
 

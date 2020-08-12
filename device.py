@@ -1,4 +1,4 @@
-from robotState import RobotState
+from deviceState import DeviceState
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import *
 from PyQt5.QtCore import pyqtSignal
@@ -16,11 +16,11 @@ class Device(QObject):
         self.productModel=""
         self.productNum=0
 
-        self.state=RobotState.OFFLINE
+        self.state=DeviceState.OFFLINE
         self.fsm=None
     
     def enter_offline(self):
-        self.stateChanged.emit(self.name,RobotState.OFFLINE)
+        self.stateChanged.emit(self.name,DeviceState.OFFLINE)
         print("%s enter offline state!"% self.name)
         pass
     def exit_offline(self):
@@ -28,7 +28,7 @@ class Device(QObject):
         pass
 
     def enter_idle(self):
-        self.stateChanged.emit(self.name,RobotState.IDLE)
+        self.stateChanged.emit(self.name,DeviceState.IDLE)
         print("%s enter idle state!"% self.name)
         pass
     def exit_idle(self):
@@ -36,7 +36,7 @@ class Device(QObject):
         pass
 
     def enter_monitor(self):
-        self.stateChanged.emit(self.name,RobotState.MONITOR)
+        self.stateChanged.emit(self.name,DeviceState.MONITOR)
         print("%s enter monitor state!"% self.name)
         pass
     def exit_monitor(self):
@@ -44,7 +44,7 @@ class Device(QObject):
         pass
 
     def enter_ota(self):
-        self.stateChanged.emit(self.name,RobotState.OTA)
+        self.stateChanged.emit(self.name,DeviceState.OTA)
         print("%s enter ota state!"% self.name)
         pass
     def exit_ota(self):
@@ -52,7 +52,7 @@ class Device(QObject):
         pass
 
     def enter_pause(self):
-        self.stateChanged.emit(self.name,RobotState.PAUSE)
+        self.stateChanged.emit(self.name,DeviceState.PAUSE)
         print("%s enter pause state!"% self.name)
         pass
     def exit_pause(self):
@@ -60,11 +60,19 @@ class Device(QObject):
         pass
         
     def enter_stop(self):
-        self.stateChanged.emit(self.name,RobotState.STOP)
+        self.stateChanged.emit(self.name,DeviceState.STOP)
         print("%s enter stop state!"% self.name)
         pass
     def exit_stop(self):
         print("%s exit stop state!"% self.name)
+        pass
+
+    def enter_unknown(self):
+        self.stateChanged.emit(self.name,DeviceState.UNKNOWN_WORKMODE)
+        print("%s enter unknown state!"% self.name)
+        pass
+    def exit_unknown(self):
+        print("%s exit unknown state!"% self.name)
         pass
 
     def bind(self,_state,_fsm):
@@ -119,6 +127,15 @@ class PauseState(State):
     def enter(self,obj):
         obj.enter_pause()
 
+class UnkonwnState(State):
+    def exit(self,obj):
+        obj.exit_unknown()
+        pass
+
+    def enter(self,obj):
+        obj.enter_unknown()
+
+
 class StopState(State):
     def exit(self,obj):
         obj.exit_stop()
@@ -129,7 +146,14 @@ class StopState(State):
 
 class StateMachine(object):
     def __init__(self):
-        self.states={RobotState.OFFLINE:OfflineState(),RobotState.IDLE:IdleState(),RobotState.STOP:StopState(),RobotState.PAUSE:PauseState(),RobotState.OTA:OtaState(),RobotState.MONITOR:MonitorState()}
+        self.states={DeviceState.OFFLINE:OfflineState(),
+        DeviceState.IDLE:IdleState(),
+        DeviceState.STOP:StopState(),
+        DeviceState.PAUSE:PauseState(),
+        DeviceState.OTA:OtaState(),
+        DeviceState.MONITOR:MonitorState(),
+        DeviceState.UNKNOWN_WORKMODE:UnkonwnState()
+        }
 
     def getFsm(self,state):
         return self.states[state]
@@ -150,7 +174,7 @@ class StateMachine(object):
 if __name__=="__main__":
     testMachine=StateMachine()
     testDevice=Device('testRobot')
-    testDevice.bind(RobotState.OFFLINE,testMachine.getFsm(RobotState.OFFLINE))
-    testMachine.changeState(RobotState.MONITOR,testDevice)
-    testMachine.changeState(RobotState.IDLE,testDevice)
+    testDevice.bind(DeviceState.OFFLINE,testMachine.getFsm(DeviceState.OFFLINE))
+    testMachine.changeState(DeviceState.MONITOR,testDevice)
+    testMachine.changeState(DeviceState.IDLE,testDevice)
     pass
