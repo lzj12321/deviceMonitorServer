@@ -33,8 +33,6 @@ class MonitorServer(QObject):
         self.robotOnlineCheckFlag={}
         self.monitoringRobot=[]
         self.otaStateRobots=[]
-        self.waitOtaCheckRobots=[]
-        self.waitMonitorCheckRobots=[]
         self.robotState={}
         self.onlineRobotIp={}
         self.ipSocket={}
@@ -195,8 +193,7 @@ class MonitorServer(QObject):
             self.otaStateRobots.remove(_robotFlag)
         if _robot in self.monitoringRobot:
             self.monitoringRobot.remove(_robotFlag)
-        return RObotState.IDLE
-
+        return RobotState.IDLE
         pass
 
     def processMsgFromRobot(self,msg,sockIp):

@@ -197,10 +197,10 @@ class GUI(QWidget):
             self.findChild(QPushButton,_robot).setText("OTA")
         elif self.monitorServer.robotState[_robot]==RobotState.UNKNOWN_WORKMODE:
             lableBgColor='background:red'
-            self.findChild(QPushButton,_robot).setText("UNKNOWN")
+            self.findChild(QPushButton,_robot).setText("未知")
         elif self.monitorServer.robotState[_robot]==RobotState.IDLE:
             lableBgColor='background:gray'
-            self.findChild(QPushButton,_robot).setText("IDLE")
+            self.findChild(QPushButton,_robot).setText("空闲")
         else:
             lableBgColor='background:dark'
 
