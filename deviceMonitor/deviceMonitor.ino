@@ -1,29 +1,14 @@
 #include <EEPROM.h>
 #include <ArduinoOTA.h>
-//#include <BearSSLHelpers.h>
-//#include <CertStoreBearSSL.h>
 #include <ESP8266WiFi.h>
-//#include <ESP8266WiFiAP.h>
-//#include <ESP8266WiFiGeneric.h>
 #include <ESP8266WiFiGratuitous.h>
 #include <ESP8266WiFiMulti.h>
-//#include <ESP8266WiFiScan.h>
-//#include <ESP8266WiFiSTA.h>
-//#include <ESP8266WiFiType.h>
 #include <WiFiClient.h>
 #include <WiFiClientSecure.h>
-//#include <WiFiClientSecureAxTLS.h>
-//#include <WiFiClientSecureBearSSL.h>
 #include <WiFiServer.h>
 #include <WiFiServerSecure.h>
-//#include <WiFiServerSecureAxTLS.h>
-//#include <WiFiServerSecureBearSSL.h>
 #include <WiFiUdp.h>
 
-
-// enum WORK_STATE{
-//   CATCH_ERROR,HIPOT,NORMAL,STOP,PAUSE
-// }
 
 /* work states declartion */
 #define NORMAL 3
@@ -39,6 +24,10 @@
 #define IDLE_MODE 2
 #define UNKNOWN_MODE 3
 
+const int workModeAddress=1;
+IPAddress localIp(10, 0, 0, 22);
+IPAddress gateway(10, 0, 0, 1);
+IPAddress subnet(255, 255, 255, 0);
 struct stru_netWorkParam {
   //  String ssid = "TEXE-Robot";
   //  String ssidPasswd = "JX_TELUA";
@@ -50,7 +39,7 @@ struct stru_netWorkParam {
 };
 
 struct stru_deviceParam {
-  String deviceSerial = "xe_line3_robot1";
+  String deviceSerial = "xe_line1_robot3";
   String firmWareVersion = "1";
   int workMode = MONITOR_MODE;
   unsigned int workState = NORMAL;
@@ -86,9 +75,6 @@ struct stru_deviceParam deviceParam;
 /* network param */
 WiFiClient client;
 struct stru_netWorkParam networkParam;
-IPAddress localIp(10, 0, 0, 22);
-IPAddress gateway(10, 0, 0, 1);
-IPAddress subnet(255, 255, 255, 0);
 
 /* io param */
 struct stru_ioParam ioParam;
@@ -129,7 +115,7 @@ void connectWifi() {
 
 //loop connect the server until connected//
 void connectServer() {
-  //  client.setSync(true);
+  client.setSync(true);
   while (!client.connected())//几个非连接的异常处理
   {
     if (!client.connect(networkParam.serverIp, networkParam.serverPort))
@@ -265,7 +251,7 @@ void loop()
         }
       default: {
           Serial.println("no task mode");
-          delay(2000);
+          delay(5000);
         }
     }
     delay(loopInterval);
@@ -318,7 +304,7 @@ void MONITOR_Mode_Run() {
 void OTA_Mode_Run() {
   ArduinoOTA.handle();
   detectNormalTime++;
-  if (detectNormalTime > (MIN_DETECTED_SIGNAL_TIME * 3))
+  if (detectNormalTime > (MIN_DETECTED_SIGNAL_TIME * 2))
   {
     deviceParam.workState = NORMAL;
     sendMsg(msgParam.otaCheckMsg);
@@ -372,19 +358,15 @@ void IDLE_Mode_Run() {
 }
 
 int readWorkModeFromRom() {
-  int workModeAddress = 1;
   byte _value = EEPROM.read(workModeAddress);
-  Serial.print("work mode: ");
+  Serial.print("read work mode: ");
   Serial.println(_value, DEC);
-  Serial.print("value: ");
-  Serial.println(int(_value));
   delay(500);
   return int(_value);
 }
 
 void writeWorkModeToRom(int workMode) {
-  int addr = 1;
-  EEPROM.write(addr, workMode);
+  EEPROM.write(workModeAddress, workMode);
   if (EEPROM.commit()) {
     Serial.println("EEPROM successfully save work mode!");
   } else {

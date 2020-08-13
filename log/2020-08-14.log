@@ -1,0 +1,31 @@
+2020-08-14 06:21:05,609 - param initialize
+2020-08-14 06:21:05,756 - server initialize
+2020-08-14 06:21:05,769 - timer initialize
+2020-08-14 06:21:05,769 - mysql initialize
+2020-08-14 06:21:08,340 - a new connection from 10.0.0.21
+2020-08-14 06:21:08,617 - a new connection from 10.0.0.22
+2020-08-14 06:24:29,173 - a new connection from 10.0.0.22
+2020-08-14 06:25:05,782 - xe_line3_robot3 alter robot state to offline!
+2020-08-14 06:25:05,801 - check this connection time out,close this connection with 10.0.0.21
+2020-08-14 06:25:07,461 - a new connection from 10.0.0.22
+2020-08-14 06:26:35,770 - xe_line3_robot1 alter robot state to offline!
+2020-08-14 06:26:35,784 - check this connection time out,close this connection with 10.0.0.22
+2020-08-14 06:26:36,021 - a new connection from 10.0.0.22
+2020-08-14 06:27:04,600 - a new connection from 10.0.0.22
+2020-08-14 06:27:24,788 - a new connection from 10.0.0.22
+2020-08-14 06:31:50,770 - xe_line3_robot1 alter robot state to offline!
+2020-08-14 06:31:50,824 - check this connection time out,close this connection with 10.0.0.22
+2020-08-14 06:32:11,813 - a new connection from 10.0.0.21
+2020-08-14 06:35:00,027 - a new connection from 10.0.0.22
+2020-08-14 06:49:05,771 - xe_line3_robot1 alter robot state to offline!
+2020-08-14 06:49:05,798 - check this connection time out,close this connection with 10.0.0.22
+2020-08-14 06:49:05,947 - a new connection from 10.0.0.21
+2020-08-14 06:49:52,909 - a new connection from 10.0.0.21
+2020-08-14 06:52:14,270 - a new connection from 10.0.0.21
+2020-08-14 06:52:35,989 - a new connection from 10.0.0.21
+2020-08-14 06:55:05,771 - xe_line1_robot1 alter robot state to offline!
+2020-08-14 06:55:05,814 - check this connection time out,close this connection with 10.0.0.21
+2020-08-14 06:56:36,759 - a new connection from 10.0.0.21
+2020-08-14 06:58:47,009 - a new connection from 10.0.0.21
+2020-08-14 06:59:19,799 - a new connection from 10.0.0.21
+2020-08-14 06:59:54,640 - a new connection from 10.0.0.22
