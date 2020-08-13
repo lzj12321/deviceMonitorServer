@@ -348,6 +348,25 @@ class GUI(QWidget):
     def showDeviceDialog(self,_device):
         _deviceDialog=DeviceDialog(self)
         _deviceDialog.setDevice(_device)
+        # self.name=_name
+        # self.ip=""
+        # self.deviceSerial=""
+        # self.firmWareVersion=""
+        # self.macAddress=""
+        # self.productModel=""
+        # self.productNum=0
+        # def dataIni(self,_serial,_name,_model,_num,_workMode,_mac,_ip,_version):
+        self.state=DeviceState.OFFLINE
+        _deviceDialog.dataIni(
+            self.monitorServer.devices[_device].deviceSerial,\
+            self.monitorServer.devices[_device].name,\
+            self.monitorServer.devices[_device].productModel,\
+            self.monitorServer.devices[_device].productNum,\
+            self.monitorServer.devices[_device].state,\
+            self.monitorServer.devices[_device].macAddress,\
+            self.monitorServer.devices[_device].ip,\
+            self.monitorServer.devices[_device].firmWareVersion)
+
         _deviceDialog.show()
         pass
 
@@ -461,5 +480,6 @@ class GUI(QWidget):
 if __name__ == '__main__':
     app=QApplication(sys.argv)
     runGui=GUI()
-    runGui.showFullScreen()
+    # runGui.showFullScreen()
+    runGui.show()
     sys.exit(app.exec_())

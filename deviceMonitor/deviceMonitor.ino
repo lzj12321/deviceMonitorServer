@@ -1,23 +1,23 @@
 #include <EEPROM.h>
 #include <ArduinoOTA.h>
-#include <BearSSLHelpers.h>
-#include <CertStoreBearSSL.h>
+//#include <BearSSLHelpers.h>
+//#include <CertStoreBearSSL.h>
 #include <ESP8266WiFi.h>
-#include <ESP8266WiFiAP.h>
-#include <ESP8266WiFiGeneric.h>
+//#include <ESP8266WiFiAP.h>
+//#include <ESP8266WiFiGeneric.h>
 #include <ESP8266WiFiGratuitous.h>
 #include <ESP8266WiFiMulti.h>
-#include <ESP8266WiFiScan.h>
-#include <ESP8266WiFiSTA.h>
-#include <ESP8266WiFiType.h>
+//#include <ESP8266WiFiScan.h>
+//#include <ESP8266WiFiSTA.h>
+//#include <ESP8266WiFiType.h>
 #include <WiFiClient.h>
 #include <WiFiClientSecure.h>
-#include <WiFiClientSecureAxTLS.h>
-#include <WiFiClientSecureBearSSL.h>
+//#include <WiFiClientSecureAxTLS.h>
+//#include <WiFiClientSecureBearSSL.h>
 #include <WiFiServer.h>
 #include <WiFiServerSecure.h>
-#include <WiFiServerSecureAxTLS.h>
-#include <WiFiServerSecureBearSSL.h>
+//#include <WiFiServerSecureAxTLS.h>
+//#include <WiFiServerSecureBearSSL.h>
 #include <WiFiUdp.h>
 
 
@@ -39,45 +39,45 @@
 #define IDLE_MODE 2
 #define UNKNOWN_MODE 3
 
-struct stru_netWorkParam{
-  String ssid="TEXE-Robot";
-  String ssidPasswd="JX_TELUA";
-  String serverIp="192.168.16.106";
-//  String ssid="NETGEAR";
-//  String ssidPasswd="sj13607071774";
-//  String serverIp="10.0.0.11";
-  unsigned int serverPort=8888; 
+struct stru_netWorkParam {
+  //  String ssid = "TEXE-Robot";
+  //  String ssidPasswd = "JX_TELUA";
+  //  String serverIp = "192.168.16.106";
+  String ssid = "NETGEAR";
+  String ssidPasswd = "sj13607071774";
+  String serverIp = "10.0.0.11";
+  unsigned int serverPort = 8888;
 };
 
-struct stru_deviceParam{
-  String deviceSerial="xe_line3_robot3";
-  String firmWareVersion="1";
-  int workMode=MONITOR_MODE;
-  unsigned int workState=NORMAL;
+struct stru_deviceParam {
+  String deviceSerial = "xe_line3_robot1";
+  String firmWareVersion = "1";
+  int workMode = MONITOR_MODE;
+  unsigned int workState = NORMAL;
 };
 
-struct stru_ioParam{
-  unsigned int stopIO=14;
-  unsigned int pauseIO=12;
+struct stru_ioParam {
+  unsigned int stopIO = 14;
+  unsigned int pauseIO = 12;
 };
 
-struct stru_msgParam{
+struct stru_msgParam {
   const String splitFlag = ":";
   const String stopMsg = "stop";
   const String pauseMsg = "pause";
-  const String restartMsg="restart";
-  const String setMonitorMsg="monitor";
-  const String setIdleMsg="idle";
-  const String setOtaMsg="ota";
+  const String restartMsg = "restart";
+  const String setMonitorMsg = "monitor";
+  const String setIdleMsg = "idle";
+  const String setOtaMsg = "ota";
   const String otaCheckMsg = "ota_check";
   const String monitorCheckMsg = "monitor_check";
-  const String idleCheckMsg="idle_check";
-  const String unknownCheckMsg="unknown_check";
+  const String idleCheckMsg = "idle_check";
+  const String unknownCheckMsg = "unknown_check";
 };
 
-struct stru_productParam{
-  unsigned int productedNum=0;
-  String productModel="";
+struct stru_productParam {
+  unsigned int productedNum = 0;
+  String productModel = "";
 };
 
 /* device param */
@@ -86,6 +86,9 @@ struct stru_deviceParam deviceParam;
 /* network param */
 WiFiClient client;
 struct stru_netWorkParam networkParam;
+IPAddress localIp(10, 0, 0, 22);
+IPAddress gateway(10, 0, 0, 1);
+IPAddress subnet(255, 255, 255, 0);
 
 /* io param */
 struct stru_ioParam ioParam;
@@ -102,9 +105,11 @@ int retryConnectWifiTime = 0;
 int retryConnectServerTime = 0;
 
 //loop connect the wifi until connected//
-void connectWifi(){
+void connectWifi() {
   Serial.print("Connecting to ");
   Serial.print(networkParam.ssid);
+  WiFi.config(localIp, gateway, subnet);
+  WiFi.mode(WIFI_STA);
   WiFi.begin(networkParam.ssid, networkParam.ssidPasswd);
   while (WiFi.status() != WL_CONNECTED)
   {
@@ -123,8 +128,9 @@ void connectWifi(){
 }
 
 //loop connect the server until connected//
-void connectServer(){
-   while (!client.connected())//几个非连接的异常处理
+void connectServer() {
+  //  client.setSync(true);
+  while (!client.connected())//几个非连接的异常处理
   {
     if (!client.connect(networkParam.serverIp, networkParam.serverPort))
     {
@@ -139,17 +145,17 @@ void connectServer(){
     }
     else {
       retryConnectServerTime = 0;
-      if(deviceParam.workMode==MONITOR_MODE){
+      if (deviceParam.workMode == MONITOR_MODE) {
         sendMsg(msgParam.monitorCheckMsg);
       }
-      else if(deviceParam.workMode == OTA_MODE){
+      else if (deviceParam.workMode == OTA_MODE) {
         sendMsg(msgParam.otaCheckMsg);
       }
-      else if(deviceParam.workMode==IDLE_MODE){
+      else if (deviceParam.workMode == IDLE_MODE) {
         sendMsg(msgParam.idleCheckMsg);
       }
-      else{
-        deviceParam.workMode=UNKNOWN_MODE;
+      else {
+        deviceParam.workMode = UNKNOWN_MODE;
         sendMsg(msgParam.unknownCheckMsg);
         // ESP.restart();
       }
@@ -160,20 +166,23 @@ void connectServer(){
 }
 
 //initialize io//
-void initializeIO(){
+void initializeIO() {
   pinMode(ioParam.stopIO, INPUT);
   pinMode(ioParam.pauseIO, INPUT);
 }
 
-void initializeWorkmode(){
-  deviceParam.workMode=readWorkModeFromRom();
+void initializeWorkmode() {
+  deviceParam.workMode = readWorkModeFromRom();
+  if(deviceParam.workMode==OTA_MODE){
+    OTA_Mode_Ini();
+  }
 }
 
 void setup()
 {
   /*initialize EEPROM*/
   EEPROM.begin(512);
-  
+
   /*intialize the io mode*/
   initializeIO();
 
@@ -188,41 +197,41 @@ void setup()
   initializeWorkmode();
 }
 
-void processMsgFromServer(String msg){
+void processMsgFromServer(String msg) {
   if (msg == msgParam.setOtaMsg)
-    {
-      if (deviceParam.workMode != OTA_MODE){
-        //initialize the ota env//
-        OTA_Mode_Ini();
-        Serial.println("enter ota mode");
-        deviceParam.workMode = OTA_MODE;
-        writeWorkModeToRom(deviceParam.workMode);
-      }
-      sendMsg(msgParam.otaCheckMsg);
+  {
+    if (deviceParam.workMode != OTA_MODE) {
+      //initialize the ota env//
+      OTA_Mode_Ini();
+      Serial.println("enter ota mode");
+      deviceParam.workMode = OTA_MODE;
+      writeWorkModeToRom(deviceParam.workMode);
     }
-    else if (msg == msgParam.setMonitorMsg){
-      if (deviceParam.workMode != MONITOR_MODE) {
-        Serial.println("enter monitor mode");
-        deviceParam.workMode = MONITOR_MODE;
-        writeWorkModeToRom(deviceParam.workMode);
-      }
-      sendMsg(msgParam.monitorCheckMsg);
+    sendMsg(msgParam.otaCheckMsg);
+  }
+  else if (msg == msgParam.setMonitorMsg) {
+    if (deviceParam.workMode != MONITOR_MODE) {
+      Serial.println("enter monitor mode");
+      deviceParam.workMode = MONITOR_MODE;
+      writeWorkModeToRom(deviceParam.workMode);
     }
-    else if(msg== msgParam.setIdleMsg){
-      if(deviceParam.workMode!=IDLE_MODE){
-        Serial.println("enter idle mode");
-        deviceParam.workMode=IDLE_MODE;
-        writeWorkModeToRom(deviceParam.workMode);
-      }
-      sendMsg(msgParam.idleCheckMsg);
+    sendMsg(msgParam.monitorCheckMsg);
+  }
+  else if (msg == msgParam.setIdleMsg) {
+    if (deviceParam.workMode != IDLE_MODE) {
+      Serial.println("enter idle mode");
+      deviceParam.workMode = IDLE_MODE;
+      writeWorkModeToRom(deviceParam.workMode);
     }
-    else if(msg==msgParam.restartMsg){
-      Serial.println("restart!");
-      ESP.restart();
-    }
-    else if (msg != "") {
-      Serial.println("unknown order:" + msg);
-    }
+    sendMsg(msgParam.idleCheckMsg);
+  }
+  else if (msg == msgParam.restartMsg) {
+    Serial.println("restart!");
+    ESP.restart();
+  }
+  else if (msg != "") {
+    Serial.println("unknown order:" + msg);
+  }
 }
 
 void loop()
@@ -231,9 +240,11 @@ void loop()
   connectServer();
 
   while (client.connected()) {
-    String msg = readMsg();
-    processMsgFromServer(msg);
-
+    if (client.available())
+    {
+      String msg = client.readStringUntil('\n');
+      processMsgFromServer(msg);
+    }
     switch (deviceParam.workMode) {
       case MONITOR_MODE: {
           MONITOR_Mode_Run();
@@ -243,9 +254,15 @@ void loop()
           OTA_Mode_Run();
           break;
         }
-      case IDLE_MODE:{
-        IDLE_Mode_Run();
-      }
+      case IDLE_MODE: {
+          IDLE_Mode_Run();
+          break;
+        }
+      case UNKNOWN_MODE: {
+          sendMsg(msgParam.unknownCheckMsg);
+          delay(5000);
+          break;
+        }
       default: {
           Serial.println("no task mode");
           delay(2000);
@@ -258,22 +275,7 @@ void loop()
 void sendMsg(const String msg) {
   String result = deviceParam.deviceSerial + msgParam.splitFlag + msg;
   client.write(result.c_str());
-  client.flush();
-}
-
-String readMsg() {
-  if (!client.available())
-  {
-    return "";
-  }
-  String msg = client.readStringUntil('\n');
-  if (msg != "") {
-    Serial.println("msg:" + msg);
-    return msg;
-  }
-  else {
-    return "";
-  }
+//  client.flush();
 }
 
 void MONITOR_Mode_Run() {
@@ -316,7 +318,7 @@ void MONITOR_Mode_Run() {
 void OTA_Mode_Run() {
   ArduinoOTA.handle();
   detectNormalTime++;
-  if (detectNormalTime > (MIN_DETECTED_SIGNAL_TIME * 5))
+  if (detectNormalTime > (MIN_DETECTED_SIGNAL_TIME * 3))
   {
     deviceParam.workState = NORMAL;
     sendMsg(msgParam.otaCheckMsg);
@@ -363,30 +365,30 @@ void OTA_Mode_Ini() {
   ArduinoOTA.begin();
 }
 
-void IDLE_Mode_Run(){
+void IDLE_Mode_Run() {
   sendMsg(msgParam.idleCheckMsg);
   delay(5000);
   // Serial.println("")
 }
 
-int readWorkModeFromRom(){
-    int workModeAddress=1;
-    byte _value=EEPROM.read(workModeAddress);
-    Serial.print("work mode: ");
-    Serial.println(_value,DEC);
-    Serial.print("value: ");
-    Serial.println(int(_value));
-    delay(500);
-    return int(_value);
+int readWorkModeFromRom() {
+  int workModeAddress = 1;
+  byte _value = EEPROM.read(workModeAddress);
+  Serial.print("work mode: ");
+  Serial.println(_value, DEC);
+  Serial.print("value: ");
+  Serial.println(int(_value));
+  delay(500);
+  return int(_value);
 }
 
-void writeWorkModeToRom(int workMode){
-    int addr = 1;
-    EEPROM.write(addr, workMode);
-    if (EEPROM.commit()) {
-      Serial.println("EEPROM successfully save work mode!");
-    } else {
-      Serial.println("ERROR! failed to save work mode!");
-    }
-    delay(100);
+void writeWorkModeToRom(int workMode) {
+  int addr = 1;
+  EEPROM.write(addr, workMode);
+  if (EEPROM.commit()) {
+    Serial.println("EEPROM successfully save work mode!");
+  } else {
+    Serial.println("ERROR! failed to save work mode!");
+  }
+  delay(100);
 }

@@ -129,11 +129,12 @@ class DeviceDialog(QDialog):
 
 
 
-        self.setWindowTitle('fuck')
+        self.setWindowTitle('debug')
         self.pushbutton=QPushButton(self)
         self.pushbutton.setVisible(True)
         self.pushbutton.setGeometry(50,20,100,100)
         self.pushbutton.setText('test')
+        self.pushbutton.setVisible(False)
 
 
 
@@ -144,15 +145,43 @@ class DeviceDialog(QDialog):
         self._name=_name
         self.setWindowTitle(_name)
 
-    def dataIni(self):
-        self.deviceSerial=''
-        self.deviceName=''
-        self.productModel=''
-        self.productNum=0
-        self.woroMode=''
-        self.macAddress=''
-        self.ip=''
-        self.firmWareVersion=''
+    def dataIni(self,_serial,_name,_model,_num,_state,_mac,_ip,_version):
+        _nullData="null"
+        self.deviceSerial=_serial
+        self.deviceName=_name
+        self.productModel=_model
+        self.productNum=_num
+        self.state=_state
+        self.macAddress=_mac
+        self.ip=_ip
+        self.firmWareVersion=_version
+
+        self.lineEdit.setReadOnly(True)
+        self.lineEdit.setText(self.deviceSerial)
+
+        self.lineEdit_2.setReadOnly(True)
+        self.lineEdit_2.setText(self.deviceName)
+
+        self.lineEdit_3.setText(self.productModel)
+
+        self.lineEdit_4.setReadOnly(True)
+        self.lineEdit_4.setText(str(self.productNum))
+
+        self.lineEdit_5.setReadOnly(True)
+        self.lineEdit_5.setText(str(self.state))
+
+        self.lineEdit_6.setReadOnly(True)
+        self.lineEdit_6.setText(self.macAddress)
+
+        self.lineEdit_7.setReadOnly(True)
+        if self.ip!="":
+            self.lineEdit_7.setText(self.ip)
+        else:
+            self.lineEdit_7.setText(_nullData)
+
+        self.lineEdit_8.setReadOnly(True)
+        self.lineEdit_8.setText(self.firmWareVersion)
+
         pass
 
     def uiIni(self):

@@ -104,7 +104,8 @@ class MonitorServer(QObject):
         pass
 
     def closeRobotConnection(self,_device):
-        self.outLog("close the connection with "+self.onlineDeviceIp[_device])
+        self.outLog("check this connection time out,close this connection with "+self.onlineDeviceIp[_device])
+        print(self.onlineDeviceIp)
         self.ipSocket[self.onlineDeviceIp[_device]].close()
         self.ipSocket.pop(self.onlineDeviceIp[_device])
         self.onlineDeviceIp.pop(_device)
@@ -114,7 +115,7 @@ class MonitorServer(QObject):
         self.outLog('timer initialize')
         checkTimer=QTimer(self)
         checkTimer.timeout.connect(self.checkTimerTimeout)
-        checkTimer.setInterval(30000)
+        checkTimer.setInterval(15000)
         checkTimer.start()
         pass
 
@@ -140,6 +141,7 @@ class MonitorServer(QObject):
         if newSockIp in self.ipSocket.keys():
             self.ipSocket[newSockIp].close()
         self.ipSocket[newSockIp]=_sock
+        print('ipSocket.size:'+str(len(self.ipSocket)))
         pass
 
     def saveDeviceStateChangeLog(self,_device,_deviceState):
@@ -186,6 +188,7 @@ class MonitorServer(QObject):
         pass
 
     def preProcessMsgFromDevice(self,msg,sockIp):
+        print("msg:"+msg)
         isMsgValid=True
         _device=''
         _validMsg=''
@@ -204,21 +207,25 @@ class MonitorServer(QObject):
                         self.ipSocket.pop(self.onlineDeviceIp[_device])
                     else:
                         self.outLog("error self.onlineDeviceIp[_device] in self.ipSocket.keys() "+sockIp+' '+_device)
-            elif _device in self.devices.keys():
-                self.onlineDeviceIp[_device]=sockIp
+                elif _device in self.devices.keys():
+                    self.onlineDeviceIp[_device]=sockIp
             else:
-                isMsgValid=False
-                self.outLog('receivd a error msg:'+msg)
+                # isMsgValid=False
+                # self.outLog('receivd a error msg device not in onlineDeviceIp:'+msg)
+                self.onlineDeviceIp[_device]=sockIp
         else:
-            self.outLog('receivd a error msg:'+msg)
             isMsgValid=False
+            self.outLog('receivd a error msg len!=2:'+msg)
 
         return isMsgValid,_device,_validMsg
 
 
     def processMsgFromDevice(self,msg,sockIp):
         isMsgValid,_device,_validMsg=self.preProcessMsgFromDevice(msg,sockIp)
+        if not isMsgValid:
+            return
 
+        self.devices[_device].ip=sockIp
         if _device in self.devices.keys():
             self.isCheckDeviceOnline[_device]=True
             if _validMsg=='stop':
