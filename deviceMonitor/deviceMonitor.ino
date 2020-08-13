@@ -40,9 +40,18 @@
 #define UNKNOWN_MODE 3
 
 struct stru_netWorkParam{
+//  String ssid="TEXE-MONITOR";
+//  String ssidPasswd="JX_TELUA";
+//  String serverIp="192.168.1.103";
+  
+//  String ssid="TEXE-004";
+//  String ssidPasswd="JX_TELUA";
+//  String serverIp="192.168.254.153";
+
   String ssid="TEXE-Robot";
   String ssidPasswd="JX_TELUA";
   String serverIp="192.168.16.106";
+
 //  String ssid="NETGEAR";
 //  String ssidPasswd="sj13607071774";
 //  String serverIp="10.0.0.11";
@@ -50,7 +59,7 @@ struct stru_netWorkParam{
 };
 
 struct stru_deviceParam{
-  String deviceSerial="xe_line3_robot3";
+  String deviceSerial="xe_line2_robot2";
   String firmWareVersion="1";
   int workMode=MONITOR_MODE;
   unsigned int workState=NORMAL;
@@ -101,10 +110,16 @@ int detectPauseSignalTime = 0;
 int retryConnectWifiTime = 0;
 int retryConnectServerTime = 0;
 
+IPAddress gateway(192, 168, 16, 1);
+IPAddress subnet(255, 255, 255, 0);
+IPAddress localIp(192, 168, 16, 155);
+
 //loop connect the wifi until connected//
 void connectWifi(){
   Serial.print("Connecting to ");
   Serial.print(networkParam.ssid);
+  WiFi.config(localIp, gateway, subnet);
+  WiFi.mode(WIFI_STA);
   WiFi.begin(networkParam.ssid, networkParam.ssidPasswd);
   while (WiFi.status() != WL_CONNECTED)
   {

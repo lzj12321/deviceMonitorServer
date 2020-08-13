@@ -1,52 +1,445 @@
-2020-08-13 08:11:58,345 - param initialize
-2020-08-13 08:11:58,734 - server initialize
-2020-08-13 08:11:58,758 - timer initialize
-2020-08-13 08:11:58,760 - mysql initialize
-2020-08-13 08:13:13,411 - a new connection from 192.168.16.107
-2020-08-13 08:14:58,782 - xe_line3_ultra alter robot state to offline!
-2020-08-13 08:14:58,848 - close the connection with 192.168.16.107
-2020-08-13 08:15:20,461 - a new connection from 192.168.16.107
-2020-08-13 08:15:58,779 - xe_line3_robot3 alter robot state to offline!
-2020-08-13 08:15:58,835 - close the connection with 192.168.16.107
-2020-08-13 08:18:17,673 - a new connection from 192.168.16.107
-2020-08-13 08:21:58,804 - xe_line3_robot3 alter robot state to offline!
-2020-08-13 08:21:58,856 - close the connection with 192.168.16.107
-2020-08-13 08:22:11,022 - a new connection from 192.168.16.107
-2020-08-13 08:24:28,810 - xe_line3_robot3 alter robot state to offline!
-2020-08-13 08:24:28,881 - close the connection with 192.168.16.107
-2020-08-13 08:24:29,005 - a new connection from 192.168.16.107
-2020-08-13 08:57:28,848 - xe_line3_robot3 alter robot state to offline!
-2020-08-13 08:57:28,903 - close the connection with 192.168.16.107
-2020-08-13 08:57:29,072 - a new connection from 192.168.16.107
-2020-08-13 09:08:15,577 - param initialize
-2020-08-13 09:08:15,944 - server initialize
-2020-08-13 09:08:15,957 - timer initialize
-2020-08-13 09:08:15,960 - mysql initialize
-2020-08-13 09:08:18,949 - a new connection from 192.168.16.107
-2020-08-13 09:54:25,712 - param initialize
-2020-08-13 09:54:26,061 - server initialize
-2020-08-13 09:54:26,079 - timer initialize
-2020-08-13 09:54:26,087 - mysql initialize
-2020-08-13 09:54:34,741 - a new connection from 192.168.16.107
-2020-08-13 09:55:31,566 - param initialize
-2020-08-13 09:55:31,909 - server initialize
-2020-08-13 09:55:31,932 - timer initialize
-2020-08-13 09:55:31,939 - mysql initialize
-2020-08-13 09:55:33,411 - a new connection from 192.168.16.107
-2020-08-13 09:58:31,935 - xe_line3_robot3 alter robot state to offline!
-2020-08-13 09:58:32,070 - close the connection with 192.168.16.107
-2020-08-13 09:58:32,444 - a new connection from 192.168.16.107
-2020-08-13 10:01:16,940 - xe_line3_robot3 alter robot state to offline!
-2020-08-13 10:01:17,017 - close the connection with 192.168.16.107
-2020-08-13 10:01:19,910 - a new connection from 192.168.16.107
-2020-08-13 10:08:16,948 - xe_line3_robot3 alter robot state to offline!
-2020-08-13 10:08:17,010 - close the connection with 192.168.16.107
-2020-08-13 10:08:17,369 - a new connection from 192.168.16.107
-2020-08-13 10:12:33,820 - param initialize
-2020-08-13 10:12:34,169 - server initialize
-2020-08-13 10:12:34,186 - timer initialize
-2020-08-13 10:12:34,195 - mysql initialize
-2020-08-13 10:12:35,854 - a new connection from 192.168.16.107
-2020-08-13 10:14:19,204 - xe_line3_robot3 alter robot state to offline!
-2020-08-13 10:14:19,244 - close the connection with 192.168.16.107
-2020-08-13 10:14:23,897 - a new connection from 192.168.16.107
+2020-08-13 10:51:17,600 - param initialize
+2020-08-13 10:51:18,238 - server initialize
+2020-08-13 10:51:18,257 - timer initialize
+2020-08-13 10:51:18,258 - mysql initialize
+2020-08-13 10:51:18,917 - a new connection from 192.168.16.107
+2020-08-13 10:51:18,954 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 10:51:50,371 - param initialize
+2020-08-13 10:51:50,870 - server initialize
+2020-08-13 10:51:50,883 - timer initialize
+2020-08-13 10:51:50,897 - mysql initialize
+2020-08-13 10:51:51,652 - a new connection from 192.168.16.107
+2020-08-13 10:52:17,224 - param initialize
+2020-08-13 10:52:17,605 - server initialize
+2020-08-13 10:52:17,615 - timer initialize
+2020-08-13 10:52:17,622 - mysql initialize
+2020-08-13 10:52:18,235 - a new connection from 192.168.16.107
+2020-08-13 10:52:18,237 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 10:53:26,016 - param initialize
+2020-08-13 10:53:26,370 - server initialize
+2020-08-13 10:53:26,379 - timer initialize
+2020-08-13 10:53:26,380 - mysql initialize
+2020-08-13 10:53:29,131 - a new connection from 192.168.16.107
+2020-08-13 10:56:11,071 - param initialize
+2020-08-13 10:56:11,435 - server initialize
+2020-08-13 10:56:11,453 - timer initialize
+2020-08-13 10:56:11,460 - mysql initialize
+2020-08-13 10:56:12,152 - a new connection from 192.168.16.107
+2020-08-13 10:56:12,155 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 10:56:23,959 - param initialize
+2020-08-13 10:56:24,326 - server initialize
+2020-08-13 10:56:24,336 - timer initialize
+2020-08-13 10:56:24,337 - mysql initialize
+2020-08-13 10:56:24,929 - a new connection from 192.168.16.107
+2020-08-13 10:56:24,932 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 10:56:43,225 - param initialize
+2020-08-13 10:56:43,584 - server initialize
+2020-08-13 10:56:43,600 - timer initialize
+2020-08-13 10:56:43,607 - mysql initialize
+2020-08-13 10:56:45,120 - a new connection from 192.168.16.107
+2020-08-13 10:57:22,191 - param initialize
+2020-08-13 10:57:22,547 - server initialize
+2020-08-13 10:57:22,563 - timer initialize
+2020-08-13 10:57:22,569 - mysql initialize
+2020-08-13 10:57:24,182 - a new connection from 192.168.16.107
+2020-08-13 10:59:19,574 - param initialize
+2020-08-13 10:59:19,934 - server initialize
+2020-08-13 10:59:19,945 - timer initialize
+2020-08-13 10:59:19,951 - mysql initialize
+2020-08-13 10:59:22,351 - a new connection from 192.168.16.107
+2020-08-13 10:59:50,548 - param initialize
+2020-08-13 10:59:50,891 - server initialize
+2020-08-13 10:59:50,909 - timer initialize
+2020-08-13 10:59:50,915 - mysql initialize
+2020-08-13 10:59:52,558 - a new connection from 192.168.16.107
+2020-08-13 11:00:23,198 - param initialize
+2020-08-13 11:00:23,560 - server initialize
+2020-08-13 11:00:23,570 - timer initialize
+2020-08-13 11:00:23,582 - mysql initialize
+2020-08-13 11:00:25,526 - a new connection from 192.168.16.107
+2020-08-13 11:00:35,547 - param initialize
+2020-08-13 11:00:35,898 - server initialize
+2020-08-13 11:00:35,907 - timer initialize
+2020-08-13 11:00:35,915 - mysql initialize
+2020-08-13 11:00:38,591 - a new connection from 192.168.16.107
+2020-08-13 11:00:53,157 - param initialize
+2020-08-13 11:00:53,528 - server initialize
+2020-08-13 11:00:53,540 - timer initialize
+2020-08-13 11:00:53,546 - mysql initialize
+2020-08-13 11:00:54,491 - a new connection from 192.168.16.107
+2020-08-13 11:00:54,493 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:01:34,447 - param initialize
+2020-08-13 11:01:34,795 - server initialize
+2020-08-13 11:01:34,804 - timer initialize
+2020-08-13 11:01:34,814 - mysql initialize
+2020-08-13 11:01:37,396 - a new connection from 192.168.16.107
+2020-08-13 11:01:46,808 - param initialize
+2020-08-13 11:01:47,177 - server initialize
+2020-08-13 11:01:47,186 - timer initialize
+2020-08-13 11:01:47,193 - mysql initialize
+2020-08-13 11:01:47,794 - a new connection from 192.168.16.107
+2020-08-13 11:01:47,797 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:02:05,260 - param initialize
+2020-08-13 11:02:05,618 - server initialize
+2020-08-13 11:02:05,630 - timer initialize
+2020-08-13 11:02:05,636 - mysql initialize
+2020-08-13 11:02:07,998 - a new connection from 192.168.16.107
+2020-08-13 11:02:28,380 - param initialize
+2020-08-13 11:02:28,730 - server initialize
+2020-08-13 11:02:28,747 - timer initialize
+2020-08-13 11:02:28,754 - mysql initialize
+2020-08-13 11:02:29,641 - a new connection from 192.168.16.107
+2020-08-13 11:02:29,643 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:03:00,301 - param initialize
+2020-08-13 11:03:00,651 - server initialize
+2020-08-13 11:03:00,670 - timer initialize
+2020-08-13 11:03:00,678 - mysql initialize
+2020-08-13 11:03:02,975 - a new connection from 192.168.16.107
+2020-08-13 11:03:11,706 - param initialize
+2020-08-13 11:03:12,068 - server initialize
+2020-08-13 11:03:12,079 - timer initialize
+2020-08-13 11:03:12,085 - mysql initialize
+2020-08-13 11:03:13,329 - a new connection from 192.168.16.107
+2020-08-13 11:03:49,212 - param initialize
+2020-08-13 11:03:49,567 - server initialize
+2020-08-13 11:03:49,581 - timer initialize
+2020-08-13 11:03:49,589 - mysql initialize
+2020-08-13 11:03:50,626 - a new connection from 192.168.16.107
+2020-08-13 11:04:16,340 - param initialize
+2020-08-13 11:04:16,709 - server initialize
+2020-08-13 11:04:16,722 - timer initialize
+2020-08-13 11:04:16,731 - mysql initialize
+2020-08-13 11:04:17,750 - a new connection from 192.168.16.107
+2020-08-13 11:04:17,753 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:04:35,857 - param initialize
+2020-08-13 11:04:36,219 - server initialize
+2020-08-13 11:04:36,233 - timer initialize
+2020-08-13 11:04:36,238 - mysql initialize
+2020-08-13 11:04:36,826 - a new connection from 192.168.16.107
+2020-08-13 11:04:36,832 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:04:57,321 - param initialize
+2020-08-13 11:04:57,684 - server initialize
+2020-08-13 11:04:57,706 - timer initialize
+2020-08-13 11:04:57,713 - mysql initialize
+2020-08-13 11:04:58,310 - a new connection from 192.168.16.107
+2020-08-13 11:04:58,313 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:05:12,472 - param initialize
+2020-08-13 11:05:12,833 - server initialize
+2020-08-13 11:05:12,842 - timer initialize
+2020-08-13 11:05:12,849 - mysql initialize
+2020-08-13 11:05:14,377 - a new connection from 192.168.16.107
+2020-08-13 11:05:51,338 - param initialize
+2020-08-13 11:05:51,684 - server initialize
+2020-08-13 11:05:51,706 - timer initialize
+2020-08-13 11:05:51,713 - mysql initialize
+2020-08-13 11:05:53,435 - a new connection from 192.168.16.107
+2020-08-13 11:06:39,355 - param initialize
+2020-08-13 11:06:39,711 - server initialize
+2020-08-13 11:06:39,721 - timer initialize
+2020-08-13 11:06:39,727 - mysql initialize
+2020-08-13 11:06:40,672 - a new connection from 192.168.16.107
+2020-08-13 11:06:40,675 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:06:54,843 - param initialize
+2020-08-13 11:06:55,200 - server initialize
+2020-08-13 11:06:55,222 - timer initialize
+2020-08-13 11:06:55,230 - mysql initialize
+2020-08-13 11:06:56,424 - a new connection from 192.168.16.107
+2020-08-13 11:07:13,118 - param initialize
+2020-08-13 11:07:13,482 - server initialize
+2020-08-13 11:07:13,491 - timer initialize
+2020-08-13 11:07:13,499 - mysql initialize
+2020-08-13 11:07:14,422 - a new connection from 192.168.16.107
+2020-08-13 11:07:14,424 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:07:42,548 - param initialize
+2020-08-13 11:07:42,903 - server initialize
+2020-08-13 11:07:42,923 - timer initialize
+2020-08-13 11:07:42,931 - mysql initialize
+2020-08-13 11:07:43,510 - a new connection from 192.168.16.107
+2020-08-13 11:07:43,513 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:07:54,834 - param initialize
+2020-08-13 11:07:55,200 - server initialize
+2020-08-13 11:07:55,209 - timer initialize
+2020-08-13 11:07:55,210 - mysql initialize
+2020-08-13 11:07:56,276 - a new connection from 192.168.16.107
+2020-08-13 11:07:56,279 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:08:15,816 - param initialize
+2020-08-13 11:08:16,186 - server initialize
+2020-08-13 11:08:16,200 - timer initialize
+2020-08-13 11:08:16,206 - mysql initialize
+2020-08-13 11:08:16,790 - a new connection from 192.168.16.107
+2020-08-13 11:08:16,792 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:08:52,073 - param initialize
+2020-08-13 11:08:52,430 - server initialize
+2020-08-13 11:08:52,445 - timer initialize
+2020-08-13 11:08:52,452 - mysql initialize
+2020-08-13 11:08:53,028 - a new connection from 192.168.16.107
+2020-08-13 11:08:53,034 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:09:13,234 - param initialize
+2020-08-13 11:09:13,606 - server initialize
+2020-08-13 11:09:13,616 - timer initialize
+2020-08-13 11:09:13,617 - mysql initialize
+2020-08-13 11:09:14,541 - a new connection from 192.168.16.107
+2020-08-13 11:09:14,545 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:09:39,238 - param initialize
+2020-08-13 11:09:39,610 - server initialize
+2020-08-13 11:09:39,620 - timer initialize
+2020-08-13 11:09:39,626 - mysql initialize
+2020-08-13 11:09:41,693 - a new connection from 192.168.16.107
+2020-08-13 11:10:04,471 - param initialize
+2020-08-13 11:10:04,864 - server initialize
+2020-08-13 11:10:04,875 - timer initialize
+2020-08-13 11:10:04,881 - mysql initialize
+2020-08-13 11:10:07,709 - a new connection from 192.168.16.107
+2020-08-13 11:10:35,602 - param initialize
+2020-08-13 11:10:35,954 - server initialize
+2020-08-13 11:10:35,974 - timer initialize
+2020-08-13 11:10:35,980 - mysql initialize
+2020-08-13 11:10:37,177 - a new connection from 192.168.16.107
+2020-08-13 11:13:07,668 - param initialize
+2020-08-13 11:13:08,062 - server initialize
+2020-08-13 11:13:08,079 - timer initialize
+2020-08-13 11:13:08,086 - mysql initialize
+2020-08-13 11:14:08,310 - param initialize
+2020-08-13 11:14:08,654 - server initialize
+2020-08-13 11:14:08,675 - timer initialize
+2020-08-13 11:14:08,682 - mysql initialize
+2020-08-13 11:14:09,949 - a new connection from 192.168.16.107
+2020-08-13 11:14:44,481 - param initialize
+2020-08-13 11:14:44,841 - server initialize
+2020-08-13 11:14:44,850 - timer initialize
+2020-08-13 11:14:44,860 - mysql initialize
+2020-08-13 11:14:47,304 - a new connection from 192.168.16.107
+2020-08-13 11:15:20,352 - param initialize
+2020-08-13 11:15:20,725 - server initialize
+2020-08-13 11:15:20,735 - timer initialize
+2020-08-13 11:15:20,745 - mysql initialize
+2020-08-13 11:15:24,147 - a new connection from 192.168.16.107
+2020-08-13 11:15:36,295 - param initialize
+2020-08-13 11:15:36,642 - server initialize
+2020-08-13 11:15:36,666 - timer initialize
+2020-08-13 11:15:36,672 - mysql initialize
+2020-08-13 11:15:37,652 - a new connection from 192.168.16.107
+2020-08-13 11:15:37,654 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:15:47,351 - param initialize
+2020-08-13 11:15:47,702 - server initialize
+2020-08-13 11:15:47,720 - timer initialize
+2020-08-13 11:15:47,725 - mysql initialize
+2020-08-13 11:15:50,373 - a new connection from 192.168.16.107
+2020-08-13 11:16:16,388 - param initialize
+2020-08-13 11:16:16,764 - server initialize
+2020-08-13 11:16:16,773 - timer initialize
+2020-08-13 11:16:16,779 - mysql initialize
+2020-08-13 11:16:19,208 - a new connection from 192.168.16.107
+2020-08-13 11:16:37,884 - param initialize
+2020-08-13 11:16:38,242 - server initialize
+2020-08-13 11:16:38,257 - timer initialize
+2020-08-13 11:16:38,258 - mysql initialize
+2020-08-13 11:16:41,410 - a new connection from 192.168.16.107
+2020-08-13 11:16:59,303 - param initialize
+2020-08-13 11:16:59,646 - server initialize
+2020-08-13 11:16:59,667 - timer initialize
+2020-08-13 11:16:59,674 - mysql initialize
+2020-08-13 11:17:00,257 - a new connection from 192.168.16.107
+2020-08-13 11:17:00,259 - receivd a error msg:xe_line3_robot3:idle_checkxe_line3_robot3:idle_check
+2020-08-13 11:17:36,794 - param initialize
+2020-08-13 11:17:37,163 - server initialize
+2020-08-13 11:17:37,171 - timer initialize
+2020-08-13 11:17:37,172 - mysql initialize
+2020-08-13 11:17:38,270 - a new connection from 192.168.16.107
+2020-08-13 11:18:33,958 - param initialize
+2020-08-13 11:18:34,311 - server initialize
+2020-08-13 11:18:34,326 - timer initialize
+2020-08-13 11:18:34,333 - mysql initialize
+2020-08-13 11:18:36,026 - a new connection from 192.168.16.107
+2020-08-13 11:19:29,791 - param initialize
+2020-08-13 11:19:30,143 - server initialize
+2020-08-13 11:19:30,152 - timer initialize
+2020-08-13 11:19:30,153 - mysql initialize
+2020-08-13 11:19:32,019 - a new connection from 192.168.16.107
+2020-08-13 11:20:08,424 - param initialize
+2020-08-13 11:20:08,773 - server initialize
+2020-08-13 11:20:08,786 - timer initialize
+2020-08-13 11:20:08,792 - mysql initialize
+2020-08-13 11:20:09,402 - a new connection from 192.168.16.107
+2020-08-13 11:20:29,265 - param initialize
+2020-08-13 11:20:29,610 - server initialize
+2020-08-13 11:20:29,633 - timer initialize
+2020-08-13 11:20:29,639 - mysql initialize
+2020-08-13 11:20:31,181 - a new connection from 192.168.16.107
+2020-08-13 11:21:57,340 - param initialize
+2020-08-13 11:21:57,706 - server initialize
+2020-08-13 11:21:57,716 - timer initialize
+2020-08-13 11:21:57,725 - mysql initialize
+2020-08-13 11:21:58,616 - a new connection from 192.168.16.107
+2020-08-13 11:22:20,112 - param initialize
+2020-08-13 11:22:20,495 - server initialize
+2020-08-13 11:22:20,505 - timer initialize
+2020-08-13 11:22:20,506 - mysql initialize
+2020-08-13 11:22:22,910 - a new connection from 192.168.16.107
+2020-08-13 11:22:38,766 - param initialize
+2020-08-13 11:22:39,128 - server initialize
+2020-08-13 11:22:39,141 - timer initialize
+2020-08-13 11:22:39,148 - mysql initialize
+2020-08-13 11:22:40,546 - a new connection from 192.168.16.107
+2020-08-13 11:24:20,049 - param initialize
+2020-08-13 11:24:20,391 - server initialize
+2020-08-13 11:24:20,416 - timer initialize
+2020-08-13 11:24:20,419 - mysql initialize
+2020-08-13 11:24:21,453 - a new connection from 192.168.16.107
+2020-08-13 11:24:39,509 - param initialize
+2020-08-13 11:24:39,881 - server initialize
+2020-08-13 11:24:39,890 - timer initialize
+2020-08-13 11:24:39,893 - mysql initialize
+2020-08-13 11:24:42,882 - a new connection from 192.168.16.107
+2020-08-13 11:25:12,846 - param initialize
+2020-08-13 11:25:13,202 - server initialize
+2020-08-13 11:25:13,214 - timer initialize
+2020-08-13 11:25:13,218 - mysql initialize
+2020-08-13 11:25:15,648 - a new connection from 192.168.16.107
+2020-08-13 11:25:59,534 - param initialize
+2020-08-13 11:25:59,921 - server initialize
+2020-08-13 11:25:59,939 - timer initialize
+2020-08-13 11:25:59,942 - mysql initialize
+2020-08-13 11:26:02,146 - a new connection from 192.168.16.107
+2020-08-13 11:27:26,483 - param initialize
+2020-08-13 11:27:26,939 - server initialize
+2020-08-13 11:27:26,953 - timer initialize
+2020-08-13 11:27:26,960 - mysql initialize
+2020-08-13 11:27:28,528 - a new connection from 192.168.16.107
+2020-08-13 11:27:46,853 - param initialize
+2020-08-13 11:27:47,267 - server initialize
+2020-08-13 11:27:47,279 - timer initialize
+2020-08-13 11:27:47,287 - mysql initialize
+2020-08-13 11:27:48,937 - a new connection from 192.168.16.107
+2020-08-13 11:28:36,107 - param initialize
+2020-08-13 11:28:36,491 - server initialize
+2020-08-13 11:28:36,501 - timer initialize
+2020-08-13 11:28:36,505 - mysql initialize
+2020-08-13 11:28:37,136 - a new connection from 192.168.16.107
+2020-08-13 11:29:11,921 - param initialize
+2020-08-13 11:29:12,305 - server initialize
+2020-08-13 11:29:12,316 - timer initialize
+2020-08-13 11:29:12,320 - mysql initialize
+2020-08-13 11:29:13,821 - a new connection from 192.168.16.107
+2020-08-13 11:30:00,658 - param initialize
+2020-08-13 11:30:01,044 - server initialize
+2020-08-13 11:30:01,052 - timer initialize
+2020-08-13 11:30:01,053 - mysql initialize
+2020-08-13 11:30:06,359 - a new connection from 192.168.16.107
+2020-08-13 11:30:24,432 - param initialize
+2020-08-13 11:30:24,790 - server initialize
+2020-08-13 11:30:24,802 - timer initialize
+2020-08-13 11:30:24,803 - mysql initialize
+2020-08-13 11:30:29,909 - a new connection from 192.168.16.107
+2020-08-13 12:57:04,921 - param initialize
+2020-08-13 12:57:05,272 - server initialize
+2020-08-13 12:57:05,292 - timer initialize
+2020-08-13 12:57:05,294 - mysql initialize
+2020-08-13 12:57:07,573 - a new connection from 192.168.16.107
+2020-08-13 12:58:13,338 - param initialize
+2020-08-13 12:58:13,691 - server initialize
+2020-08-13 12:58:13,702 - timer initialize
+2020-08-13 12:58:13,707 - mysql initialize
+2020-08-13 12:58:40,510 - param initialize
+2020-08-13 12:58:40,858 - server initialize
+2020-08-13 12:58:40,868 - timer initialize
+2020-08-13 12:58:40,871 - mysql initialize
+2020-08-13 12:58:41,818 - a new connection from 192.168.16.107
+2020-08-13 12:59:59,179 - param initialize
+2020-08-13 12:59:59,539 - server initialize
+2020-08-13 12:59:59,549 - timer initialize
+2020-08-13 12:59:59,556 - mysql initialize
+2020-08-13 13:00:04,510 - a new connection from 192.168.16.107
+2020-08-13 13:01:54,019 - param initialize
+2020-08-13 13:01:54,390 - server initialize
+2020-08-13 13:01:54,399 - timer initialize
+2020-08-13 13:01:54,404 - mysql initialize
+2020-08-13 13:01:59,368 - a new connection from 192.168.16.107
+2020-08-13 13:02:14,522 - param initialize
+2020-08-13 13:02:14,881 - server initialize
+2020-08-13 13:02:14,891 - timer initialize
+2020-08-13 13:02:14,892 - mysql initialize
+2020-08-13 13:02:16,843 - a new connection from 192.168.16.107
+2020-08-13 13:02:29,393 - param initialize
+2020-08-13 13:02:29,744 - server initialize
+2020-08-13 13:02:29,754 - timer initialize
+2020-08-13 13:02:29,758 - mysql initialize
+2020-08-13 13:02:32,118 - a new connection from 192.168.16.107
+2020-08-13 13:04:28,133 - param initialize
+2020-08-13 13:04:28,532 - server initialize
+2020-08-13 13:04:28,543 - timer initialize
+2020-08-13 13:04:28,547 - mysql initialize
+2020-08-13 13:04:29,937 - a new connection from 192.168.16.107
+2020-08-13 13:07:51,992 - param initialize
+2020-08-13 13:07:52,355 - server initialize
+2020-08-13 13:07:52,365 - timer initialize
+2020-08-13 13:07:52,368 - mysql initialize
+2020-08-13 13:07:55,231 - a new connection from 192.168.16.107
+2020-08-13 13:20:04,425 - param initialize
+2020-08-13 13:20:04,793 - server initialize
+2020-08-13 13:20:04,803 - timer initialize
+2020-08-13 13:20:04,808 - mysql initialize
+2020-08-13 13:20:06,292 - a new connection from 192.168.16.107
+2020-08-13 13:20:54,539 - param initialize
+2020-08-13 13:20:54,909 - server initialize
+2020-08-13 13:20:54,918 - timer initialize
+2020-08-13 13:20:54,922 - mysql initialize
+2020-08-13 13:20:56,813 - a new connection from 192.168.16.107
+2020-08-13 13:21:15,143 - param initialize
+2020-08-13 13:21:15,496 - server initialize
+2020-08-13 13:21:15,505 - timer initialize
+2020-08-13 13:21:15,509 - mysql initialize
+2020-08-13 13:21:16,132 - a new connection from 192.168.16.107
+2020-08-13 13:21:26,191 - param initialize
+2020-08-13 13:21:26,553 - server initialize
+2020-08-13 13:21:26,562 - timer initialize
+2020-08-13 13:21:26,566 - mysql initialize
+2020-08-13 13:21:29,155 - a new connection from 192.168.16.107
+2020-08-13 13:21:48,070 - param initialize
+2020-08-13 13:21:48,427 - server initialize
+2020-08-13 13:21:48,437 - timer initialize
+2020-08-13 13:21:48,441 - mysql initialize
+2020-08-13 13:21:50,689 - a new connection from 192.168.16.107
+2020-08-13 13:22:22,887 - param initialize
+2020-08-13 13:22:23,241 - server initialize
+2020-08-13 13:22:23,252 - timer initialize
+2020-08-13 13:22:23,255 - mysql initialize
+2020-08-13 13:22:24,706 - a new connection from 192.168.16.107
+2020-08-13 13:24:25,919 - param initialize
+2020-08-13 13:24:26,276 - server initialize
+2020-08-13 13:24:26,287 - timer initialize
+2020-08-13 13:24:26,290 - mysql initialize
+2020-08-13 13:24:27,463 - a new connection from 192.168.16.107
+2020-08-13 13:26:03,559 - param initialize
+2020-08-13 13:26:03,927 - server initialize
+2020-08-13 13:26:03,938 - timer initialize
+2020-08-13 13:26:03,940 - mysql initialize
+2020-08-13 13:26:06,464 - a new connection from 192.168.16.107
+2020-08-13 13:28:36,921 - param initialize
+2020-08-13 13:28:37,265 - server initialize
+2020-08-13 13:28:37,275 - timer initialize
+2020-08-13 13:28:37,282 - mysql initialize
+2020-08-13 13:28:37,884 - a new connection from 192.168.16.107
+2020-08-13 13:30:22,282 - xe_line3_robot3 alter robot state to offline!
+2020-08-13 13:30:22,313 - close the connection with 192.168.16.107
+2020-08-13 13:30:22,720 - a new connection from 192.168.16.107
+2020-08-13 14:17:04,153 - param initialize
+2020-08-13 14:17:04,551 - server initialize
+2020-08-13 14:17:04,570 - timer initialize
+2020-08-13 14:17:04,572 - mysql initialize
+2020-08-13 16:44:09,512 - param initialize
+2020-08-13 16:44:09,943 - server initialize
+2020-08-13 16:44:09,963 - timer initialize
+2020-08-13 16:44:09,972 - mysql initialize
+2020-08-13 16:46:31,688 - a new connection from 192.168.16.100
+2020-08-13 16:46:54,968 - xe_line2_robot2 alter robot state to offline!
+2020-08-13 16:46:55,006 - close the connection with 192.168.16.100
+2020-08-13 16:46:57,060 - a new connection from 192.168.16.100
+2020-08-13 16:50:29,238 - param initialize
+2020-08-13 16:50:29,597 - server initialize
+2020-08-13 16:50:29,607 - timer initialize
+2020-08-13 16:50:29,618 - mysql initialize
+2020-08-13 16:50:30,711 - a new connection from 192.168.16.100
+2020-08-13 16:54:59,610 - xe_line2_robot2 alter robot state to offline!
+2020-08-13 16:54:59,652 - close the connection with 192.168.16.100
+2020-08-13 16:55:19,307 - a new connection from 192.168.16.155

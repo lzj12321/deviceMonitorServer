@@ -40,11 +40,15 @@ class GUI(QWidget):
         self.labelArray=[]
         self.checkboxArray=[]
         self.deviceLabelIni()
+
+        labelFontSize=30
+        labelWidth=160
+        labelHeight=70
         
         self.label_33 = QtWidgets.QLabel(self)
-        self.label_33.setGeometry(QtCore.QRect(300, 10, 701, 101))
+        self.label_33.setGeometry(QtCore.QRect(300, 100, 1600, 101))
         font = QtGui.QFont()
-        font.setPointSize(45)
+        font.setPointSize(90)
         font.setBold(True)
         font.setWeight(75)
         self.label_33.setFont(font)
@@ -59,33 +63,33 @@ class GUI(QWidget):
         font.setWeight(75)
         self.textEdit.setFont(font)
         self.textEdit.setReadOnly(True)
-        # self.textEdit.setVisible(False)
+        self.textEdit.setVisible(False)
         self.textEdit.setObjectName("textEdit")
         self.label_34 = QtWidgets.QLabel(self)
-        self.label_34.setGeometry(QtCore.QRect(30, 10, 200, 120))
+        self.label_34.setGeometry(QtCore.QRect(100, 60, 300, 180))
         self.label_34.setObjectName("label_34")
         self.label_35 = QtWidgets.QLabel(self)
-        self.label_35.setGeometry(QtCore.QRect(50, 265, 71, 31))
+        self.label_35.setGeometry(QtCore.QRect(50, 510, labelWidth, labelHeight))
         font = QtGui.QFont()
-        font.setPointSize(17)
+        font.setPointSize(labelFontSize)
         font.setBold(True)
         font.setWeight(75)
         self.label_35.setFont(font)
         self.label_35.setAlignment(QtCore.Qt.AlignCenter)
         self.label_35.setObjectName("label_35")
         self.label_36 = QtWidgets.QLabel(self)
-        self.label_36.setGeometry(QtCore.QRect(50, 205, 71, 31))
+        self.label_36.setGeometry(QtCore.QRect(50, 405, labelWidth, labelHeight))
         font = QtGui.QFont()
-        font.setPointSize(15)
+        font.setPointSize(labelFontSize)
         font.setBold(True)
         font.setWeight(75)
         self.label_36.setFont(font)
         self.label_36.setAlignment(QtCore.Qt.AlignCenter)
         self.label_36.setObjectName("label_36")
         self.label_37 = QtWidgets.QLabel(self)
-        self.label_37.setGeometry(QtCore.QRect(50, 325, 71, 31))
+        self.label_37.setGeometry(QtCore.QRect(50, 610, labelWidth, labelHeight))
         font = QtGui.QFont()
-        font.setPointSize(15)
+        font.setPointSize(labelFontSize)
         font.setBold(True)
         font.setWeight(75)
         self.label_37.setFont(font)
@@ -93,9 +97,9 @@ class GUI(QWidget):
         self.label_37.setObjectName("label_37")
 
         self.label_38 = QtWidgets.QLabel(self)
-        self.label_38.setGeometry(QtCore.QRect(50, 385, 71, 31))
+        self.label_38.setGeometry(QtCore.QRect(50, 715, labelWidth, labelHeight))
         font = QtGui.QFont()
-        font.setPointSize(15)
+        font.setPointSize(labelFontSize)
         font.setBold(True)
         font.setWeight(75)
         self.label_38.setFont(font)
@@ -109,12 +113,15 @@ class GUI(QWidget):
         self.editButtonIni()
         self.runMonitorServer()
         self.updateAllDeviceLabel()
+        self.setUiBg()
 
     def deviceLabelIni(self):
-        labelWidth=100
-        labelHeight=40
-        label_y=80
-        label_x=50
+        labelWidth=180
+        labelHeight=70
+        label_y=190
+        label_x=30
+        label_x_gap=25
+        label_y_gap=35
         
         objectIndex=0
         for i in range(0,40):
@@ -122,11 +129,15 @@ class GUI(QWidget):
             _label.setParent(self)
             self.labelArray.append(_label)
             if i%5==0:
-                label_y=80
-                label_x=label_x+labelWidth+20
+                label_y=190
+                label_x=label_x+labelWidth+label_x_gap
                 _label.setText(str(int(i/5+1))+'拉')
                 _label.setEnabled(False)
-                _label.setStyleSheet("background-color:rgb(78,255,255)")
+                _label.setStyleSheet("QPushButton{color:black}"
+                    "QPushButton{background-color:rgb(78,255,255)}"
+                    "QPushButton{border:2px}"
+                    "QPushButton{border-radius:20px}"
+                    "QPushButton{padding:2px 4px}")
             else:
                 _label.setObjectName(self.monitorDevices[objectIndex])
                 objectIndex+=1
@@ -134,9 +145,9 @@ class GUI(QWidget):
                 _label.setText("离线")
                 _label.clickedButton.connect(self.deviceButtonClicked)
 
-            label_y=label_y+labelHeight+20
+            label_y=label_y+labelHeight+label_y_gap
             font = QtGui.QFont()
-            font.setPointSize(17)
+            font.setPointSize(30)
             font.setBold(True)
             font.setWeight(75)
             _label.setFont(font)
@@ -149,9 +160,29 @@ class GUI(QWidget):
         self.label_33.setText(_translate("MainWindow", "新厂E车间终测机械手状态"))
         self.label_34.setText(_translate("MainWindow", "pi icon"))
         self.label_35.setText(_translate("MainWindow", "B号手"))
+        self.label_35.setStyleSheet("QLabel{color:black}"
+                                  "QLabel{background-color:rgb(78,255,255)}"
+                                  "QLabel{border:2px}"
+                                  "QLabel{border-radius:20px}"
+                                  "QLabel{padding:2px 4px}")
         self.label_36.setText(_translate("MainWindow", "A号手"))
+        self.label_36.setStyleSheet("QLabel{color:black}"
+                                  "QLabel{background-color:rgb(78,255,255)}"
+                                  "QLabel{border:2px}"
+                                  "QLabel{border-radius:20px}"
+                                  "QLabel{padding:2px 4px}")
         self.label_37.setText(_translate("MainWindow", "C号手"))
+        self.label_37.setStyleSheet("QLabel{color:black}"
+                                  "QLabel{background-color:rgb(78,255,255)}"
+                                  "QLabel{border:2px}"
+                                  "QLabel{border-radius:20px}"
+                                  "QLabel{padding:2px 4px}")
         self.label_38.setText(_translate("MainWindow", "超声波"))
+        self.label_38.setStyleSheet("QLabel{color:black}"
+                                  "QLabel{background-color:rgb(78,255,255)}"
+                                  "QLabel{border:2px}"
+                                  "QLabel{border-radius:20px}"
+                                  "QLabel{padding:2px 4px}")
 
     def alterDeviceState(self,robotNumber,state):
         pass
@@ -226,8 +257,8 @@ class GUI(QWidget):
             a0.ignore()
 
     def editButtonIni(self):
-        _buttonWidth=100
-        _buttonHeight=50
+        _buttonWidth=150
+        _buttonHeight=70
 
         self.otaButton=QPushButton(self)
         self.clearButton=QPushButton(self)
@@ -245,10 +276,15 @@ class GUI(QWidget):
         self.confirmButton.setText("CONFIRM")
         self.monitorButton.setText("MONITOR")
 
-        self.otaButton.setGeometry(50,500,_buttonWidth,_buttonHeight)
-        self.monitorButton.setGeometry(200,500,_buttonWidth,_buttonHeight)
-        self.clearButton.setGeometry(50,600,_buttonWidth,_buttonHeight)
-        self.confirmButton.setGeometry(200,600,_buttonWidth,_buttonHeight)
+        buttonY=900
+        buttonX=500
+        self.otaButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
+        buttonX+=200
+        self.monitorButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
+        buttonX+=200
+        self.clearButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
+        buttonX+=200
+        self.confirmButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
         _buttons=[]
         _buttons.append(self.otaButton)
         _buttons.append(self.monitorButton)
@@ -293,9 +329,9 @@ class GUI(QWidget):
     def setbuttonStyleSheet(self,_buttons):
         for _button in _buttons:
             font = QtGui.QFont()
-            font.setPointSize(15)
+            font.setPointSize(25)
             font.setBold(True)
-            font.setWeight(75)
+            font.setWeight(87)
             _button.setFont(font)
             _button.setStyleSheet("QPushButton{color:black}"
                                   "QPushButton:hover{color:red}"
@@ -360,9 +396,14 @@ class GUI(QWidget):
         for _device in self.monitorDevices:
             self.updateRobotLabel(_device,self.monitorServer.devices[_device].state)
 
+    def setUiBg(self):
+        window_pale = QtGui.QPalette() 
+        window_pale.setBrush(self.backgroundRole(),   QtGui.QBrush(QtGui.QPixmap("timg.jpg"))) 
+        self.setPalette(window_pale)
+
 
 if __name__ == '__main__':
     app=QApplication(sys.argv)
     runGui=GUI()
-    runGui.show()
+    runGui.showFullScreen()
     sys.exit(app.exec_())
