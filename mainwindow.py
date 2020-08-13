@@ -46,7 +46,7 @@ class GUI(QWidget):
         labelHeight=70
         
         self.label_33 = QtWidgets.QLabel(self)
-        self.label_33.setGeometry(QtCore.QRect(300, 100, 1600, 101))
+        self.label_33.setGeometry(QtCore.QRect(300, 100, 1600, 125))
         font = QtGui.QFont()
         font.setPointSize(90)
         font.setBold(True)
@@ -66,10 +66,12 @@ class GUI(QWidget):
         self.textEdit.setVisible(False)
         self.textEdit.setObjectName("textEdit")
         self.label_34 = QtWidgets.QLabel(self)
-        self.label_34.setGeometry(QtCore.QRect(100, 60, 300, 180))
+        self.label_34.setGeometry(QtCore.QRect(50, 70, 300, 180))
         self.label_34.setObjectName("label_34")
         self.label_35 = QtWidgets.QLabel(self)
-        self.label_35.setGeometry(QtCore.QRect(50, 510, labelWidth, labelHeight))
+        
+        deviceLabel_x=30
+        self.label_35.setGeometry(QtCore.QRect(deviceLabel_x, 510, labelWidth, labelHeight))
         font = QtGui.QFont()
         font.setPointSize(labelFontSize)
         font.setBold(True)
@@ -78,7 +80,7 @@ class GUI(QWidget):
         self.label_35.setAlignment(QtCore.Qt.AlignCenter)
         self.label_35.setObjectName("label_35")
         self.label_36 = QtWidgets.QLabel(self)
-        self.label_36.setGeometry(QtCore.QRect(50, 405, labelWidth, labelHeight))
+        self.label_36.setGeometry(QtCore.QRect(deviceLabel_x, 405, labelWidth, labelHeight))
         font = QtGui.QFont()
         font.setPointSize(labelFontSize)
         font.setBold(True)
@@ -87,7 +89,7 @@ class GUI(QWidget):
         self.label_36.setAlignment(QtCore.Qt.AlignCenter)
         self.label_36.setObjectName("label_36")
         self.label_37 = QtWidgets.QLabel(self)
-        self.label_37.setGeometry(QtCore.QRect(50, 610, labelWidth, labelHeight))
+        self.label_37.setGeometry(QtCore.QRect(deviceLabel_x, 610, labelWidth, labelHeight))
         font = QtGui.QFont()
         font.setPointSize(labelFontSize)
         font.setBold(True)
@@ -97,7 +99,7 @@ class GUI(QWidget):
         self.label_37.setObjectName("label_37")
 
         self.label_38 = QtWidgets.QLabel(self)
-        self.label_38.setGeometry(QtCore.QRect(50, 715, labelWidth, labelHeight))
+        self.label_38.setGeometry(QtCore.QRect(deviceLabel_x, 715, labelWidth, labelHeight))
         font = QtGui.QFont()
         font.setPointSize(labelFontSize)
         font.setBold(True)
@@ -119,7 +121,7 @@ class GUI(QWidget):
         labelWidth=180
         labelHeight=70
         label_y=190
-        label_x=30
+        label_x=0
         label_x_gap=25
         label_y_gap=35
         
@@ -141,7 +143,12 @@ class GUI(QWidget):
             else:
                 _label.setObjectName(self.monitorDevices[objectIndex])
                 objectIndex+=1
-                _label.setStyleSheet("background-color:gray")
+                ##_label.setStyleSheet("background-color:yellow")
+               # _label.setStyleSheet("QPushButton{color:black}"
+               #     "QPushButton{background-color:yellow}"
+               #     "QPushButton{border:2px}"
+                #    "QPushButton{border-radius:20px}"
+               #     "QPushButton{padding:2px 4px}")
                 _label.setText("离线")
                 _label.clickedButton.connect(self.deviceButtonClicked)
 
@@ -211,35 +218,81 @@ class GUI(QWidget):
             self.monitorDevices.append(_device)
 
     def updateRobotLabel(self,_device,_state):
-        lableBgColor='background:gray'
+        lableBgColor='gray'
         if _state==DeviceState.OFFLINE:
-            lableBgColor='background:yellow'
+            lableBgColor='yellow'
             self.findChild(QPushButton,_device).setText("离线")
         elif _state==DeviceState.MONITOR:
-            lableBgColor='background:green'
+            lableBgColor='green'
             self.findChild(QPushButton,_device).setText("监控")
         elif _state==DeviceState.STOP:
-            lableBgColor='background:red'
+            lableBgColor='red'
             self.findChild(QPushButton,_device).setText("停止")
         elif _state==DeviceState.PAUSE:
-            lableBgColor='background:red'
-            self.findChild(QPushButton,_devicet).setText("中止")
+            lableBgColor='red'
+            self.findChild(QPushButton,_device).setText("中止")
         elif _state==DeviceState.OTA:
-            lableBgColor='background:blue'
+            lableBgColor='blue'
             self.findChild(QPushButton,_device).setText("OTA")
         elif _state==DeviceState.UNKNOWN_WORKMODE:
-            lableBgColor='background:red'
+            lableBgColor='red'
             self.findChild(QPushButton,_device).setText("未知")
         elif _state==DeviceState.IDLE:
-            lableBgColor='background:gray'
+            lableBgColor='gray'
             self.findChild(QPushButton,_device).setText("空闲")
         else:
-            lableBgColor='background:dark'
+            lableBgColor='dark'
 
         if self.runMode==MonitorState.MONITOR_STATE:
-            self.findChild(QPushButton,_device).setStyleSheet(lableBgColor)
+            #self.findChild(QPushButton,_device).setStyleSheet("background-color:rgb(78,255,255)")
+            self.setDeviceButtonStyle(self.findChild(QPushButton,_device),lableBgColor)
         pass
-
+    
+    def setDeviceButtonStyle(self,deviceButton,color):
+        if color=="yellow":
+            deviceButton.setStyleSheet("QPushButton{color:black}"
+                    "QPushButton{background-color:yellow}"
+                    "QPushButton{border:2px}"
+                    "QPushButton{border-radius:0px}"
+                    "QPushButton{padding:2px 4px}")
+        elif color=="red":
+            deviceButton.setStyleSheet("QPushButton{color:black}"
+                    "QPushButton{background-color:red}"
+                    "QPushButton{border:2px}"
+                    "QPushButton{border-radius:0px}"
+                    "QPushButton{padding:2px 4px}")
+        elif color=="gray":
+            deviceButton.setStyleSheet("QPushButton{color:black}"
+                    "QPushButton{background-color:gray}"
+                    "QPushButton{border:2px}"
+                    "QPushButton{border-radius:0px}"
+                    "QPushButton{padding:2px 4px}")
+        elif color=="green":
+            deviceButton.setStyleSheet("QPushButton{color:black}"
+                    "QPushButton{background-color:green}"
+                    "QPushButton{border:2px}"
+                    "QPushButton{border-radius:0px}"
+                    "QPushButton{padding:2px 4px}")
+        elif color=="blue":
+            deviceButton.setStyleSheet("QPushButton{color:black}"
+                    "QPushButton{background-color:blue}"
+                    "QPushButton{border:2px}"
+                    "QPushButton{border-radius:0px}"
+                    "QPushButton{padding:2px 4px}")
+        elif color=="dark":
+            deviceButton.setStyleSheet("QPushButton{color:black}"
+                    "QPushButton{background-color:dark}"
+                    "QPushButton{border:2px}"
+                    "QPushButton{border-radius:0px}"
+                    "QPushButton{padding:2px 4px}")
+        #self.findChild(QPushButton,_device).setStyleSheet('background-color:rgb(78,155,255)')
+        elif color=="lightBlue":
+            deviceButton.setStyleSheet("QPushButton{color:black}"
+                    "QPushButton{background-color:rgb(78,155,255)}"
+                    "QPushButton{border:2px}"
+                    "QPushButton{border-radius:0px}"
+                    "QPushButton{padding:2px 4px}")
+            
     def logoIni(self):
         print('logoIni')
         self.logPixMap=QPixmap('PI_LOGO.png')
@@ -257,7 +310,7 @@ class GUI(QWidget):
             a0.ignore()
 
     def editButtonIni(self):
-        _buttonWidth=150
+        _buttonWidth=160
         _buttonHeight=70
 
         self.otaButton=QPushButton(self)
@@ -276,8 +329,8 @@ class GUI(QWidget):
         self.confirmButton.setText("CONFIRM")
         self.monitorButton.setText("MONITOR")
 
-        buttonY=900
-        buttonX=500
+        buttonY=860
+        buttonX=480
         self.otaButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
         buttonX+=200
         self.monitorButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
@@ -309,12 +362,14 @@ class GUI(QWidget):
         if _device in self.choosingOtaList and self.runMode==MonitorState.CHOOSING_OTA_STATE:
             self.choosingOtaList.remove(_device)
             print('remove ota '+_device)
-            self.findChild(QPushButton,_device).setStyleSheet('background-color:gray') 
+            #self.findChild(QPushButton,_device).setStyleSheet('background-color:gray')
+            self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'gray')
             return
         if _device in self.choosingMonitorList and self.runMode==MonitorState.CHOOSING_MONITOR_STATE:
             self.choosingMonitorList.remove(_device)
             print('remove monitor '+_device)
-            self.findChild(QPushButton,_device).setStyleSheet('background-color:gray')
+            self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'gray')
+           # self.findChild(QPushButton,_device).setStyleSheet('background-color:gray')
             return
             
         if self.runMode==MonitorState.CHOOSING_OTA_STATE:
@@ -323,7 +378,8 @@ class GUI(QWidget):
         elif self.runMode==MonitorState.CHOOSING_MONITOR_STATE:
             self.choosingMonitorList.append(_device)
             print('add monitor '+_device)
-        self.findChild(QPushButton,_device).setStyleSheet('background-color:rgb(78,155,255)')
+        self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'lightBlue')
+        #self.findChild(QPushButton,_device).setStyleSheet('background-color:rgb(78,155,255)')
         pass
 
     def setbuttonStyleSheet(self,_buttons):
@@ -373,22 +429,22 @@ class GUI(QWidget):
         print('ota button clicked')
         self.choosingOtaList=copy.deepcopy(self.monitorServer.getOtaDevice())
         self.runMode=MonitorState.CHOOSING_OTA_STATE
-        for _robot in self.monitorServer.devices.keys():
-            if _robot not in self.choosingOtaList:
-                self.findChild(QPushButton,_robot).setStyleSheet('background:gray')
+        for _device in self.monitorServer.devices.keys():
+            if _device not in self.choosingOtaList:
+                self.findChild(QPushButton,_device).setStyleSheet('background:gray')
             else:
-                self.findChild(QPushButton,_robot).setStyleSheet('background-color:rgb(78,155,255)')
+                self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'lightBlue')
         pass
 
     def monitorButtonClicked(self):
         print('monitor button clicked')
         self.choosingMonitorList=copy.deepcopy(self.monitorServer.getMonitoringDevice())
         self.runMode=MonitorState.CHOOSING_MONITOR_STATE
-        for _robot in self.monitorServer.devices.keys():
-            if _robot not in self.choosingMonitorList:
-                self.findChild(QPushButton,_robot).setStyleSheet('background:gray')
+        for _device in self.monitorServer.devices.keys():
+            if _device not in self.choosingMonitorList:
+                self.findChild(QPushButton,_device).setStyleSheet('background:gray')
             else:
-                self.findChild(QPushButton,_robot).setStyleSheet('background-color:rgb(78,155,255)')
+                self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'lightBlue')
 
         pass
 

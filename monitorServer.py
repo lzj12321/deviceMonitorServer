@@ -114,7 +114,7 @@ class MonitorServer(QObject):
         self.outLog('timer initialize')
         checkTimer=QTimer(self)
         checkTimer.timeout.connect(self.checkTimerTimeout)
-        checkTimer.setInterval(15000)
+        checkTimer.setInterval(30000)
         checkTimer.start()
         pass
 
