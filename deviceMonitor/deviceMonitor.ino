@@ -40,12 +40,12 @@
 #define UNKNOWN_MODE 3
 
 struct stru_netWorkParam{
-//  String ssid="TEXE-Robot";
-//  String ssidPasswd="JX_TELUA";
-//  String serverIp="192.168.16.106";
-  String ssid="NETGEAR";
-  String ssidPasswd="sj13607071774";
-  String serverIp="10.0.0.11";
+  String ssid="TEXE-Robot";
+  String ssidPasswd="JX_TELUA";
+  String serverIp="192.168.16.106";
+//  String ssid="NETGEAR";
+//  String ssidPasswd="sj13607071774";
+//  String serverIp="10.0.0.11";
   unsigned int serverPort=8888; 
 };
 

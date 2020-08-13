@@ -205,12 +205,8 @@ class GUI(QWidget):
         else:
             lableBgColor='background:dark'
 
-
         if self.runMode==MonitorState.MONITOR_STATE:
             self.findChild(QPushButton,_device).setStyleSheet(lableBgColor)
-
-        # if _device not in self.monitorServer.monitoringRobot and _device not in self.monitorServer.otaStateRobots:
-        #     self.findChild(QPushButton,_device).setStyleSheet("background-color:gray")
         pass
 
     def logoIni(self):
@@ -270,7 +266,6 @@ class GUI(QWidget):
         print(_device)
     
     def deviceButtonClicked(self,_device):
-        # print(_str+' clicked')
         if self.runMode==MonitorState.MONITOR_STATE:
             self.showDeviceDialog(_device)
             return
@@ -335,8 +330,6 @@ class GUI(QWidget):
     def clearButtonClicked(self):
         print('clear button clicked')
         self.runMode=MonitorState.MONITOR_STATE
-        # self.choosingMonitorList=copy.deepcopy(self.monitorServer.monitoringRobot)
-        # self.choosingOtaList=copy.deepcopy(self.monitorServer.otaStateRobots)
         self.updateAllDeviceLabel()
         pass
 

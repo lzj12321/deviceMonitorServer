@@ -185,11 +185,15 @@ class MonitorServer(QObject):
         # print(_device+' alter robot state to '+str(_state))
         pass
 
-    def processMsgFromDevice(self,msg,sockIp):
+    def preProcessMsgFromDevice(self,msg,sockIp):
+        isMsgValid=True
+        _device=''
+        _validMsg=''
+
         _msgs=msg.split(':')
         if len(_msgs)==2:
-            _device=msg.split(':')[0]
-            _validMsg=msg.split(':')[1]
+            _device=_msgs[0]
+            _validMsg=_msgs[1]
 
             ######## update robot socket ##########
             if _device in self.onlineDeviceIp.keys():
@@ -203,30 +207,34 @@ class MonitorServer(QObject):
             elif _device in self.devices.keys():
                 self.onlineDeviceIp[_device]=sockIp
             else:
+                isMsgValid=False
                 self.outLog('receivd a error msg:'+msg)
-                return
-
-            if _device in self.devices.keys():
-                self.isCheckDeviceOnline[_device]=True
-                if _validMsg=='stop':
-                    self.process_stop_msg(_device)
-                elif _validMsg=='pause':
-                    self.process_pause_msg(_device)
-                elif _validMsg=='ota_check':
-                    self.process_ota_check_msg(_device)
-                elif _validMsg=='monitor_check':
-                    self.process_monitor_check_msg(_device)
-                elif _validMsg=='idle_check':
-                    self.process_idle_check_msg(_device)
-                elif _validMsg=='unknown_check':
-                    self.process_unknownWorkmode_msg(_device)
-                else:
-                    self.outLog('receivd a error msg without valid msg:'+msg)
-                    return
-            else:
-                self.outLog('receivd a error msg without valid robot:'+msg)
         else:
             self.outLog('receivd a error msg:'+msg)
+            isMsgValid=False
+
+        return isMsgValid,_device,_validMsg
+
+
+    def processMsgFromDevice(self,msg,sockIp):
+        isMsgValid,_device,_validMsg=self.preProcessMsgFromDevice(msg,sockIp)
+
+        if _device in self.devices.keys():
+            self.isCheckDeviceOnline[_device]=True
+            if _validMsg=='stop':
+                self.process_stop_msg(_device)
+            elif _validMsg=='pause':
+                self.process_pause_msg(_device)
+            elif _validMsg=='ota_check':
+                self.process_ota_check_msg(_device)
+            elif _validMsg=='monitor_check':
+                self.process_monitor_check_msg(_device)
+            elif _validMsg=='idle_check':
+                self.process_idle_check_msg(_device)
+            elif _validMsg=='unknown_check':
+                self.process_unknownWorkmode_msg(_device)
+            else:
+                self.outLog("receive a invalid msg:"+msg)
         pass
     
     def getMonitoringDevice(self):

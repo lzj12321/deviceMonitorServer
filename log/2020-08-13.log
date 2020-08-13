@@ -1,0 +1,52 @@
+2020-08-13 08:11:58,345 - param initialize
+2020-08-13 08:11:58,734 - server initialize
+2020-08-13 08:11:58,758 - timer initialize
+2020-08-13 08:11:58,760 - mysql initialize
+2020-08-13 08:13:13,411 - a new connection from 192.168.16.107
+2020-08-13 08:14:58,782 - xe_line3_ultra alter robot state to offline!
+2020-08-13 08:14:58,848 - close the connection with 192.168.16.107
+2020-08-13 08:15:20,461 - a new connection from 192.168.16.107
+2020-08-13 08:15:58,779 - xe_line3_robot3 alter robot state to offline!
+2020-08-13 08:15:58,835 - close the connection with 192.168.16.107
+2020-08-13 08:18:17,673 - a new connection from 192.168.16.107
+2020-08-13 08:21:58,804 - xe_line3_robot3 alter robot state to offline!
+2020-08-13 08:21:58,856 - close the connection with 192.168.16.107
+2020-08-13 08:22:11,022 - a new connection from 192.168.16.107
+2020-08-13 08:24:28,810 - xe_line3_robot3 alter robot state to offline!
+2020-08-13 08:24:28,881 - close the connection with 192.168.16.107
+2020-08-13 08:24:29,005 - a new connection from 192.168.16.107
+2020-08-13 08:57:28,848 - xe_line3_robot3 alter robot state to offline!
+2020-08-13 08:57:28,903 - close the connection with 192.168.16.107
+2020-08-13 08:57:29,072 - a new connection from 192.168.16.107
+2020-08-13 09:08:15,577 - param initialize
+2020-08-13 09:08:15,944 - server initialize
+2020-08-13 09:08:15,957 - timer initialize
+2020-08-13 09:08:15,960 - mysql initialize
+2020-08-13 09:08:18,949 - a new connection from 192.168.16.107
+2020-08-13 09:54:25,712 - param initialize
+2020-08-13 09:54:26,061 - server initialize
+2020-08-13 09:54:26,079 - timer initialize
+2020-08-13 09:54:26,087 - mysql initialize
+2020-08-13 09:54:34,741 - a new connection from 192.168.16.107
+2020-08-13 09:55:31,566 - param initialize
+2020-08-13 09:55:31,909 - server initialize
+2020-08-13 09:55:31,932 - timer initialize
+2020-08-13 09:55:31,939 - mysql initialize
+2020-08-13 09:55:33,411 - a new connection from 192.168.16.107
+2020-08-13 09:58:31,935 - xe_line3_robot3 alter robot state to offline!
+2020-08-13 09:58:32,070 - close the connection with 192.168.16.107
+2020-08-13 09:58:32,444 - a new connection from 192.168.16.107
+2020-08-13 10:01:16,940 - xe_line3_robot3 alter robot state to offline!
+2020-08-13 10:01:17,017 - close the connection with 192.168.16.107
+2020-08-13 10:01:19,910 - a new connection from 192.168.16.107
+2020-08-13 10:08:16,948 - xe_line3_robot3 alter robot state to offline!
+2020-08-13 10:08:17,010 - close the connection with 192.168.16.107
+2020-08-13 10:08:17,369 - a new connection from 192.168.16.107
+2020-08-13 10:12:33,820 - param initialize
+2020-08-13 10:12:34,169 - server initialize
+2020-08-13 10:12:34,186 - timer initialize
+2020-08-13 10:12:34,195 - mysql initialize
+2020-08-13 10:12:35,854 - a new connection from 192.168.16.107
+2020-08-13 10:14:19,204 - xe_line3_robot3 alter robot state to offline!
+2020-08-13 10:14:19,244 - close the connection with 192.168.16.107
+2020-08-13 10:14:23,897 - a new connection from 192.168.16.107
