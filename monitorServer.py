@@ -209,6 +209,8 @@ class MonitorServer(QObject):
                         self.outLog("error self.onlineDeviceIp[_device] in self.ipSocket.keys() "+sockIp+' '+_device)
                 elif _device in self.devices.keys():
                     self.onlineDeviceIp[_device]=sockIp
+                elif _device not in self.devices.keys():
+                    isMsgValid=False
             else:
                 # isMsgValid=False
                 # self.outLog('receivd a error msg device not in onlineDeviceIp:'+msg)

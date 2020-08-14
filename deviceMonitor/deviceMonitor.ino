@@ -25,21 +25,26 @@
 #define UNKNOWN_MODE 3
 
 const int workModeAddress=1;
-IPAddress localIp(10, 0, 0, 22);
-IPAddress gateway(10, 0, 0, 1);
+IPAddress localIp(192, 168, 1, 74);
+IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 255, 0);
 struct stru_netWorkParam {
   //  String ssid = "TEXE-Robot";
   //  String ssidPasswd = "JX_TELUA";
   //  String serverIp = "192.168.16.106";
-  String ssid = "NETGEAR";
-  String ssidPasswd = "sj13607071774";
-  String serverIp = "10.0.0.11";
+  
+//  String ssid = "NETGEAR";
+//  String ssidPasswd = "sj13607071774";
+//  String serverIp = "10.0.0.11";
+
+  String ssid = "TEXE-MONITOR";
+  String ssidPasswd = "JX_TELUA";
+  String serverIp = "192.168.1.100";
   unsigned int serverPort = 8888;
 };
 
 struct stru_deviceParam {
-  String deviceSerial = "xe_line1_robot3";
+  String deviceSerial = "xe_line7_ultra";
   String firmWareVersion = "1";
   int workMode = MONITOR_MODE;
   unsigned int workState = NORMAL;

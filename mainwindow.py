@@ -252,6 +252,7 @@ class GUI(QWidget):
         if color=="yellow":
             deviceButton.setStyleSheet("QPushButton{color:black}"
                     "QPushButton{background-color:yellow}"
+                    "QPushButton:hover{color:rgb(150,200,200)}"
                     "QPushButton{border:2px}"
                     "QPushButton{border-radius:0px}"
                     "QPushButton{padding:2px 4px}")
@@ -259,6 +260,7 @@ class GUI(QWidget):
             deviceButton.setStyleSheet("QPushButton{color:black}"
                     "QPushButton{background-color:red}"
                     "QPushButton{border:2px}"
+                    "QPushButton:hover{color:rgb(150,200,200)}"
                     "QPushButton{border-radius:0px}"
                     "QPushButton{padding:2px 4px}")
         elif color=="gray":
@@ -266,29 +268,34 @@ class GUI(QWidget):
                     "QPushButton{background-color:gray}"
                     "QPushButton{border:2px}"
                     "QPushButton{border-radius:0px}"
+                    "QPushButton:hover{color:rgb(150,200,200)}"
                     "QPushButton{padding:2px 4px}")
         elif color=="green":
             deviceButton.setStyleSheet("QPushButton{color:black}"
                     "QPushButton{background-color:green}"
                     "QPushButton{border:2px}"
                     "QPushButton{border-radius:0px}"
+                    "QPushButton:hover{color:rgb(150,200,200)}"
                     "QPushButton{padding:2px 4px}")
         elif color=="blue":
             deviceButton.setStyleSheet("QPushButton{color:black}"
                     "QPushButton{background-color:blue}"
                     "QPushButton{border:2px}"
                     "QPushButton{border-radius:0px}"
+                    "QPushButton:hover{color:rgb(150,200,200)}"
                     "QPushButton{padding:2px 4px}")
         elif color=="dark":
             deviceButton.setStyleSheet("QPushButton{color:black}"
                     "QPushButton{background-color:dark}"
                     "QPushButton{border:2px}"
+                    "QPushButton:hover{color:rgb(150,200,200)}"
                     "QPushButton{border-radius:0px}"
                     "QPushButton{padding:2px 4px}")
         #self.findChild(QPushButton,_device).setStyleSheet('background-color:rgb(78,155,255)')
         elif color=="lightBlue":
             deviceButton.setStyleSheet("QPushButton{color:black}"
                     "QPushButton{background-color:rgb(78,155,255)}"
+                    "QPushButton:hover{color:rgb(150,200,200)}"
                     "QPushButton{border:2px}"
                     "QPushButton{border-radius:0px}"
                     "QPushButton{padding:2px 4px}")
@@ -409,7 +416,7 @@ class GUI(QWidget):
             font.setWeight(87)
             _button.setFont(font)
             _button.setStyleSheet("QPushButton{color:black}"
-                                  "QPushButton:hover{color:red}"
+                                  "QPushButton:hover{color:rgb(150,200,200)}"
                                   "QPushButton{background-color:rgb(78,255,255)}"
                                   "QPushButton{border:2px}"
                                   "QPushButton{border-radius:10px}"
