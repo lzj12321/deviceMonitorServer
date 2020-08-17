@@ -31,6 +31,7 @@ class Device(QObject):
         self.stateChanged.emit(self.name,DeviceState.IDLE)
         print("%s enter idle state!"% self.name)
         pass
+
     def exit_idle(self):
         print("%s exit idle state!"% self.name)
         pass

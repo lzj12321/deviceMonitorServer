@@ -58,19 +58,22 @@ class MonitorServer(QObject):
         self.outLog('mysql initialize')
         self.mysqlTool=MysqlTool()
 
-    def setRobotToOtaState(self,_otaRobots):
-        for _robot in _otaRobots:
-            if self.devices[_robot].state==DeviceState.OTA:
-                continue
-            if _robot in self.onlineDeviceIp.keys():
-                print('send ota msg to:'+_robot)
-                self.ipSocket[self.onlineDeviceIp[_robot]].sendMsg('ota')
-                pass
-            else:
-                self.appendRunMsg.emit('cant set '+_robot+' into ota mode because it not online!')
+    def setDeviceToOtaState(self,_otaDeviceList):
+        for _device in self.devices.keys():
+            if _device in _otaDeviceList:
+                if self.devices[_device].state==DeviceState.OTA:
+                    continue
+                if _device in self.onlineDeviceIp.keys():
+                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('ota')
+                    pass
+                else:
+                    self.appendRunMsg.emit('cant set '+_device+' into ota mode because it not online!')
+            elif self.devices[_device].state==DeviceState.OTA:
+                print('test idle')
+                self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('idle')
         pass
 
-    def setRobotToMonitorState(self,_monitorList):
+    def setDeviceToMonitorState(self,_monitorList):
         for _device in self.devices.keys():
             if _device in _monitorList:
                 if self.devices[_device].state==DeviceState.MONITOR:
@@ -88,7 +91,6 @@ class MonitorServer(QObject):
                 else:
                     pass
                     # self.appendRunMsg.emit('cant set '+_device+' into idle model because it not on line!')
-                
         pass
 
     def checkTimerTimeout(self):
@@ -97,13 +99,13 @@ class MonitorServer(QObject):
             if self.devices[_device].state!=DeviceState.OFFLINE:
                 if not self.isCheckDeviceOnline[_device]:
                     self.appendRunMsg.emit(_device+" offline!")
-                    self.outLog(_device+' alter robot state to offline!')
+                    self.outLog(_device+' alter device state to offline!')
                     self.stateMachine.changeState(self.devices[_device],DeviceState.OFFLINE)
-                    self.closeRobotConnection(_device)
+                    self.closeDeviceConnection(_device)
             self.isCheckDeviceOnline[_device]=False
         pass
 
-    def closeRobotConnection(self,_device):
+    def closeDeviceConnection(self,_device):
         self.outLog("check this connection time out,close this connection with "+self.onlineDeviceIp[_device])
         print(self.onlineDeviceIp)
         self.ipSocket[self.onlineDeviceIp[_device]].close()

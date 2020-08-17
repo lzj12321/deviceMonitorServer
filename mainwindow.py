@@ -191,8 +191,6 @@ class GUI(QWidget):
                                   "QLabel{border-radius:20px}"
                                   "QLabel{padding:2px 4px}")
 
-    def alterDeviceState(self,robotNumber,state):
-        pass
 
     def addRunMessage(self,msg):
         self.textEdit.append(QDateTime.currentDateTime().toString('yyyy-MM-dd hh:mm:ss')+' : '+msg)
@@ -201,7 +199,7 @@ class GUI(QWidget):
     def runMonitorServer(self):
         self.monitorServer=MonitorServer()
         self.monitorServer.appendRunMsg.connect(self.addRunMessage)
-        self.monitorServer.updateDeviceState.connect(self.updateRobotLabel)
+        self.monitorServer.updateDeviceState.connect(self.updateDeviceLabel)
         self.monitorServer.run()
 
     def getObjectNames(self):
@@ -217,7 +215,7 @@ class GUI(QWidget):
         for _device in params['devices'].keys():
             self.monitorDevices.append(_device)
 
-    def updateRobotLabel(self,_device,_state):
+    def updateDeviceLabel(self,_device,_state):
         lableBgColor='gray'
         if _state==DeviceState.OFFLINE:
             lableBgColor='yellow'
@@ -433,12 +431,12 @@ class GUI(QWidget):
             return
         elif self.runMode==MonitorState.CHOOSING_MONITOR_STATE:
             print(self.choosingMonitorList)
-            self.monitorServer.setRobotToMonitorState(self.choosingMonitorList)
+            self.monitorServer.setDeviceToMonitorState(self.choosingMonitorList)
             self.choosingMonitorList.clear()
             pass
         elif self.runMode==MonitorState.CHOOSING_OTA_STATE:
             print(self.choosingOtaList)
-            self.monitorServer.setRobotToOtaState(self.choosingOtaList)
+            self.monitorServer.setDeviceToOtaState(self.choosingOtaList)
             self.choosingOtaList.clear()
             pass
         self.runMode=MonitorState.MONITOR_STATE
@@ -476,7 +474,7 @@ class GUI(QWidget):
 
     def updateAllDeviceLabel(self):
         for _device in self.monitorDevices:
-            self.updateRobotLabel(_device,self.monitorServer.devices[_device].state)
+            self.updateDeviceLabel(_device,self.monitorServer.devices[_device].state)
 
     def setUiBg(self):
         window_pale = QtGui.QPalette() 
