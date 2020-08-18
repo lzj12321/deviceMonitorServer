@@ -252,6 +252,11 @@ class MonitorServer(QObject):
                 self.process_unknownWorkmode_msg(_device)
             elif _validMsg=='calculate_check':
                 self.process_calculate_msg(_device)
+            elif _validMsg.find("calculate-"):
+                validMsgs=_validMsg.split("-")
+                if len(validMsgs)==2:
+                    self.devices[_device].productNum=int(validMsgs[1])
+
             else:
                 self.outLog("receive a invalid msg:"+msg)
         pass

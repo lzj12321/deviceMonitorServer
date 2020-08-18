@@ -30,13 +30,13 @@ IPAddress localIp(192, 168, 1, 34);
 IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 255, 0);
 struct stru_netWorkParam {
-    String ssid = "TEXE-Robot";
-    String ssidPasswd = "JX_TELUA";
-    String serverIp = "192.168.16.106";
+//    String ssid = "TEXE-Robot";
+//    String ssidPasswd = "JX_TELUA";
+//    String serverIp = "192.168.16.106";
   
-//  String ssid = "NETGEAR";
-//  String ssidPasswd = "sj13607071774";
-//  String serverIp = "10.0.0.11";
+  String ssid = "NETGEAR";
+  String ssidPasswd = "sj13607071774";
+  String serverIp = "10.0.0.3";
 
 //  String ssid = "TEXE-MONITOR";
 //  String ssidPasswd = "JX_TELUA";
@@ -83,7 +83,7 @@ struct stru_productParam {
 
   unsigned int detectedSignalTime=0;
   unsigned int minDetectedSignalTime=5;
-  unsigned int minDetectInterval=20;
+  unsigned int minDetectInterval=25;
   unsigned int detectInterval=0;
 
   /* max calculate num is 65280*/
@@ -166,6 +166,9 @@ void connectServer() {
       }
       else if (deviceParam.workMode == IDLE_MODE) {
         sendMsg(msgParam.idleCheckMsg);
+      }
+      else if (deviceParam.workMode == CALCULATE_MODE) {
+        sendMsg(msgParam.calculateCheckMsg);
       }
       else {
         deviceParam.workMode = UNKNOWN_MODE;
@@ -313,6 +316,7 @@ void loop()
 
 void sendMsg(const String msg) {
   if(!client.connected()){
+    Serial.println("send msg error!");
     return;
   }
   String result = deviceParam.deviceSerial + msgParam.splitFlag + msg;
@@ -320,7 +324,7 @@ void sendMsg(const String msg) {
 //  client.flush();
 }
 
-void MONITOR_Mode_Run() {
+void MONITOR_Mode_Run(){
   if (digitalRead(ioParam.stopIO))
   {
     ++detectStopSignalTime;
@@ -475,16 +479,13 @@ void saveDetectMode(){
 }
 
 void CALCULATE_Mode_Run(){
-//  Serial.print("CALCULATE:");
-//  Serial.println(productParam.detectInterval);
   Serial.print("sensor state:");
   Serial.println(digitalRead(ioParam.detectSensorIO));
   Serial.print("isDetectRise:");
   Serial.println(productParam.isDetectRise);
   ++productParam.detectInterval;
-  if(productParam.detectInterval>25){
+  if(productParam.detectInterval>productParam.minDetectInterval){
     productParam.detectInterval=0;
-    Serial.println("send calculate check msg");
     sendMsg(msgParam.calculateCheckMsg);
   }
 
@@ -509,5 +510,5 @@ void CALCULATE_Mode_Run(){
       productParam.isDetectRise=!productParam.isDetectRise;
       saveDetectMode();
     }
-  } 
+  }
 }

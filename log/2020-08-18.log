@@ -31,3 +31,56 @@
 2020-08-18 15:37:54,002 - xe_line3_ultra alter device state to offline!
 2020-08-18 15:37:54,110 - check this connection time out,close this connection with 192.168.16.101
 2020-08-18 15:37:54,383 - a new connection from 192.168.16.101
+2020-08-18 20:03:34,298 - param initialize
+2020-08-18 20:03:34,427 - server initialize
+2020-08-18 20:03:34,453 - timer initialize
+2020-08-18 20:03:34,454 - mysql initialize
+2020-08-18 20:05:12,606 - param initialize
+2020-08-18 20:05:12,764 - server initialize
+2020-08-18 20:05:12,772 - timer initialize
+2020-08-18 20:05:12,775 - mysql initialize
+2020-08-18 20:30:29,078 - param initialize
+2020-08-18 20:30:29,233 - server initialize
+2020-08-18 20:30:29,242 - timer initialize
+2020-08-18 20:30:29,243 - mysql initialize
+2020-08-18 21:09:33,015 - param initialize
+2020-08-18 21:09:33,160 - server initialize
+2020-08-18 21:09:33,168 - timer initialize
+2020-08-18 21:09:33,172 - mysql initialize
+2020-08-18 21:09:36,360 - a new connection from 10.0.0.17
+2020-08-18 21:10:18,164 - xe_line3_ultra alter device state to offline!
+2020-08-18 21:10:18,211 - check this connection time out,close this connection with 10.0.0.17
+2020-08-18 21:10:18,399 - a new connection from 10.0.0.17
+2020-08-18 21:10:48,165 - xe_line3_ultra alter device state to offline!
+2020-08-18 21:10:48,217 - check this connection time out,close this connection with 10.0.0.17
+2020-08-18 21:10:49,413 - a new connection from 10.0.0.17
+2020-08-18 21:11:18,166 - xe_line3_ultra alter device state to offline!
+2020-08-18 21:11:18,199 - check this connection time out,close this connection with 10.0.0.17
+2020-08-18 21:11:18,429 - a new connection from 10.0.0.17
+2020-08-18 21:12:03,162 - xe_line3_ultra alter device state to offline!
+2020-08-18 21:12:03,209 - check this connection time out,close this connection with 10.0.0.17
+2020-08-18 21:12:03,445 - a new connection from 10.0.0.17
+2020-08-18 21:12:33,165 - xe_line3_ultra alter device state to offline!
+2020-08-18 21:12:33,231 - check this connection time out,close this connection with 10.0.0.17
+2020-08-18 21:12:33,460 - a new connection from 10.0.0.17
+2020-08-18 21:13:03,165 - xe_line3_ultra alter device state to offline!
+2020-08-18 21:13:03,211 - check this connection time out,close this connection with 10.0.0.17
+2020-08-18 21:13:03,478 - a new connection from 10.0.0.17
+2020-08-18 21:13:48,166 - xe_line3_ultra alter device state to offline!
+2020-08-18 21:13:48,198 - check this connection time out,close this connection with 10.0.0.17
+2020-08-18 21:13:48,498 - a new connection from 10.0.0.17
+2020-08-18 21:14:18,163 - xe_line3_ultra alter device state to offline!
+2020-08-18 21:14:18,219 - check this connection time out,close this connection with 10.0.0.17
+2020-08-18 21:14:19,514 - a new connection from 10.0.0.17
+2020-08-18 21:15:03,165 - xe_line3_ultra alter device state to offline!
+2020-08-18 21:15:03,195 - check this connection time out,close this connection with 10.0.0.17
+2020-08-18 21:15:03,529 - a new connection from 10.0.0.17
+2020-08-18 21:15:33,161 - xe_line3_ultra alter device state to offline!
+2020-08-18 21:15:33,201 - check this connection time out,close this connection with 10.0.0.17
+2020-08-18 21:15:33,547 - a new connection from 10.0.0.17
+2020-08-18 21:16:03,163 - xe_line3_ultra alter device state to offline!
+2020-08-18 21:16:03,179 - check this connection time out,close this connection with 10.0.0.17
+2020-08-18 21:16:03,562 - a new connection from 10.0.0.17
+2020-08-18 21:16:48,165 - xe_line3_ultra alter device state to offline!
+2020-08-18 21:16:48,198 - check this connection time out,close this connection with 10.0.0.17
+2020-08-18 21:17:06,228 - a new connection from 10.0.0.17
