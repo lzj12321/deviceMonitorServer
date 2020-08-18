@@ -27,6 +27,14 @@ class Device(QObject):
         print("%s exit offline state!"% self.name)
         pass
 
+    def enter_calculate(self):
+        self.stateChanged.emit(self.name,DeviceState.CALCULATE)
+        print("%s enter calculate state!"% self.name)
+        pass
+    def exit_calculate(self):
+        print("%s exit calculate state!"% self.name)
+        pass
+
     def enter_idle(self):
         self.stateChanged.emit(self.name,DeviceState.IDLE)
         print("%s enter idle state!"% self.name)
@@ -96,6 +104,14 @@ class OfflineState(State):
     def enter(self,obj):
         obj.enter_offline()
 
+class CalculateState(State):
+    def exit(self,obj):
+        obj.exit_calculate()
+        pass
+
+    def enter(self,obj):
+        obj.enter_calculate()
+
 class IdleState(State):
     def exit(self,obj):
         obj.exit_idle()
@@ -153,7 +169,8 @@ class StateMachine(object):
         DeviceState.PAUSE:PauseState(),
         DeviceState.OTA:OtaState(),
         DeviceState.MONITOR:MonitorState(),
-        DeviceState.UNKNOWN_WORKMODE:UnkonwnState()
+        DeviceState.UNKNOWN_WORKMODE:UnkonwnState(),
+        DeviceState.CALCULATE:CalculateState()
         }
 
     def getFsm(self,state):

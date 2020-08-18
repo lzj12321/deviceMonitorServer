@@ -1,0 +1,33 @@
+2020-08-18 15:25:41,182 - param initialize
+2020-08-18 15:25:41,559 - server initialize
+2020-08-18 15:25:41,577 - timer initialize
+2020-08-18 15:25:41,578 - mysql initialize
+2020-08-18 15:28:11,869 - a new connection from 192.168.16.101
+2020-08-18 15:30:40,615 - param initialize
+2020-08-18 15:30:40,998 - server initialize
+2020-08-18 15:30:41,011 - timer initialize
+2020-08-18 15:30:41,018 - mysql initialize
+2020-08-18 15:30:42,508 - a new connection from 192.168.16.101
+2020-08-18 15:31:08,844 - receive a invalid msg:xe_line3_ultra:calculate_check
+2020-08-18 15:31:26,026 - xe_line3_ultra alter device state to offline!
+2020-08-18 15:31:26,088 - check this connection time out,close this connection with 192.168.16.101
+2020-08-18 15:31:26,249 - a new connection from 192.168.16.101
+2020-08-18 15:35:55,895 - param initialize
+2020-08-18 15:35:56,292 - server initialize
+2020-08-18 15:35:56,303 - timer initialize
+2020-08-18 15:35:56,312 - mysql initialize
+2020-08-18 15:35:58,024 - a new connection from 192.168.16.101
+2020-08-18 15:36:26,310 - xe_line3_ultra alter device state to offline!
+2020-08-18 15:36:26,380 - check this connection time out,close this connection with 192.168.16.101
+2020-08-18 15:36:26,532 - a new connection from 192.168.16.101
+2020-08-18 15:37:11,300 - xe_line3_ultra alter device state to offline!
+2020-08-18 15:37:11,395 - check this connection time out,close this connection with 192.168.16.101
+2020-08-18 15:37:11,656 - a new connection from 192.168.16.101
+2020-08-18 15:37:23,601 - param initialize
+2020-08-18 15:37:23,987 - server initialize
+2020-08-18 15:37:23,998 - timer initialize
+2020-08-18 15:37:24,007 - mysql initialize
+2020-08-18 15:37:25,376 - a new connection from 192.168.16.101
+2020-08-18 15:37:54,002 - xe_line3_ultra alter device state to offline!
+2020-08-18 15:37:54,110 - check this connection time out,close this connection with 192.168.16.101
+2020-08-18 15:37:54,383 - a new connection from 192.168.16.101

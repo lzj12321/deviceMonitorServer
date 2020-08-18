@@ -12,6 +12,7 @@ class DeviceState(IntEnum):
     MONITOR=8
     UNKNOWN_WORKMODE=9
     IDLE=10
+    CALCULATE=11
 
 
 class MonitorState(IntEnum):

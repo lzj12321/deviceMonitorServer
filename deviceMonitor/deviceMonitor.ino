@@ -23,36 +23,39 @@
 #define OTA_MODE 1
 #define IDLE_MODE 2
 #define UNKNOWN_MODE 3
+#define CALCULATE_MODE 4
 
 const int workModeAddress=1;
-IPAddress localIp(192, 168, 1, 83);
+IPAddress localIp(192, 168, 1, 34);
 IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 255, 0);
 struct stru_netWorkParam {
-//    String ssid = "TEXE-Robot";
-//    String ssidPasswd = "JX_TELUA";
-//    String serverIp = "192.168.16.106";
+    String ssid = "TEXE-Robot";
+    String ssidPasswd = "JX_TELUA";
+    String serverIp = "192.168.16.106";
   
 //  String ssid = "NETGEAR";
 //  String ssidPasswd = "sj13607071774";
 //  String serverIp = "10.0.0.11";
 
-  String ssid = "TEXE-MONITOR";
-  String ssidPasswd = "JX_TELUA";
-  String serverIp = "192.168.1.100";
+//  String ssid = "TEXE-MONITOR";
+//  String ssidPasswd = "JX_TELUA";
+//  String serverIp = "192.168.1.100";
+
   unsigned int serverPort = 8888;
 };
 
 struct stru_deviceParam {
-  String deviceSerial = "xe_line8_robot3";
+  String deviceSerial = "xe_line3_ultra";
   String firmWareVersion = "1";
-  int workMode = MONITOR_MODE;
+  int workMode = CALCULATE_MODE;
   unsigned int workState = NORMAL;
 };
 
 struct stru_ioParam {
   unsigned int stopIO = 14;
   unsigned int pauseIO = 12;
+  unsigned int detectSensorIO=4;
 };
 
 struct stru_msgParam {
@@ -63,15 +66,31 @@ struct stru_msgParam {
   const String setMonitorMsg = "monitor";
   const String setIdleMsg = "idle";
   const String setOtaMsg = "ota";
+  const String setCalculateMsg="calculate";
+  const String calculateCheckMsg="calculate_check";
   const String otaCheckMsg = "ota_check";
   const String monitorCheckMsg = "monitor_check";
   const String idleCheckMsg = "idle_check";
+  const String calculateMsg="calculate-";
   const String unknownCheckMsg = "unknown_check";
+  const String clearProductMsg="clear_productData";
 };
 
 struct stru_productParam {
-  unsigned int productedNum = 0;
+  unsigned int productedNum1 = 0;
+  unsigned int productedNum2 = 0;
   String productModel = "";
+
+  unsigned int detectedSignalTime=0;
+  unsigned int minDetectedSignalTime=5;
+  unsigned int minDetectInterval=20;
+  unsigned int detectInterval=0;
+
+  /* max calculate num is 65280*/
+  unsigned int productedNumAddress1=2;
+  unsigned int productedNumAddress2=3;
+  unsigned int isDetectRiseAddress=4;
+  bool isDetectRise=true;
 };
 
 /* device param */
@@ -87,8 +106,11 @@ struct stru_ioParam ioParam;
 /* msg param */
 struct stru_msgParam msgParam;
 
+/* product param */
+struct stru_productParam productParam;
+
 /* Timer param*/
-int loopInterval = 300;
+int loopInterval = 1000;
 int detectNormalTime = 0;
 int detectStopSignalTime = 0;
 int detectPauseSignalTime = 0;
@@ -99,7 +121,7 @@ int retryConnectServerTime = 0;
 void connectWifi() {
   Serial.print("Connecting to ");
   Serial.print(networkParam.ssid);
-  WiFi.config(localIp, gateway, subnet);
+//  WiFi.config(localIp, gateway, subnet);
   WiFi.mode(WIFI_STA);
   WiFi.begin(networkParam.ssid, networkParam.ssidPasswd);
   while (WiFi.status() != WL_CONNECTED)
@@ -157,13 +179,15 @@ void connectServer() {
 }
 
 //initialize io//
-void initializeIO() {
+void MONITOR_Mode_Ini() {
   pinMode(ioParam.stopIO, INPUT);
   pinMode(ioParam.pauseIO, INPUT);
 }
 
 void initializeWorkmode() {
   deviceParam.workMode = readWorkModeFromRom();
+  Serial.print("work mode:");
+  Serial.println(deviceParam.workMode);
   if(deviceParam.workMode==OTA_MODE){
     OTA_Mode_Ini();
   }
@@ -173,9 +197,6 @@ void setup()
 {
   /*initialize EEPROM*/
   EEPROM.begin(512);
-
-  /*intialize the io mode*/
-  initializeIO();
 
   //initialize serial//
   Serial.begin(115200);
@@ -200,9 +221,21 @@ void processMsgFromServer(String msg) {
     }
     sendMsg(msgParam.otaCheckMsg);
   }
+  else if (msg == msgParam.setCalculateMsg)
+  {
+    if (deviceParam.workMode != CALCULATE_MODE) {
+      //initialize the calculate env//
+      CALCULATE_Mode_Ini();
+      Serial.println("enter calculate mode");
+      deviceParam.workMode = CALCULATE_MODE;
+      writeWorkModeToRom(deviceParam.workMode);
+    }
+    sendMsg(msgParam.calculateCheckMsg);
+  }
   else if (msg == msgParam.setMonitorMsg) {
     if (deviceParam.workMode != MONITOR_MODE) {
       Serial.println("enter monitor mode");
+      MONITOR_Mode_Ini();
       deviceParam.workMode = MONITOR_MODE;
       writeWorkModeToRom(deviceParam.workMode);
     }
@@ -219,6 +252,17 @@ void processMsgFromServer(String msg) {
   else if (msg == msgParam.restartMsg) {
     Serial.println("restart!");
     ESP.restart();
+  }
+  else if(msg==msgParam.clearProductMsg){
+    EEPROM.write(productParam.productedNumAddress1,0);
+    EEPROM.write(productParam.productedNumAddress2,0);
+    EEPROM.write(productParam.isDetectRiseAddress,1);
+    
+    if (EEPROM.commit()) {
+      Serial.println("EEPROM successfully clear product num!");
+    } else {
+      Serial.println("ERROR! failed to clear product num!");
+    }
   }
   else if (msg != "") {
     Serial.println("unknown order:" + msg);
@@ -249,6 +293,10 @@ void loop()
           IDLE_Mode_Run();
           break;
         }
+      case CALCULATE_MODE: {
+          CALCULATE_Mode_Run();
+          break;
+        }
       case UNKNOWN_MODE: {
           sendMsg(msgParam.unknownCheckMsg);
           delay(5000);
@@ -264,6 +312,9 @@ void loop()
 }
 
 void sendMsg(const String msg) {
+  if(!client.connected()){
+    return;
+  }
   String result = deviceParam.deviceSerial + msgParam.splitFlag + msg;
   client.write(result.c_str());
 //  client.flush();
@@ -378,4 +429,85 @@ void writeWorkModeToRom(int workMode) {
     Serial.println("ERROR! failed to save work mode!");
   }
   delay(100);
+}
+
+void CALCULATE_Mode_Ini(){
+  pinMode(ioParam.detectSensorIO, INPUT);
+
+  productParam.productedNum1=int(EEPROM.read(productParam.productedNumAddress1));
+  productParam.productedNum2=int(EEPROM.read(productParam.productedNumAddress2));
+  productParam.isDetectRise=bool(EEPROM.read(productParam.isDetectRiseAddress));
+}
+
+void calculateAddNum(){
+  Serial.println("add a num!");
+  if(productParam.productedNum1==255){
+    productParam.productedNum1=0;
+    ++productParam.productedNum2;
+  }else{
+    ++productParam.productedNum1;
+  }
+
+  unsigned int productedNum=productParam.productedNum2*255+productParam.productedNum1;
+
+  EEPROM.write(productParam.productedNumAddress1,productParam.productedNum1);
+  delay(30);
+  EEPROM.write(productParam.productedNumAddress2,productParam.productedNum2);
+  delay(30);
+  if (EEPROM.commit()) {
+    Serial.println("EEPROM successfully save product num!");
+  } else {
+    Serial.println("ERROR! failed to save product num!");
+  }
+  Serial.print("calculate msg:");
+  Serial.println(msgParam.calculateMsg+String(productedNum));
+  sendMsg(msgParam.calculateMsg+String(productedNum));
+}
+
+void saveDetectMode(){
+  EEPROM.write(productParam.isDetectRiseAddress,productParam.isDetectRise);
+  if (EEPROM.commit()) {
+    Serial.println("EEPROM successfully save detect mode!");
+  } else {
+    Serial.println("ERROR! failed to save detect mode!");
+  }
+  delay(30);
+}
+
+void CALCULATE_Mode_Run(){
+//  Serial.print("CALCULATE:");
+//  Serial.println(productParam.detectInterval);
+  Serial.print("sensor state:");
+  Serial.println(digitalRead(ioParam.detectSensorIO));
+  Serial.print("isDetectRise:");
+  Serial.println(productParam.isDetectRise);
+  ++productParam.detectInterval;
+  if(productParam.detectInterval>25){
+    productParam.detectInterval=0;
+    Serial.println("send calculate check msg");
+    sendMsg(msgParam.calculateCheckMsg);
+  }
+
+  if(productParam.isDetectRise){
+    if(!digitalRead(ioParam.detectSensorIO)){
+      ++productParam.detectedSignalTime;
+    }
+    if(productParam.detectedSignalTime>productParam.minDetectedSignalTime){
+      productParam.isDetectRise=!productParam.isDetectRise;
+      calculateAddNum();
+      saveDetectMode();
+      productParam.detectInterval=0;
+      productParam.detectedSignalTime=0;
+    }
+  }else{
+    if(digitalRead(ioParam.detectSensorIO)){
+      ++productParam.detectedSignalTime;
+    }
+    if(productParam.detectedSignalTime>productParam.minDetectedSignalTime){
+      productParam.detectInterval=0;
+      productParam.detectedSignalTime=0;
+      productParam.isDetectRise=!productParam.isDetectRise;
+      saveDetectMode();
+    }
+  } 
 }

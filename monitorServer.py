@@ -64,7 +64,8 @@ class MonitorServer(QObject):
                 if self.devices[_device].state==DeviceState.OTA:
                     continue
                 if _device in self.onlineDeviceIp.keys():
-                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('ota')
+                    # self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('ota')
+                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('clear_productData')
                     pass
                 else:
                     self.appendRunMsg.emit('cant set '+_device+' into ota mode because it not online!')
@@ -79,7 +80,8 @@ class MonitorServer(QObject):
                 if self.devices[_device].state==DeviceState.MONITOR:
                     continue
                 if _device in self.onlineDeviceIp.keys():
-                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('monitor')
+                    # self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('monitor')
+                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('calculate')
                     print('send monitor msg to '+_device)
                 else:
                     pass
@@ -160,6 +162,10 @@ class MonitorServer(QObject):
 
     def process_unknownWorkmode_msg(self,_device):
         self.stateMachine.changeState(self.devices[_device],DeviceState.UNKNOWN_WORKMODE)
+        pass
+
+    def process_calculate_msg(self,_device):
+        self.stateMachine.changeState(self.devices[_device],DeviceState.CALCULATE)
         pass
 
     def process_stop_msg(self,_device):
@@ -244,6 +250,8 @@ class MonitorServer(QObject):
                 self.process_idle_check_msg(_device)
             elif _validMsg=='unknown_check':
                 self.process_unknownWorkmode_msg(_device)
+            elif _validMsg=='calculate_check':
+                self.process_calculate_msg(_device)
             else:
                 self.outLog("receive a invalid msg:"+msg)
         pass

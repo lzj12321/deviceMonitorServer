@@ -226,6 +226,9 @@ class GUI(QWidget):
         elif _state==DeviceState.STOP:
             lableBgColor='red'
             self.findChild(QPushButton,_device).setText("停止")
+        elif _state==DeviceState.CALCULATE:
+            lableBgColor='blue'
+            self.findChild(QPushButton,_device).setText("统计")
         elif _state==DeviceState.PAUSE:
             lableBgColor='red'
             self.findChild(QPushButton,_device).setText("中止")
