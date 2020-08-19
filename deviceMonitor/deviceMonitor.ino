@@ -25,18 +25,19 @@
 #define UNKNOWN_MODE 3
 #define CALCULATE_MODE 4
 
+String checkConnectionMsg="";
 const int workModeAddress=1;
 IPAddress localIp(192, 168, 1, 34);
 IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 255, 0);
 struct stru_netWorkParam {
-//    String ssid = "TEXE-Robot";
-//    String ssidPasswd = "JX_TELUA";
-//    String serverIp = "192.168.16.106";
+    String ssid = "TEXE-Robot";
+    String ssidPasswd = "JX_TELUA";
+    String serverIp = "192.168.16.106";
   
-  String ssid = "NETGEAR";
-  String ssidPasswd = "sj13607071774";
-  String serverIp = "10.0.0.3";
+//  String ssid = "NETGEAR";
+//  String ssidPasswd = "sj13607071774";
+//  String serverIp = "10.0.0.3";
 
 //  String ssid = "TEXE-MONITOR";
 //  String ssidPasswd = "JX_TELUA";
@@ -83,7 +84,7 @@ struct stru_productParam {
 
   unsigned int detectedSignalTime=0;
   unsigned int minDetectedSignalTime=5;
-  unsigned int minDetectInterval=25;
+  unsigned int minDetectInterval=10;
   unsigned int detectInterval=0;
 
   /* max calculate num is 65280*/
@@ -111,6 +112,7 @@ struct stru_productParam productParam;
 
 /* Timer param*/
 int loopInterval = 1000;
+unsigned int loopTime=0;
 int detectNormalTime = 0;
 int detectStopSignalTime = 0;
 int detectPauseSignalTime = 0;
@@ -142,7 +144,6 @@ void connectWifi() {
 
 //loop connect the server until connected//
 void connectServer() {
-  client.setSync(true);
   while (!client.connected())//几个非连接的异常处理
   {
     if (!client.connect(networkParam.serverIp, networkParam.serverPort))
@@ -154,7 +155,7 @@ void connectServer() {
         Serial.println("restart the chip now!");
         ESP.restart();
       }
-      delay(500);
+      delay(1000);
     }
     else {
       retryConnectServerTime = 0;
@@ -173,31 +174,32 @@ void connectServer() {
       else {
         deviceParam.workMode = UNKNOWN_MODE;
         sendMsg(msgParam.unknownCheckMsg);
-        // ESP.restart();
       }
+      client.setSync(true);
       Serial.print("connected server:");
       Serial.println(networkParam.serverIp);
     }
   }
 }
 
-//initialize io//
-void MONITOR_Mode_Ini() {
-  pinMode(ioParam.stopIO, INPUT);
-  pinMode(ioParam.pauseIO, INPUT);
-}
-
-void initializeWorkmode() {
+void initializeWorkmode(){
   deviceParam.workMode = readWorkModeFromRom();
   Serial.print("work mode:");
   Serial.println(deviceParam.workMode);
   if(deviceParam.workMode==OTA_MODE){
     OTA_Mode_Ini();
   }
+  
+  if(deviceParam.workMode==CALCULATE_MODE){
+    CALCULATE_Mode_Ini();
+  }
+  
+  if(deviceParam.workMode==MONITOR_MODE){
+    MONITOR_Mode_Ini();
+  }
 }
 
-void setup()
-{
+void setup(){
   /*initialize EEPROM*/
   EEPROM.begin(512);
 
@@ -207,6 +209,9 @@ void setup()
 
   //connect wifi//
   connectWifi();
+
+  //connect server//
+  connectServer();
 
   //initialize workmode//
   initializeWorkmode();
@@ -272,12 +277,8 @@ void processMsgFromServer(String msg) {
   }
 }
 
-void loop()
-{
-  /* connect wifi*/
-  connectServer();
-
-  while (client.connected()) {
+void loop(){
+  if (client.connected()){
     if (client.available())
     {
       String msg = client.readStringUntil('\n');
@@ -310,68 +311,38 @@ void loop()
           delay(5000);
         }
     }
-    delay(loopInterval);
+    if(loopTime>10)
+    {
+      sendMsg(checkConnectionMsg);
+      loopTime=0;
+    }
   }
+  ++loopTime;
+  delay(loopInterval);
 }
 
-void sendMsg(const String msg) {
+void sendMsg(const String msg){
   if(!client.connected()){
-    Serial.println("send msg error!");
+    Serial.println("Disconnect from server,send msg error!");
     return;
   }
   String result = deviceParam.deviceSerial + msgParam.splitFlag + msg;
   client.write(result.c_str());
-//  client.flush();
 }
 
-void MONITOR_Mode_Run(){
-  if (digitalRead(ioParam.stopIO))
-  {
-    ++detectStopSignalTime;
-    detectPauseSignalTime = 0;
-    if ((deviceParam.workState != STOP && (detectStopSignalTime > MIN_DETECTED_SIGNAL_TIME)) || detectStopSignalTime > ( MIN_DETECTED_SIGNAL_TIME * 5)) {
-      detectNormalTime = 0;
-      deviceParam.workState = STOP;
-      sendMsg(msgParam.stopMsg);
-      detectStopSignalTime = 0;
-    }
-  }
-  else if (digitalRead(ioParam.pauseIO))
-  {
-    ++detectPauseSignalTime;
-    detectStopSignalTime = 0;
-    if ((deviceParam.workState != PAUSE && (detectPauseSignalTime > MIN_DETECTED_SIGNAL_TIME)) || detectPauseSignalTime > (MIN_DETECTED_SIGNAL_TIME * 5)) {
-      detectNormalTime = 0;
-      deviceParam.workState = PAUSE;
-      sendMsg(msgParam.pauseMsg);
-      detectPauseSignalTime = 0;
-    }
-  }
-  else
-  {
-    detectPauseSignalTime = 0;
-    detectStopSignalTime = 0;
-    detectNormalTime++;
-    if (detectNormalTime > (MIN_DETECTED_SIGNAL_TIME * 5))
-    {
-      deviceParam.workState = NORMAL;
-      sendMsg(msgParam.monitorCheckMsg);
-      detectNormalTime = 0;
-    }
-  }
+void MONITOR_Mode_Ini() {
+  pinMode(ioParam.stopIO, INPUT);
+  pinMode(ioParam.pauseIO, INPUT);
+  checkConnectionMsg=msgParam.monitorCheckMsg;
 }
 
-void OTA_Mode_Run() {
-  ArduinoOTA.handle();
-  detectNormalTime++;
-  if (detectNormalTime > (MIN_DETECTED_SIGNAL_TIME * 2))
-  {
-    deviceParam.workState = NORMAL;
-    sendMsg(msgParam.otaCheckMsg);
-    detectNormalTime = 0;
-    detectPauseSignalTime = 0;
-    detectStopSignalTime = 0;
-  }
+void CALCULATE_Mode_Ini(){
+  pinMode(ioParam.detectSensorIO, INPUT);
+
+  productParam.productedNum1=int(EEPROM.read(productParam.productedNumAddress1));
+  productParam.productedNum2=int(EEPROM.read(productParam.productedNumAddress2));
+  productParam.isDetectRise=bool(EEPROM.read(productParam.isDetectRiseAddress));
+  checkConnectionMsg=msgParam.calculateCheckMsg;
 }
 
 void OTA_Mode_Ini() {
@@ -409,12 +380,98 @@ void OTA_Mode_Ini() {
   ArduinoOTA.setHostname(deviceParam.deviceSerial.c_str());
   ArduinoOTA.setRebootOnSuccess(true);
   ArduinoOTA.begin();
+  checkConnectionMsg=msgParam.otaCheckMsg;
+}
+
+void IDLE_Mode_Ini(){
+  checkConnectionMsg=msgParam.idleCheckMsg;
+}
+
+void MONITOR_Mode_Run(){
+  if (digitalRead(ioParam.stopIO))
+  {
+    ++detectStopSignalTime;
+    detectPauseSignalTime = 0;
+    if (deviceParam.workState != STOP && (detectStopSignalTime > MIN_DETECTED_SIGNAL_TIME)) {
+      detectNormalTime = 0;
+      deviceParam.workState = STOP;
+      sendMsg(msgParam.stopMsg);
+      checkConnectionMsg=msgParam.stopMsg;
+      detectStopSignalTime = 0;
+    }
+  }
+  else if (digitalRead(ioParam.pauseIO))
+  {
+    ++detectPauseSignalTime;
+    detectStopSignalTime = 0;
+    if(deviceParam.workState != PAUSE && (detectPauseSignalTime > MIN_DETECTED_SIGNAL_TIME)) {
+      detectNormalTime = 0;
+      deviceParam.workState = PAUSE;
+      sendMsg(msgParam.pauseMsg);
+      checkConnectionMsg=msgParam.pauseMsg;
+      detectPauseSignalTime = 0;
+    }
+  }
+  else
+  {
+    detectPauseSignalTime = 0;
+    detectStopSignalTime = 0;
+    detectNormalTime++;
+    if (deviceParam.workState!=NORMAL)
+    {
+      deviceParam.workState = NORMAL;
+      sendMsg(msgParam.monitorCheckMsg);
+      checkConnectionMsg=msgParam.monitorCheckMsg;
+      detectNormalTime = 0;
+    }
+  }
+}
+
+void OTA_Mode_Run() {
+  ArduinoOTA.handle();
+  // detectNormalTime++;
+  // if (detectNormalTime > (MIN_DETECTED_SIGNAL_TIME * 2))
+  // {
+  //   deviceParam.workState = NORMAL;
+  //   sendMsg(msgParam.otaCheckMsg);
+  //   detectNormalTime = 0;
+  //   detectPauseSignalTime = 0;
+  //   detectStopSignalTime = 0;
+  // }
 }
 
 void IDLE_Mode_Run() {
-  sendMsg(msgParam.idleCheckMsg);
-  delay(5000);
-  // Serial.println("")
+  // sendMsg(msgParam.idleCheckMsg);
+  // delay(5000);
+  Serial.println("IDLE MODE RUNNING!");
+}
+
+void CALCULATE_Mode_Run(){
+  Serial.print("sensor state:");
+  Serial.println(digitalRead(ioParam.detectSensorIO));
+  Serial.print("isDetectRise:");
+  Serial.println(productParam.isDetectRise);
+
+  if(productParam.isDetectRise){
+    if(!digitalRead(ioParam.detectSensorIO)){
+      ++productParam.detectedSignalTime;
+    }
+    if(productParam.detectedSignalTime>productParam.minDetectedSignalTime){
+      productParam.isDetectRise=!productParam.isDetectRise;
+      calculateAddNum();
+      saveDetectMode();
+      productParam.detectedSignalTime=0;
+    }
+  }else{
+    if(digitalRead(ioParam.detectSensorIO)){
+      ++productParam.detectedSignalTime;
+    }
+    if(productParam.detectedSignalTime>productParam.minDetectedSignalTime){
+      productParam.detectedSignalTime=0;
+      productParam.isDetectRise=!productParam.isDetectRise;
+      saveDetectMode();
+    }
+  }
 }
 
 int readWorkModeFromRom() {
@@ -433,14 +490,6 @@ void writeWorkModeToRom(int workMode) {
     Serial.println("ERROR! failed to save work mode!");
   }
   delay(100);
-}
-
-void CALCULATE_Mode_Ini(){
-  pinMode(ioParam.detectSensorIO, INPUT);
-
-  productParam.productedNum1=int(EEPROM.read(productParam.productedNumAddress1));
-  productParam.productedNum2=int(EEPROM.read(productParam.productedNumAddress2));
-  productParam.isDetectRise=bool(EEPROM.read(productParam.isDetectRiseAddress));
 }
 
 void calculateAddNum(){
@@ -476,39 +525,4 @@ void saveDetectMode(){
     Serial.println("ERROR! failed to save detect mode!");
   }
   delay(30);
-}
-
-void CALCULATE_Mode_Run(){
-  Serial.print("sensor state:");
-  Serial.println(digitalRead(ioParam.detectSensorIO));
-  Serial.print("isDetectRise:");
-  Serial.println(productParam.isDetectRise);
-  ++productParam.detectInterval;
-  if(productParam.detectInterval>productParam.minDetectInterval){
-    productParam.detectInterval=0;
-    sendMsg(msgParam.calculateCheckMsg);
-  }
-
-  if(productParam.isDetectRise){
-    if(!digitalRead(ioParam.detectSensorIO)){
-      ++productParam.detectedSignalTime;
-    }
-    if(productParam.detectedSignalTime>productParam.minDetectedSignalTime){
-      productParam.isDetectRise=!productParam.isDetectRise;
-      calculateAddNum();
-      saveDetectMode();
-      productParam.detectInterval=0;
-      productParam.detectedSignalTime=0;
-    }
-  }else{
-    if(digitalRead(ioParam.detectSensorIO)){
-      ++productParam.detectedSignalTime;
-    }
-    if(productParam.detectedSignalTime>productParam.minDetectedSignalTime){
-      productParam.detectInterval=0;
-      productParam.detectedSignalTime=0;
-      productParam.isDetectRise=!productParam.isDetectRise;
-      saveDetectMode();
-    }
-  }
 }

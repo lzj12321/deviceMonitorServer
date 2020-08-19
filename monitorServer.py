@@ -64,8 +64,8 @@ class MonitorServer(QObject):
                 if self.devices[_device].state==DeviceState.OTA:
                     continue
                 if _device in self.onlineDeviceIp.keys():
-                    # self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('ota')
-                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('clear_productData')
+                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('ota')
+                    # self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('clear_productData')
                     pass
                 else:
                     self.appendRunMsg.emit('cant set '+_device+' into ota mode because it not online!')
@@ -80,8 +80,8 @@ class MonitorServer(QObject):
                 if self.devices[_device].state==DeviceState.MONITOR:
                     continue
                 if _device in self.onlineDeviceIp.keys():
-                    # self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('monitor')
-                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('calculate')
+                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('monitor')
+                    # self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('calculate')
                     print('send monitor msg to '+_device)
                 else:
                     pass
@@ -119,7 +119,7 @@ class MonitorServer(QObject):
         self.outLog('timer initialize')
         checkTimer=QTimer(self)
         checkTimer.timeout.connect(self.checkTimerTimeout)
-        checkTimer.setInterval(15000)
+        checkTimer.setInterval(30000)
         checkTimer.start()
         pass
 
@@ -252,9 +252,10 @@ class MonitorServer(QObject):
                 self.process_unknownWorkmode_msg(_device)
             elif _validMsg=='calculate_check':
                 self.process_calculate_msg(_device)
-            elif _validMsg.find("calculate-"):
+            elif "calculate-" in _validMsg:
                 validMsgs=_validMsg.split("-")
                 if len(validMsgs)==2:
+                    print(validMsgs)
                     self.devices[_device].productNum=int(validMsgs[1])
 
             else:
