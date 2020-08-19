@@ -31,17 +31,17 @@ IPAddress localIp(192, 168, 1, 34);
 IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 255, 0);
 struct stru_netWorkParam {
-    String ssid = "TEXE-Robot";
-    String ssidPasswd = "JX_TELUA";
-    String serverIp = "192.168.16.106";
+//    String ssid = "TEXE-Robot";
+//    String ssidPasswd = "JX_TELUA";
+//    String serverIp = "192.168.16.106";
   
 //  String ssid = "NETGEAR";
 //  String ssidPasswd = "sj13607071774";
 //  String serverIp = "10.0.0.3";
 
-//  String ssid = "TEXE-MONITOR";
-//  String ssidPasswd = "JX_TELUA";
-//  String serverIp = "192.168.1.100";
+  String ssid = "TEXE-MONITOR";
+  String ssidPasswd = "JX_TELUA";
+  String serverIp = "192.168.1.100";
 
   unsigned int serverPort = 8888;
 };
@@ -123,7 +123,7 @@ int retryConnectServerTime = 0;
 void connectWifi() {
   Serial.print("Connecting to ");
   Serial.print(networkParam.ssid);
-//  WiFi.config(localIp, gateway, subnet);
+  WiFi.config(localIp, gateway, subnet);
   WiFi.mode(WIFI_STA);
   WiFi.begin(networkParam.ssid, networkParam.ssidPasswd);
   while (WiFi.status() != WL_CONNECTED)
