@@ -292,7 +292,6 @@ class GUI(QWidget):
                     "QPushButton:hover{color:rgb(150,200,200)}"
                     "QPushButton{border-radius:0px}"
                     "QPushButton{padding:2px 4px}")
-        #self.findChild(QPushButton,_device).setStyleSheet('background-color:rgb(78,155,255)')
         elif color=="lightBlue":
             deviceButton.setStyleSheet("QPushButton{color:black}"
                     "QPushButton{background-color:rgb(78,155,255)}"
@@ -318,7 +317,7 @@ class GUI(QWidget):
             a0.ignore()
 
     def editButtonIni(self):
-        _buttonWidth=160
+        _buttonWidth=180
         _buttonHeight=70
 
         self.otaButton=QPushButton(self)
@@ -341,7 +340,7 @@ class GUI(QWidget):
         self.calculateButton.setText("CALCULATE")
 
         buttonY=860
-        buttonX=480
+        buttonX=580
         self.calculateButton.setGeometry(buttonX-200,buttonY,_buttonWidth,_buttonHeight)
         self.otaButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
         buttonX+=200
@@ -361,14 +360,6 @@ class GUI(QWidget):
     def showDeviceDialog(self,_device):
         _deviceDialog=DeviceDialog(self)
         _deviceDialog.setDevice(_device)
-        # self.name=_name
-        # self.ip=""
-        # self.deviceSerial=""
-        # self.firmWareVersion=""
-        # self.macAddress=""
-        # self.productModel=""
-        # self.productNum=0
-        # def dataIni(self,_serial,_name,_model,_num,_workMode,_mac,_ip,_version):
         self.state=DeviceState.OFFLINE
         _deviceDialog.dataIni(
             self.monitorServer.devices[_device].deviceSerial,\
@@ -383,9 +374,6 @@ class GUI(QWidget):
         _deviceDialog.show()
         pass
 
-    def testConnect(self,_device):
-        print(_device)
-    
     def deviceButtonClicked(self,_device):
         if self.runMode==MonitorState.MONITOR_STATE:
             self.showDeviceDialog(_device)
@@ -393,25 +381,24 @@ class GUI(QWidget):
 
         if _device in self.choosingOtaList and self.runMode==MonitorState.CHOOSING_OTA_STATE:
             self.choosingOtaList.remove(_device)
-            print('remove ota '+_device)
-            #self.findChild(QPushButton,_device).setStyleSheet('background-color:gray')
+            self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'gray')
+            return
+        if _device in self.choosingOtaList and self.runMode==MonitorState.CHOOSING_CALCULATE_STATE:
+            self.choosingCalculateList.remove(_device)
             self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'gray')
             return
         if _device in self.choosingMonitorList and self.runMode==MonitorState.CHOOSING_MONITOR_STATE:
             self.choosingMonitorList.remove(_device)
-            print('remove monitor '+_device)
             self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'gray')
-           # self.findChild(QPushButton,_device).setStyleSheet('background-color:gray')
             return
             
         if self.runMode==MonitorState.CHOOSING_OTA_STATE:
             self.choosingOtaList.append(_device)
-            print('add ota '+_device)
         elif self.runMode==MonitorState.CHOOSING_MONITOR_STATE:
             self.choosingMonitorList.append(_device)
-            print('add monitor '+_device)
+        elif self.runMode==MonitorState.CHOOSING_CALCULATE_STATE:
+            self.choosingCalculateList.append(_device)
         self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'lightBlue')
-        #self.findChild(QPushButton,_device).setStyleSheet('background-color:rgb(78,155,255)')
         pass
 
     def setbuttonStyleSheet(self,_buttons):
@@ -505,6 +492,6 @@ class GUI(QWidget):
 if __name__ == '__main__':
     app=QApplication(sys.argv)
     runGui=GUI()
-    # runGui.showFullScreen()
-    runGui.show()
+    runGui.showFullScreen()
+    # runGui.show()
     sys.exit(app.exec_())

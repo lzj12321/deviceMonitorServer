@@ -6,8 +6,6 @@ from PyQt5.QtWidgets import *
 
 
 class DeviceDialog(QDialog):
-    testSignal = pyqtSignal(str)
-
     def __init__(self, parent=None):
         super(DeviceDialog, self).__init__(parent)
 
@@ -180,9 +178,7 @@ class DeviceDialog(QDialog):
         self.pushbutton.setVisible(False)
 
 
-
         self.pushbutton.clicked.connect(self.test)
-        self.testSignal.connect(parent.testConnect)
     
     def setDevice(self,_name):
         self._name=_name
