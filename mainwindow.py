@@ -325,20 +325,24 @@ class GUI(QWidget):
         self.clearButton=QPushButton(self)
         self.confirmButton=QPushButton(self)
         self.monitorButton=QPushButton(self)
+        self.calculateButton=QPushButton(self)
 
 
         self.otaButton.clicked.connect(self.otaButtonClicked)
         self.clearButton.clicked.connect(self.clearButtonClicked)
         self.confirmButton.clicked.connect(self.confirmButtonClicked)
         self.monitorButton.clicked.connect(self.monitorButtonClicked)
+        self.calculateButton.clicked.connect(self.calculateButtonClicked)
 
         self.otaButton.setText("OTA")
         self.clearButton.setText("CLEAR")
         self.confirmButton.setText("CONFIRM")
         self.monitorButton.setText("MONITOR")
+        self.calculateButton.setText("CALCULATE")
 
         buttonY=860
         buttonX=480
+        self.calculateButton.setGeometry(buttonX-200,buttonY,_buttonWidth,_buttonHeight)
         self.otaButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
         buttonX+=200
         self.monitorButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
@@ -351,6 +355,7 @@ class GUI(QWidget):
         _buttons.append(self.monitorButton)
         _buttons.append(self.clearButton)
         _buttons.append(self.confirmButton)
+        _buttons.append(self.calculateButton)
         self.setbuttonStyleSheet(_buttons)
 
     def showDeviceDialog(self,_device):
@@ -442,6 +447,10 @@ class GUI(QWidget):
             self.monitorServer.setDeviceToOtaState(self.choosingOtaList)
             self.choosingOtaList.clear()
             pass
+        elif self.runMode==MonitorState.CHOOSING_CALCULATE_STATE:
+            print(self.choosingCalculateList)
+            self.monitorServer.setDeviceToMonitorState(self.choosingCalculateList)
+            self.choosingCalculateList.clear()
         self.runMode=MonitorState.MONITOR_STATE
         self.updateAllDeviceLabel()
         pass
@@ -472,8 +481,16 @@ class GUI(QWidget):
                 self.findChild(QPushButton,_device).setStyleSheet('background:gray')
             else:
                 self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'lightBlue')
-
         pass
+
+    def calculateButtonClicked(self):
+        self.choosingCalculateList=copy.deepcopy(self.monitorServer.getCalculatingDevice())
+        self.runMode=MonitorState.CHOOSING_CALCULATE_STATE
+        for _device in self.monitorServer.devices.keys():
+            if _device not in self.choosingCalculateList:
+                self.findChild(QPushButton,_device).setStyleSheet('background:gray')
+            else:
+                self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'lightBlue')
 
     def updateAllDeviceLabel(self):
         for _device in self.monitorDevices:

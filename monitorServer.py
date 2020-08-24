@@ -9,6 +9,7 @@ from PyQt5.QtCore import pyqtSignal
 from loggerTool import Logger
 from deviceState import DeviceState
 from device import Device,StateMachine
+import datetime
 
 
 class MonitorServer(QObject):
@@ -19,6 +20,7 @@ class MonitorServer(QObject):
         pass
 
     def paramIni(self):
+        self.hour=int(datetime.datetime.now().strftime('%H'))
         self.outLog('param initialize')
         paramPath="configure.yaml"
         confirmConfigureFile=QFile(paramPath)
@@ -68,7 +70,7 @@ class MonitorServer(QObject):
                     # self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('clear_productData')
                     pass
                 else:
-                    self.appendRunMsg.emit('cant set '+_device+' into ota mode because it not online!')
+                    self.appendRunMsg.emit('can\'t set '+_device+' into ota mode because it not online!')
             elif self.devices[_device].state==DeviceState.OTA:
                 print('test idle')
                 self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('idle')
@@ -95,7 +97,33 @@ class MonitorServer(QObject):
                     # self.appendRunMsg.emit('cant set '+_device+' into idle model because it not on line!')
         pass
 
+    def setDeviceToCalculateState(self,_calculateList):
+        for _device in self.devices.keys():
+            if _device in _calculateList:
+                if self.devices[_device].state==DeviceState.CALCULATE:
+                    continue
+                if _device in self.onlineDeviceIp.keys():
+                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('calculate')
+                    print('send calculate msg to '+_device)
+            elif self.devices[_device].state==DeviceState.CALCULATE:
+                if _device in self.onlineDeviceIp.keys():
+                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('idle')
+                    print('send idle msg to '+_device)
+
+
+
+    def clearDeviceHourProduction(self,_productList):
+        for _device in self.devices.keys():
+            if _device in _productList:
+                if _device in self.onlineDeviceIp.keys():
+                    self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('clear_productData')
+        pass
+
     def checkTimerTimeout(self):
+        ####clear the production if the hour is changed###
+        _hour=int(datetime.datetime.now().strftime('%H'))
+        if _hour!=self.hour:
+            self.clearDeviceHourProduction()
         #### only detect offline time more than three times it will close the connection #########
         for _device in self.isCheckDeviceOnline.keys():
             if self.devices[_device].state!=DeviceState.OFFLINE:
@@ -226,7 +254,6 @@ class MonitorServer(QObject):
         else:
             isMsgValid=False
             self.outLog('receivd a error msg len!=2:'+msg)
-
         return isMsgValid,_device,_validMsg
 
 
@@ -257,9 +284,12 @@ class MonitorServer(QObject):
                 if len(validMsgs)==2:
                     print(validMsgs)
                     self.devices[_device].productNum=int(validMsgs[1])
-
             else:
                 self.outLog("receive a invalid msg:"+msg)
+        pass
+
+    def saveProductionData(self,_device,_production):
+        self.mysqlTool.saveDeviceProductionData(_device,_production)
         pass
     
     def getMonitoringDevice(self):
@@ -273,6 +303,13 @@ class MonitorServer(QObject):
                 _monitoringDevices.append(_device)
         return _monitoringDevices
         pass
+
+    def getCalculatingDevice(self):
+        _calculatingDevices=[]
+        for _device in self.devices.keys():
+            if self.devices[_device].state==DeviceState.CALCULATE:
+                _calculatingDevices.append(_device)
+        return _calculatingDevices
 
     def getOtaDevice(self):
         _otaDevices=[]

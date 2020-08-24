@@ -10,6 +10,35 @@ mysql:
 
 workshop: E
 
+timeStamp:
+  hour_20: num1
+  hour_21: num2
+  hour_22: num3
+  hour_23: num4
+  hour_0: num5
+  hour_1: num6
+  hour_2: num7
+  hour_3: num8
+  hour_4: num9
+  hour_5: num10
+  hour_6: num11
+  hour_7: num12
+
+  hour_8: num1
+  hour_9: num2
+  hour_10: num3
+  hour_11: num4
+  hour_12: num5
+  hour_13: num6
+  hour_14: num7
+  hour_15: num8
+  hour_16: num9
+  hour_17: num10
+  hour_18: num11
+  hour_19: num12
+
+
+
 devices:
   xe_line1_robot1:
     ip: 192.168.10.1

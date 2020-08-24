@@ -264,7 +264,7 @@ void processMsgFromServer(String msg) {
   else if(msg==msgParam.clearProductMsg){
     EEPROM.write(productParam.productedNumAddress1,0);
     EEPROM.write(productParam.productedNumAddress2,0);
-    EEPROM.write(productParam.isDetectRiseAddress,1);
+    // EEPROM.write(productParam.isDetectRiseAddress,1);
     
     if (EEPROM.commit()) {
       Serial.println("EEPROM successfully clear product num!");

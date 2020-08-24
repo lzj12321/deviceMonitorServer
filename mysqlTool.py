@@ -1,11 +1,13 @@
 import pymysql
 from yamlTool import Yaml_Tool
 from PyQt5.QtCore import *
+import datetime
 
 class MysqlTool:
     def __init__(self):
         self.yamlTool=Yaml_Tool()
         self.params=self.yamlTool.getValue('configure.yaml')['mysql']
+        self.timeStamp=self.yamlTool.getValue('configure.yaml')['timeStamp']
         self._connectState=self.connectServer()
         pass
 
@@ -36,6 +38,25 @@ class MysqlTool:
             self.db.rollback()
             self.db.close()
             return False,-1
+        pass
+
+    def saveDeviceProductionData(self,_device,_production):
+        _currHour=int(datetime.datetime.now().strftime('%H'))
+        _dataTable=""
+        if _currHour>=8 and _currHour <20:
+            _dataTable="chajiProduction_day"
+        else:
+            _dataTable="chajiProduction_night"
+        sql1="select 1 from "+_dataTable+" where product="+_device+" limit 1;"
+        flag,result=self.executeSql(sql1)
+        if flag and len(result)!=0:
+            _timeStamp=self.timeStamp['hour_'+str(_currHour)]
+            sql2="update "+_dataTable+" set "+_timeStamp+"="+str(_production)+";"
+            flag2,result2=self.executeSql(sql2)
+            if not flag2:
+                print('execute sql error:'+sql2)
+        else:
+            print('execute sql error:'+sql1)
         pass
 
     def saveDeviceState(self,_workshop,_robotSerial,_robotState,_description):
@@ -86,6 +107,7 @@ class MysqlTool:
         interval=time1.msecsTo(time2)/60000
         return round(interval,2)
         pass
+
 
 
 if __name__=='__main__':
