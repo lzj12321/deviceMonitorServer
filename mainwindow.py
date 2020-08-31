@@ -29,7 +29,6 @@ class myButton(QPushButton):
         pass
 
     def clickedMy(self):
-        # self.clickedButton.emit('test')
         self.clickedButton.emit(self.objectName())
 
 
@@ -326,7 +325,6 @@ class GUI(QWidget):
         self.monitorButton=QPushButton(self)
         self.calculateButton=QPushButton(self)
 
-
         self.otaButton.clicked.connect(self.otaButtonClicked)
         self.clearButton.clicked.connect(self.clearButtonClicked)
         self.confirmButton.clicked.connect(self.confirmButtonClicked)
@@ -363,14 +361,13 @@ class GUI(QWidget):
         self.state=DeviceState.OFFLINE
         _deviceDialog.dataIni(
             self.monitorServer.devices[_device].deviceSerial,\
-            self.monitorServer.devices[_device].name,\
+            # self.monitorServer.devices[_device].name,\
             self.monitorServer.devices[_device].productModel,\
             self.monitorServer.devices[_device].productNum,\
             self.monitorServer.devices[_device].state,\
             self.monitorServer.devices[_device].macAddress,\
             self.monitorServer.devices[_device].ip,\
             self.monitorServer.devices[_device].firmWareVersion)
-
         _deviceDialog.show()
         pass
 
@@ -383,7 +380,7 @@ class GUI(QWidget):
             self.choosingOtaList.remove(_device)
             self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'gray')
             return
-        if _device in self.choosingOtaList and self.runMode==MonitorState.CHOOSING_CALCULATE_STATE:
+        if _device in self.choosingCalculateList and self.runMode==MonitorState.CHOOSING_CALCULATE_STATE:
             self.choosingCalculateList.remove(_device)
             self.setDeviceButtonStyle(self.findChild(QPushButton,_device),'gray')
             return
@@ -492,6 +489,6 @@ class GUI(QWidget):
 if __name__ == '__main__':
     app=QApplication(sys.argv)
     runGui=GUI()
-    runGui.showFullScreen()
-    # runGui.show()
+    # runGui.showFullScreen()
+    runGui.show()
     sys.exit(app.exec_())

@@ -184,10 +184,10 @@ class DeviceDialog(QDialog):
         self._name=_name
         self.setWindowTitle(_name)
 
-    def dataIni(self,_serial,_name,_model,_num,_state,_mac,_ip,_version):
+    def dataIni(self,_serial,_model,_num,_state,_mac,_ip,_version):
         _nullData="null"
         self.deviceSerial=_serial
-        self.deviceName=_name
+        # self.deviceName=_name
         self.productModel=_model
         self.productNum=_num
         self.state=_state
@@ -198,8 +198,8 @@ class DeviceDialog(QDialog):
         self.lineEdit.setReadOnly(True)
         self.lineEdit.setText(self.deviceSerial)
 
-        self.lineEdit_2.setReadOnly(True)
-        self.lineEdit_2.setText(self.deviceName)
+        # self.lineEdit_2.setReadOnly(True)
+        # self.lineEdit_2.setText(self.deviceName)
 
         self.lineEdit_3.setText(self.productModel)
 
@@ -219,7 +219,7 @@ class DeviceDialog(QDialog):
             self.lineEdit_7.setText(_nullData)
 
         self.lineEdit_8.setReadOnly(True)
-        self.lineEdit_8.setText(self.firmWareVersion)
+        self.lineEdit_8.setText(str(self.firmWareVersion))
 
         pass
 

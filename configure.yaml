@@ -3,8 +3,8 @@ server:
   port: 8888
 
 mysql:
-  ip: 127.0.0.1
-  user: te
+  ip: 192.168.183.142
+  user: root
   password: '123456'
   database: robot
 
@@ -45,7 +45,8 @@ devices:
     serial: 'test'
     macAddress: 'mac test'
     productModel: 'product model test'
-    productNum: 12
+    productNum: 0
+    firmWareVersion: 1
 
   xe_line1_robot2:
     ip: 192.168.10.1
@@ -53,6 +54,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line1_robot3:
     ip: 192.168.10.1
@@ -60,6 +62,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line1_ultra:
     ip: 192.168.10.1
@@ -67,6 +70,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line2_robot1:
     ip: 192.168.10.1
@@ -74,6 +78,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line2_robot2:
     ip: 192.168.10.1
@@ -81,6 +86,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line2_robot3:
     ip: 192.168.10.1
@@ -88,6 +94,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line2_ultra:
     ip: 192.168.10.1
@@ -95,6 +102,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line3_robot1:
     ip: 192.168.10.1
@@ -102,6 +110,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line3_robot2:
     ip: 192.168.10.1
@@ -109,6 +118,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line3_robot3:
     ip: 192.168.10.1
@@ -116,6 +126,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line3_ultra:
     ip: 192.168.10.1
@@ -123,6 +134,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line4_robot1:
     ip: 192.168.10.1
@@ -130,6 +142,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line4_robot2:
     ip: 192.168.10.1
@@ -137,6 +150,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line4_robot3:
     ip: 192.168.10.1
@@ -144,6 +158,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line4_ultra:
     ip: 192.168.10.1
@@ -151,6 +166,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line5_robot1:
     ip: 192.168.10.1
@@ -158,6 +174,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line5_robot2:
     ip: 192.168.10.1
@@ -165,6 +182,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line5_robot3:
     ip: 192.168.10.1
@@ -172,6 +190,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line5_ultra:
     ip: 192.168.10.1
@@ -179,6 +198,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line6_robot1:
     ip: 192.168.10.1
@@ -186,6 +206,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line6_robot2:
     ip: 192.168.10.1
@@ -193,6 +214,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line6_robot3:
     ip: 192.168.10.1
@@ -200,6 +222,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line6_ultra:
     ip: 192.168.10.1
@@ -207,6 +230,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line7_robot1:
     ip: 192.168.10.1
@@ -214,6 +238,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line7_robot2:
     ip: 192.168.10.1
@@ -221,6 +246,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line7_robot3:
     ip: 192.168.10.1
@@ -228,6 +254,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line7_ultra:
     ip: 192.168.10.1
@@ -235,6 +262,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line8_robot1:
     ip: 192.168.10.1
@@ -242,6 +270,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line8_robot2:
     ip: 192.168.10.1
@@ -249,6 +278,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 
   xe_line8_robot3:
     ip: 192.168.10.1
@@ -256,6 +286,7 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
     
   xe_line8_ultra:
     ip: 192.168.10.1
@@ -263,4 +294,5 @@ devices:
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
+    firmWareVersion: 1
 

@@ -18,6 +18,7 @@
 #define MAX_CONNECT_WIFI_TIME 5
 #define MAX_CONNECT_SERVER_TIME 10
 #define MIN_DETECTED_SIGNAL_TIME 10
+#define SEND_CHECKMSG_INTERVAL 10000
 
 #define MONITOR_MODE 0
 #define OTA_MODE 1
@@ -27,13 +28,13 @@
 
 String checkConnectionMsg="";
 const int workModeAddress=1;
-IPAddress localIp(192, 168, 1, 34);
+IPAddress localIp(192, 168, 1, 74);
 IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 255, 0);
 struct stru_netWorkParam {
 //    String ssid = "TEXE-Robot";
 //    String ssidPasswd = "JX_TELUA";
-//    String serverIp = "192.168.16.106";
+//    String serverIp = "192.168.16.108";
   
 //  String ssid = "NETGEAR";
 //  String ssidPasswd = "sj13607071774";
@@ -47,7 +48,7 @@ struct stru_netWorkParam {
 };
 
 struct stru_deviceParam {
-  String deviceSerial = "xe_line3_ultra";
+  String deviceSerial = "xe_line7_ultra";
   String firmWareVersion = "1";
   int workMode = CALCULATE_MODE;
   unsigned int workState = NORMAL;
@@ -111,7 +112,7 @@ struct stru_msgParam msgParam;
 struct stru_productParam productParam;
 
 /* Timer param*/
-int loopInterval = 1000;
+int loopInterval = 200;
 unsigned int loopTime=0;
 int detectNormalTime = 0;
 int detectStopSignalTime = 0;
@@ -207,14 +208,14 @@ void setup(){
   Serial.begin(115200);
   delay(50);
 
+  //initialize workmode//
+  initializeWorkmode();
+
   //connect wifi//
   connectWifi();
 
   //connect server//
   connectServer();
-
-  //initialize workmode//
-  initializeWorkmode();
 }
 
 void processMsgFromServer(String msg) {
@@ -278,7 +279,7 @@ void processMsgFromServer(String msg) {
 }
 
 void loop(){
-  if (client.connected()){
+  if (client.connected()&&WiFi.status() == WL_CONNECTED){
     if (client.available())
     {
       String msg = client.readStringUntil('\n');
@@ -311,14 +312,32 @@ void loop(){
           delay(5000);
         }
     }
-    if(loopTime>10)
+    if((loopTime*loopInterval)>SEND_CHECKMSG_INTERVAL)
     {
       sendMsg(checkConnectionMsg);
       loopTime=0;
     }
   }
+  else{
+    processLoopDisconnect();
+  }
   ++loopTime;
   delay(loopInterval);
+}
+
+void processLoopDisconnect(){
+  if(WiFi.status() != WL_CONNECTED){
+    //connect wifi//
+    connectWifi();
+  }
+  if(!client.connected()&&WiFi.status() == WL_CONNECTED){
+    //connect server//
+    connectServer();
+  }
+  if(WiFi.status() != WL_CONNECTED&&(!client.connected()))
+  {
+    ESP.restart();
+  }
 }
 
 void sendMsg(const String msg){
@@ -326,7 +345,7 @@ void sendMsg(const String msg){
     Serial.println("Disconnect from server,send msg error!");
     return;
   }
-  String result = deviceParam.deviceSerial + msgParam.splitFlag + msg;
+  String result = deviceParam.deviceSerial + msgParam.splitFlag + msg+"\n";
   client.write(result.c_str());
 }
 
@@ -417,7 +436,7 @@ void MONITOR_Mode_Run(){
     detectPauseSignalTime = 0;
     detectStopSignalTime = 0;
     detectNormalTime++;
-    if (deviceParam.workState!=NORMAL)
+    if (deviceParam.workState!=NORMAL&&detectNormalTime>MIN_DETECTED_SIGNAL_TIME)
     {
       deviceParam.workState = NORMAL;
       sendMsg(msgParam.monitorCheckMsg);
@@ -429,20 +448,9 @@ void MONITOR_Mode_Run(){
 
 void OTA_Mode_Run() {
   ArduinoOTA.handle();
-  // detectNormalTime++;
-  // if (detectNormalTime > (MIN_DETECTED_SIGNAL_TIME * 2))
-  // {
-  //   deviceParam.workState = NORMAL;
-  //   sendMsg(msgParam.otaCheckMsg);
-  //   detectNormalTime = 0;
-  //   detectPauseSignalTime = 0;
-  //   detectStopSignalTime = 0;
-  // }
 }
 
 void IDLE_Mode_Run() {
-  // sendMsg(msgParam.idleCheckMsg);
-  // delay(5000);
   Serial.println("IDLE MODE RUNNING!");
 }
 
@@ -519,7 +527,7 @@ void calculateAddNum(){
 
 void saveDetectMode(){
   EEPROM.write(productParam.isDetectRiseAddress,productParam.isDetectRise);
-  if (EEPROM.commit()) {
+  if (EEPROM.commit()){
     Serial.println("EEPROM successfully save detect mode!");
   } else {
     Serial.println("ERROR! failed to save detect mode!");

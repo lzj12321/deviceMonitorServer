@@ -6,15 +6,15 @@ from PyQt5.QtCore import pyqtSignal
 
 class Device(QObject):
     stateChanged=pyqtSignal(str,int)
-    def __init__(self,_name):
+    def __init__(self,_deviceInfo):
         super(Device,self).__init__()
-        self.name=_name
-        self.ip=""
-        self.deviceSerial=""
-        self.firmWareVersion=""
-        self.macAddress=""
-        self.productModel=""
-        self.productNum=0
+        # self.name=_deviceInfo['name']
+        self.ip=_deviceInfo['ip']
+        self.deviceSerial=_deviceInfo['serial']
+        self.firmWareVersion=_deviceInfo['firmWareVersion']
+        self.macAddress=_deviceInfo['macAddress']
+        self.productModel=_deviceInfo['productModel']
+        self.productNum=_deviceInfo['productNum']
 
         self.state=DeviceState.OFFLINE
         self.fsm=None

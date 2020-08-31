@@ -41,7 +41,7 @@ class MonitorServer(QObject):
         self.stateMachine=StateMachine()
         for _device in self.params['devices'].keys():
             self.isCheckDeviceOnline[_device]=False
-            newDevice=Device(_device)
+            newDevice=Device(self.params['devices'][_device])
             newDevice.bind(DeviceState.OFFLINE,self.stateMachine.getFsm(DeviceState.OFFLINE))
             self.devices[_device]=newDevice
             newDevice.stateChanged.connect(self.processDeviceStateChanged)
@@ -123,7 +123,7 @@ class MonitorServer(QObject):
         ####clear the production if the hour is changed###
         _hour=int(datetime.datetime.now().strftime('%H'))
         if _hour!=self.hour:
-            self.clearDeviceHourProduction()
+            self.clearDeviceHourProduction(self.getCalculatingDevice())
         #### only detect offline time more than three times it will close the connection #########
         for _device in self.isCheckDeviceOnline.keys():
             if self.devices[_device].state!=DeviceState.OFFLINE:
@@ -147,7 +147,7 @@ class MonitorServer(QObject):
         self.outLog('timer initialize')
         checkTimer=QTimer(self)
         checkTimer.timeout.connect(self.checkTimerTimeout)
-        checkTimer.setInterval(30000)
+        checkTimer.setInterval(3000000)
         checkTimer.start()
         pass
 
@@ -245,6 +245,7 @@ class MonitorServer(QObject):
                         self.outLog("error self.onlineDeviceIp[_device] in self.ipSocket.keys() "+sockIp+' '+_device)
                 elif _device in self.devices.keys():
                     self.onlineDeviceIp[_device]=sockIp
+                    self.devices[_device].ip=sockIp
                 elif _device not in self.devices.keys():
                     isMsgValid=False
             else:
@@ -262,8 +263,8 @@ class MonitorServer(QObject):
         if not isMsgValid:
             return
 
-        self.devices[_device].ip=sockIp
         if _device in self.devices.keys():
+            self.devices[_device].ip=sockIp
             self.isCheckDeviceOnline[_device]=True
             if _validMsg=='stop':
                 self.process_stop_msg(_device)
@@ -284,8 +285,11 @@ class MonitorServer(QObject):
                 if len(validMsgs)==2:
                     print(validMsgs)
                     self.devices[_device].productNum=int(validMsgs[1])
+                    self.saveProductionData(_device,self.devices[_device].productNum)
             else:
                 self.outLog("receive a invalid msg:"+msg)
+        else:
+            self.outLog("receive a invalid msg:"+msg)
         pass
 
     def saveProductionData(self,_device,_production):

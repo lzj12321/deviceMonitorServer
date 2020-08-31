@@ -8,6 +8,7 @@ class MysqlTool:
         self.yamlTool=Yaml_Tool()
         self.params=self.yamlTool.getValue('configure.yaml')['mysql']
         self.timeStamp=self.yamlTool.getValue('configure.yaml')['timeStamp']
+        self.deviceInfo=self.yamlTool.getValue('configure.yaml')['devices']
         self._connectState=self.connectServer()
         pass
 
@@ -41,17 +42,24 @@ class MysqlTool:
         pass
 
     def saveDeviceProductionData(self,_device,_production):
+        _productModel=self.deviceInfo[_device]['productModel']
+        print("save production data")
         _currHour=int(datetime.datetime.now().strftime('%H'))
         _dataTable=""
         if _currHour>=8 and _currHour <20:
             _dataTable="chajiProduction_day"
         else:
             _dataTable="chajiProduction_night"
-        sql1="select 1 from "+_dataTable+" where product="+_device+" limit 1;"
+        sql1="select 1 from "+_dataTable+" where product=\'"+_productModel+"\';"
         flag,result=self.executeSql(sql1)
+        _timeStamp=self.timeStamp['hour_'+str(_currHour)]
         if flag and len(result)!=0:
-            _timeStamp=self.timeStamp['hour_'+str(_currHour)]
-            sql2="update "+_dataTable+" set "+_timeStamp+"="+str(_production)+";"
+            sql2="update "+_dataTable+" set "+_timeStamp+"="+str(_production)+" where product=\'"+_productModel+"\';"
+            flag2,result2=self.executeSql(sql2)
+            if not flag2:
+                print('execute sql error:'+sql2)
+        elif flag and len(result)==0:
+            sql2="insert "+_dataTable+"(product,"+_timeStamp+") value(\'"+_productModel+"\',"+str(_production)+");"
             flag2,result2=self.executeSql(sql2)
             if not flag2:
                 print('execute sql error:'+sql2)
