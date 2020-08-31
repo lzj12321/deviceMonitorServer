@@ -232,7 +232,7 @@ class MonitorServer(QObject):
         _msgs=msg.split(':')
         if len(_msgs)==2:
             _device=_msgs[0]
-            _validMsg=_msgs[1]
+            _validMsg=_msgs[1].replace("\n","")
 
             ######## update robot socket ##########
             if _device in self.onlineDeviceIp.keys():
