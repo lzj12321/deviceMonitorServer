@@ -1,0 +1,57 @@
+2020-08-31 13:28:27,168 - param initialize
+2020-08-31 13:28:27,787 - server initialize
+2020-08-31 13:28:27,819 - timer initialize
+2020-08-31 13:28:27,822 - mysql initialize
+2020-08-31 13:30:52,354 - param initialize
+2020-08-31 13:30:52,839 - server initialize
+2020-08-31 13:30:52,853 - timer initialize
+2020-08-31 13:30:52,865 - mysql initialize
+2020-08-31 16:12:28,138 - param initialize
+2020-08-31 16:12:28,756 - server initialize
+2020-08-31 16:12:28,788 - timer initialize
+2020-08-31 16:12:28,790 - mysql initialize
+2020-08-31 16:13:56,843 - param initialize
+2020-08-31 16:13:57,457 - server initialize
+2020-08-31 16:13:57,469 - timer initialize
+2020-08-31 16:13:57,471 - mysql initialize
+2020-08-31 16:17:49,096 - param initialize
+2020-08-31 16:17:49,714 - server initialize
+2020-08-31 16:17:49,726 - timer initialize
+2020-08-31 16:17:49,736 - mysql initialize
+2020-08-31 16:18:23,861 - a new connection from 192.168.183.1
+2020-08-31 16:18:55,500 - receive a invalid msg:xe_line1_robot1:monitor
+2020-08-31 16:22:31,250 - param initialize
+2020-08-31 16:22:31,821 - server initialize
+2020-08-31 16:22:31,831 - timer initialize
+2020-08-31 16:22:31,832 - mysql initialize
+2020-08-31 16:22:39,071 - a new connection from 192.168.183.1
+2020-08-31 16:25:58,432 - param initialize
+2020-08-31 16:25:59,034 - server initialize
+2020-08-31 16:25:59,046 - timer initialize
+2020-08-31 16:25:59,058 - mysql initialize
+2020-08-31 16:26:04,461 - a new connection from 192.168.183.1
+2020-08-31 16:33:18,804 - param initialize
+2020-08-31 16:33:19,413 - server initialize
+2020-08-31 16:33:19,425 - timer initialize
+2020-08-31 16:33:19,434 - mysql initialize
+2020-08-31 16:33:25,586 - a new connection from 192.168.183.1
+2020-08-31 16:35:17,818 - param initialize
+2020-08-31 16:35:18,460 - server initialize
+2020-08-31 16:35:18,470 - timer initialize
+2020-08-31 16:35:18,483 - mysql initialize
+2020-08-31 16:35:24,449 - a new connection from 192.168.183.1
+2020-08-31 16:36:34,963 - param initialize
+2020-08-31 16:36:35,584 - server initialize
+2020-08-31 16:36:35,596 - timer initialize
+2020-08-31 16:36:35,611 - mysql initialize
+2020-08-31 16:36:43,833 - a new connection from 192.168.183.1
+2020-08-31 16:45:34,277 - param initialize
+2020-08-31 16:45:34,896 - server initialize
+2020-08-31 16:45:34,908 - timer initialize
+2020-08-31 16:45:34,920 - mysql initialize
+2020-08-31 16:45:39,262 - a new connection from 192.168.183.1
+2020-08-31 16:45:59,583 - param initialize
+2020-08-31 16:46:00,244 - server initialize
+2020-08-31 16:46:00,256 - timer initialize
+2020-08-31 16:46:00,263 - mysql initialize
+2020-08-31 16:46:06,118 - a new connection from 192.168.183.1

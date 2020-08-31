@@ -3,7 +3,7 @@ server:
   port: 8888
 
 mysql:
-  ip: 192.168.183.142
+  ip: 127.0.0.1
   user: root
   password: '123456'
   database: robot
@@ -42,7 +42,7 @@ timeStamp:
 devices:
   xe_line1_robot1:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line1_robot1'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 0
@@ -50,7 +50,7 @@ devices:
 
   xe_line1_robot2:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line1_robot2'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -58,7 +58,7 @@ devices:
 
   xe_line1_robot3:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line1_robot3'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -66,7 +66,7 @@ devices:
 
   xe_line1_ultra:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line1_ultra'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -74,7 +74,7 @@ devices:
 
   xe_line2_robot1:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line2_robot1'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -82,7 +82,7 @@ devices:
 
   xe_line2_robot2:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line2_robot2'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -90,7 +90,7 @@ devices:
 
   xe_line2_robot3:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line2_robot3'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -98,7 +98,7 @@ devices:
 
   xe_line2_ultra:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line2_ultra'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -106,7 +106,7 @@ devices:
 
   xe_line3_robot1:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line3_robot1'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -114,7 +114,7 @@ devices:
 
   xe_line3_robot2:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line3_robot2'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -122,7 +122,7 @@ devices:
 
   xe_line3_robot3:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line3_robot3'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -130,7 +130,7 @@ devices:
 
   xe_line3_ultra:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line3_ultra'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -138,7 +138,7 @@ devices:
 
   xe_line4_robot1:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line4_robot1'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -146,7 +146,7 @@ devices:
 
   xe_line4_robot2:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line4_robot2'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -154,7 +154,7 @@ devices:
 
   xe_line4_robot3:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line4_robot3'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -162,7 +162,7 @@ devices:
 
   xe_line4_ultra:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line4_ultra'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -170,7 +170,7 @@ devices:
 
   xe_line5_robot1:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line5_robot1'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -178,7 +178,7 @@ devices:
 
   xe_line5_robot2:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line5_robot2'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -186,7 +186,7 @@ devices:
 
   xe_line5_robot3:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line5_robot3'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -194,7 +194,7 @@ devices:
 
   xe_line5_ultra:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line5_ultra'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -202,7 +202,7 @@ devices:
 
   xe_line6_robot1:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line6_robot1'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -210,7 +210,7 @@ devices:
 
   xe_line6_robot2:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line6_robot2'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -218,7 +218,7 @@ devices:
 
   xe_line6_robot3:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line6_robot3'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -226,7 +226,7 @@ devices:
 
   xe_line6_ultra:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line6_ultra'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -234,7 +234,7 @@ devices:
 
   xe_line7_robot1:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line7_robot1'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -242,7 +242,7 @@ devices:
 
   xe_line7_robot2:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line7_robot2'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -250,7 +250,7 @@ devices:
 
   xe_line7_robot3:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line7_robot3'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -258,7 +258,7 @@ devices:
 
   xe_line7_ultra:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line7_ultra'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -266,7 +266,7 @@ devices:
 
   xe_line8_robot1:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line8_robot1'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -274,7 +274,7 @@ devices:
 
   xe_line8_robot2:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line8_robot2'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -282,7 +282,7 @@ devices:
 
   xe_line8_robot3:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line8_robot3'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12
@@ -290,7 +290,7 @@ devices:
     
   xe_line8_ultra:
     ip: 192.168.10.1
-    serial: 'test'
+    serial: 'xe_line8_ultra'
     macAddress: 'mac test'
     productModel: 'product model test'
     productNum: 12

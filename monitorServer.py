@@ -3,9 +3,9 @@ from mysqlTool import MysqlTool
 from yamlTool import Yaml_Tool
 import logging
 from PyQt5.QtCore import *
-from PyQt5 import QtNetwork
+from PyQt5 import QtNetwork,QtMultimedia
 from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal,QUrl
 from loggerTool import Logger
 from deviceState import DeviceState
 from device import Device,StateMachine
@@ -37,6 +37,8 @@ class MonitorServer(QObject):
         self.onlineDeviceIp={}
         self.ipSocket={}
         self.workshop=self.params['workshop']
+        self.stopDeviceList=[]
+        self.isPlayingAlarmSound=False
 
         self.stateMachine=StateMachine()
         for _device in self.params['devices'].keys():
@@ -109,7 +111,6 @@ class MonitorServer(QObject):
                 if _device in self.onlineDeviceIp.keys():
                     self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('idle')
                     print('send idle msg to '+_device)
-
 
 
     def clearDeviceHourProduction(self,_productList):
@@ -216,11 +217,35 @@ class MonitorServer(QObject):
         self.stateMachine.changeState(self.devices[_device],DeviceState.IDLE)
         pass
 
+    def playAlarmSound(self,_device):
+        if self.isPlayingAlarmSound:
+            return
+        else:
+            print(_device+" play alarm sound")
+            self.isPlayingAlarmSound=True
+            sound_file = 'test.wav'
+            sound = QtMultimedia.QSound(sound_file)
+            sound.play()
+            # _soundUrl=QUrl.fromLocalFile("test.wav")
+            # _content=QtMultimedia.QMediaContent(_soundUrl)
+            # _player=QtMultimedia.QMediaPlayer()
+            # _player.setMedia(_content)
+            # _player.setVolume(100)
+            # _player.play()
+        pass
+
     def processDeviceStateChanged(self,_device,_state):
+        print(_device+" state changed")
+        if _state==DeviceState.PAUSE or _state==DeviceState.STOP:
+            if _device not in self.stopDeviceList:
+                self.stopDeviceList.append(_device)
+                self.playAlarmSound(_device)
+
+        elif _state!=DeviceState.PAUSE and _state!=DeviceState.STOP:
+            if _device in self.stopDeviceList:
+                self.stopDeviceList.remove(_device)
         self.updateDeviceState.emit(_device,_state)
         self.saveDeviceStateChangeLog(_device,_state)
-        # self.addRunMessage(_device+':'+_validMsg)
-        # print(_device+' alter robot state to '+str(_state))
         pass
 
     def preProcessMsgFromDevice(self,msg,sockIp):

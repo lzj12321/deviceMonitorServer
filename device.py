@@ -8,7 +8,7 @@ class Device(QObject):
     stateChanged=pyqtSignal(str,int)
     def __init__(self,_deviceInfo):
         super(Device,self).__init__()
-        # self.name=_deviceInfo['name']
+        # self.deviceSerial=_deviceInfo['deviceSerial']
         self.ip=_deviceInfo['ip']
         self.deviceSerial=_deviceInfo['serial']
         self.firmWareVersion=_deviceInfo['firmWareVersion']
@@ -20,68 +20,68 @@ class Device(QObject):
         self.fsm=None
     
     def enter_offline(self):
-        self.stateChanged.emit(self.name,DeviceState.OFFLINE)
-        print("%s enter offline state!"% self.name)
+        self.stateChanged.emit(self.deviceSerial,DeviceState.OFFLINE)
+        print("%s enter offline state!"% self.deviceSerial)
         pass
     def exit_offline(self):
-        print("%s exit offline state!"% self.name)
+        print("%s exit offline state!"% self.deviceSerial)
         pass
 
     def enter_calculate(self):
-        self.stateChanged.emit(self.name,DeviceState.CALCULATE)
-        print("%s enter calculate state!"% self.name)
+        self.stateChanged.emit(self.deviceSerial,DeviceState.CALCULATE)
+        print("%s enter calculate state!"% self.deviceSerial)
         pass
     def exit_calculate(self):
-        print("%s exit calculate state!"% self.name)
+        print("%s exit calculate state!"% self.deviceSerial)
         pass
 
     def enter_idle(self):
-        self.stateChanged.emit(self.name,DeviceState.IDLE)
-        print("%s enter idle state!"% self.name)
+        self.stateChanged.emit(self.deviceSerial,DeviceState.IDLE)
+        print("%s enter idle state!"% self.deviceSerial)
         pass
 
     def exit_idle(self):
-        print("%s exit idle state!"% self.name)
+        print("%s exit idle state!"% self.deviceSerial)
         pass
 
     def enter_monitor(self):
-        self.stateChanged.emit(self.name,DeviceState.MONITOR)
-        print("%s enter monitor state!"% self.name)
+        self.stateChanged.emit(self.deviceSerial,DeviceState.MONITOR)
+        print("%s enter monitor state!"% self.deviceSerial)
         pass
     def exit_monitor(self):
-        print("%s exit monitor state!"% self.name)
+        print("%s exit monitor state!"% self.deviceSerial)
         pass
 
     def enter_ota(self):
-        self.stateChanged.emit(self.name,DeviceState.OTA)
-        print("%s enter ota state!"% self.name)
+        self.stateChanged.emit(self.deviceSerial,DeviceState.OTA)
+        print("%s enter ota state!"% self.deviceSerial)
         pass
     def exit_ota(self):
-        print("%s exit ota state!"% self.name)
+        print("%s exit ota state!"% self.deviceSerial)
         pass
 
     def enter_pause(self):
-        self.stateChanged.emit(self.name,DeviceState.PAUSE)
-        print("%s enter pause state!"% self.name)
+        self.stateChanged.emit(self.deviceSerial,DeviceState.PAUSE)
+        print("%s enter pause state!"% self.deviceSerial)
         pass
     def exit_pause(self):
-        print("%s exit pause state!"% self.name)
+        print("%s exit pause state!"% self.deviceSerial)
         pass
         
     def enter_stop(self):
-        self.stateChanged.emit(self.name,DeviceState.STOP)
-        print("%s enter stop state!"% self.name)
+        self.stateChanged.emit(self.deviceSerial,DeviceState.STOP)
+        print("%s enter stop state!"% self.deviceSerial)
         pass
     def exit_stop(self):
-        print("%s exit stop state!"% self.name)
+        print("%s exit stop state!"% self.deviceSerial)
         pass
 
     def enter_unknown(self):
-        self.stateChanged.emit(self.name,DeviceState.UNKNOWN_WORKMODE)
-        print("%s enter unknown state!"% self.name)
+        self.stateChanged.emit(self.deviceSerial,DeviceState.UNKNOWN_WORKMODE)
+        print("%s enter unknown state!"% self.deviceSerial)
         pass
     def exit_unknown(self):
-        print("%s exit unknown state!"% self.name)
+        print("%s exit unknown state!"% self.deviceSerial)
         pass
 
     def bind(self,_state,_fsm):
