@@ -3,13 +3,14 @@ from mysqlTool import MysqlTool
 from yamlTool import Yaml_Tool
 import logging
 from PyQt5.QtCore import *
-from PyQt5 import QtNetwork,QtMultimedia
+from PyQt5 import QtNetwork
 from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import pyqtSignal,QUrl
+from PyQt5.QtCore import pyqtSignal
 from loggerTool import Logger
 from deviceState import DeviceState
 from device import Device,StateMachine
 import datetime
+from soundPlayerTherad import SoundPlayerThread
 
 
 class MonitorServer(QObject):
@@ -38,6 +39,7 @@ class MonitorServer(QObject):
         self.ipSocket={}
         self.workshop=self.params['workshop']
         self.stopDeviceList=[]
+        self.waitPlayAlarmDevice=[]
         self.isPlayingAlarmSound=False
 
         self.stateMachine=StateMachine()
@@ -121,10 +123,15 @@ class MonitorServer(QObject):
         pass
 
     def checkTimerTimeout(self):
+        ####play alarm sound####
+        if len(self.waitPlayAlarmDevice)!=0:
+            self.playAlarmSound(self.waitPlayAlarmDevice[0])
+
         ####clear the production if the hour is changed###
         _hour=int(datetime.datetime.now().strftime('%H'))
         if _hour!=self.hour:
             self.clearDeviceHourProduction(self.getCalculatingDevice())
+
         #### only detect offline time more than three times it will close the connection #########
         for _device in self.isCheckDeviceOnline.keys():
             if self.devices[_device].state!=DeviceState.OFFLINE:
@@ -219,20 +226,21 @@ class MonitorServer(QObject):
 
     def playAlarmSound(self,_device):
         if self.isPlayingAlarmSound:
+            if _device not in self.waitPlayAlarmDevice:
+                self.waitPlayAlarmDevice.append(_device)
             return
         else:
+            if _device in self.waitPlayAlarmDevice:
+                self.waitPlayAlarmDevice.remove(_device)
             print(_device+" play alarm sound")
-            self.isPlayingAlarmSound=True
-            sound_file = 'test.wav'
-            sound = QtMultimedia.QSound(sound_file)
-            sound.play()
-            # _soundUrl=QUrl.fromLocalFile("test.wav")
-            # _content=QtMultimedia.QMediaContent(_soundUrl)
-            # _player=QtMultimedia.QMediaPlayer()
-            # _player.setMedia(_content)
-            # _player.setVolume(100)
-            # _player.play()
+            _thread=SoundPlayerThread(_device)
+            _thread.playEnd.connect(self.playAlarmSoundEnd)
+            _thread.start()
         pass
+
+    def playAlarmSoundEnd(self,_device):
+        self.isPlayingAlarmSound=False
+        print("play alarm sound end!"+_device)
 
     def processDeviceStateChanged(self,_device,_state):
         print(_device+" state changed")
@@ -308,7 +316,6 @@ class MonitorServer(QObject):
             elif "calculate-" in _validMsg:
                 validMsgs=_validMsg.split("-")
                 if len(validMsgs)==2:
-                    print(validMsgs)
                     self.devices[_device].productNum=int(validMsgs[1])
                     self.saveProductionData(_device,self.devices[_device].productNum)
             else:
