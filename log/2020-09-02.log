@@ -1,0 +1,287 @@
+2020-09-02 08:54:09,067 - param initialize
+2020-09-02 08:54:09,775 - server initialize
+2020-09-02 08:54:09,801 - timer initialize
+2020-09-02 08:54:09,805 - mysql initialize
+2020-09-02 08:54:28,075 - a new connection from 192.168.183.1
+2020-09-02 08:57:38,519 - param initialize
+2020-09-02 08:57:39,036 - server initialize
+2020-09-02 08:57:39,047 - timer initialize
+2020-09-02 08:57:39,052 - mysql initialize
+2020-09-02 08:57:42,272 - a new connection from 192.168.183.1
+2020-09-02 09:01:31,043 - param initialize
+2020-09-02 09:01:31,573 - server initialize
+2020-09-02 09:01:31,595 - timer initialize
+2020-09-02 09:01:31,602 - mysql initialize
+2020-09-02 09:01:37,198 - a new connection from 192.168.183.1
+2020-09-02 09:05:54,348 - param initialize
+2020-09-02 09:05:54,864 - server initialize
+2020-09-02 09:05:54,884 - timer initialize
+2020-09-02 09:05:54,890 - mysql initialize
+2020-09-02 09:06:01,804 - a new connection from 192.168.183.1
+2020-09-02 09:12:22,493 - param initialize
+2020-09-02 09:12:22,971 - server initialize
+2020-09-02 09:12:22,992 - timer initialize
+2020-09-02 09:12:23,000 - mysql initialize
+2020-09-02 09:12:29,058 - a new connection from 192.168.183.1
+2020-09-02 09:13:51,076 - param initialize
+2020-09-02 09:13:51,566 - server initialize
+2020-09-02 09:13:51,575 - timer initialize
+2020-09-02 09:13:51,576 - mysql initialize
+2020-09-02 09:13:55,873 - a new connection from 192.168.183.1
+2020-09-02 09:14:26,406 - param initialize
+2020-09-02 09:14:26,960 - server initialize
+2020-09-02 09:14:26,981 - timer initialize
+2020-09-02 09:14:26,986 - mysql initialize
+2020-09-02 09:14:30,185 - a new connection from 192.168.183.1
+2020-09-02 09:15:40,581 - param initialize
+2020-09-02 09:15:41,316 - server initialize
+2020-09-02 09:15:41,328 - timer initialize
+2020-09-02 09:15:41,339 - mysql initialize
+2020-09-02 09:15:49,016 - a new connection from 192.168.183.1
+2020-09-02 09:16:17,427 - param initialize
+2020-09-02 09:16:18,269 - server initialize
+2020-09-02 09:16:18,284 - timer initialize
+2020-09-02 09:16:18,294 - mysql initialize
+2020-09-02 09:16:21,384 - a new connection from 192.168.183.1
+2020-09-02 09:16:39,287 - xe_line1_robot1 alter device state to offline!
+2020-09-02 09:16:39,358 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 09:16:56,682 - a new connection from 192.168.183.1
+2020-09-02 09:17:09,285 - xe_line1_robot1 alter device state to offline!
+2020-09-02 09:17:09,376 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 09:17:15,752 - a new connection from 192.168.183.1
+2020-09-02 09:17:29,285 - xe_line1_robot1 alter device state to offline!
+2020-09-02 09:17:29,359 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 09:39:02,809 - param initialize
+2020-09-02 09:39:03,324 - server initialize
+2020-09-02 09:39:03,332 - timer initialize
+2020-09-02 09:39:03,333 - mysql initialize
+2020-09-02 09:39:09,520 - a new connection from 192.168.183.1
+2020-09-02 09:39:24,335 - xe_line1_robot1 alter device state to offline!
+2020-09-02 09:39:24,385 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 09:39:34,335 - xe_line1_robot2 alter device state to offline!
+2020-09-02 09:39:34,381 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 10:06:30,362 - param initialize
+2020-09-02 10:06:30,957 - server initialize
+2020-09-02 10:06:30,971 - timer initialize
+2020-09-02 10:06:30,990 - mysql initialize
+2020-09-02 10:06:36,413 - a new connection from 192.168.183.1
+2020-09-02 10:09:51,256 - param initialize
+2020-09-02 10:09:51,743 - server initialize
+2020-09-02 10:09:51,754 - timer initialize
+2020-09-02 10:09:51,759 - mysql initialize
+2020-09-02 10:09:56,019 - a new connection from 192.168.183.1
+2020-09-02 10:11:04,697 - param initialize
+2020-09-02 10:11:05,181 - server initialize
+2020-09-02 10:11:05,191 - timer initialize
+2020-09-02 10:11:05,198 - mysql initialize
+2020-09-02 10:11:09,562 - a new connection from 192.168.183.1
+2020-09-02 10:13:04,808 - param initialize
+2020-09-02 10:13:05,315 - server initialize
+2020-09-02 10:13:05,324 - timer initialize
+2020-09-02 10:13:05,325 - mysql initialize
+2020-09-02 10:13:09,298 - a new connection from 192.168.183.1
+2020-09-02 10:14:01,862 - param initialize
+2020-09-02 10:14:02,380 - server initialize
+2020-09-02 10:14:02,388 - timer initialize
+2020-09-02 10:14:02,389 - mysql initialize
+2020-09-02 10:14:06,489 - a new connection from 192.168.183.1
+2020-09-02 10:20:13,127 - param initialize
+2020-09-02 10:20:13,679 - server initialize
+2020-09-02 10:20:13,690 - timer initialize
+2020-09-02 10:20:13,691 - mysql initialize
+2020-09-02 10:20:20,969 - a new connection from 192.168.183.1
+2020-09-02 10:21:44,815 - param initialize
+2020-09-02 10:21:45,323 - server initialize
+2020-09-02 10:21:45,334 - timer initialize
+2020-09-02 10:21:45,340 - mysql initialize
+2020-09-02 10:21:49,663 - a new connection from 192.168.183.1
+2020-09-02 10:22:16,334 - xe_line1_robot3 alter device state to offline!
+2020-09-02 10:22:16,405 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 10:22:26,336 - xe_line1_robot1 alter device state to offline!
+2020-09-02 10:22:26,389 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 10:22:36,152 - param initialize
+2020-09-02 10:22:36,657 - server initialize
+2020-09-02 10:22:36,667 - timer initialize
+2020-09-02 10:22:36,672 - mysql initialize
+2020-09-02 10:22:41,397 - a new connection from 192.168.183.1
+2020-09-02 10:23:03,712 - param initialize
+2020-09-02 10:23:04,225 - server initialize
+2020-09-02 10:23:04,234 - timer initialize
+2020-09-02 10:23:04,240 - mysql initialize
+2020-09-02 10:23:08,447 - a new connection from 192.168.183.1
+2020-09-02 10:23:25,251 - xe_line1_robot1 alter device state to offline!
+2020-09-02 10:23:25,303 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 10:33:17,052 - param initialize
+2020-09-02 10:33:17,532 - server initialize
+2020-09-02 10:33:17,552 - timer initialize
+2020-09-02 10:33:17,557 - mysql initialize
+2020-09-02 10:33:24,970 - a new connection from 192.168.183.1
+2020-09-02 10:33:38,559 - xe_line1_robot1 alter device state to offline!
+2020-09-02 10:33:38,619 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 10:38:18,513 - param initialize
+2020-09-02 10:38:19,089 - server initialize
+2020-09-02 10:38:19,119 - timer initialize
+2020-09-02 10:38:19,121 - mysql initialize
+2020-09-02 10:38:27,401 - a new connection from 192.168.183.1
+2020-09-02 10:38:46,297 - param initialize
+2020-09-02 10:38:46,752 - server initialize
+2020-09-02 10:38:46,775 - timer initialize
+2020-09-02 10:38:46,780 - mysql initialize
+2020-09-02 10:38:51,391 - a new connection from 192.168.183.1
+2020-09-02 10:39:07,778 - xe_line1_robot1 alter device state to offline!
+2020-09-02 10:39:07,850 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 10:40:43,443 - param initialize
+2020-09-02 10:40:43,944 - server initialize
+2020-09-02 10:40:43,954 - timer initialize
+2020-09-02 10:40:43,961 - mysql initialize
+2020-09-02 10:40:52,231 - a new connection from 192.168.183.1
+2020-09-02 10:41:29,866 - param initialize
+2020-09-02 10:41:30,413 - server initialize
+2020-09-02 10:41:30,436 - timer initialize
+2020-09-02 10:41:30,442 - mysql initialize
+2020-09-02 10:41:34,567 - a new connection from 192.168.183.1
+2020-09-02 10:41:51,442 - xe_line1_robot1 alter device state to offline!
+2020-09-02 10:41:51,500 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 10:42:05,642 - param initialize
+2020-09-02 10:42:06,192 - server initialize
+2020-09-02 10:42:06,202 - timer initialize
+2020-09-02 10:42:06,214 - mysql initialize
+2020-09-02 10:42:09,730 - a new connection from 192.168.183.1
+2020-09-02 10:42:14,918 - a new connection from 192.168.183.1
+2020-09-02 10:45:13,930 - param initialize
+2020-09-02 10:45:14,482 - server initialize
+2020-09-02 10:45:14,493 - timer initialize
+2020-09-02 10:45:14,500 - mysql initialize
+2020-09-02 10:45:17,550 - a new connection from 192.168.183.1
+2020-09-02 10:45:35,490 - xe_line1_robot1 alter device state to offline!
+2020-09-02 10:45:35,547 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 10:46:30,602 - param initialize
+2020-09-02 10:46:31,139 - server initialize
+2020-09-02 10:46:31,149 - timer initialize
+2020-09-02 10:46:31,157 - mysql initialize
+2020-09-02 10:46:41,045 - a new connection from 192.168.183.1
+2020-09-02 10:47:02,150 - xe_line1_robot1 alter device state to offline!
+2020-09-02 10:47:02,214 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 10:47:43,344 - param initialize
+2020-09-02 10:47:43,857 - server initialize
+2020-09-02 10:47:43,868 - timer initialize
+2020-09-02 10:47:43,874 - mysql initialize
+2020-09-02 10:47:49,852 - a new connection from 192.168.183.1
+2020-09-02 10:48:18,126 - param initialize
+2020-09-02 10:48:18,724 - server initialize
+2020-09-02 10:48:18,737 - timer initialize
+2020-09-02 10:48:18,747 - mysql initialize
+2020-09-02 10:48:25,821 - a new connection from 192.168.183.1
+2020-09-02 10:48:39,739 - xe_line1_robot1 alter device state to offline!
+2020-09-02 10:48:39,826 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 13:56:56,424 - param initialize
+2020-09-02 13:56:57,198 - server initialize
+2020-09-02 13:56:57,232 - timer initialize
+2020-09-02 13:56:57,234 - mysql initialize
+2020-09-02 14:03:20,542 - param initialize
+2020-09-02 14:03:21,192 - server initialize
+2020-09-02 14:03:21,222 - timer initialize
+2020-09-02 14:03:21,224 - mysql initialize
+2020-09-02 14:04:53,783 - param initialize
+2020-09-02 14:04:54,316 - server initialize
+2020-09-02 14:04:54,335 - timer initialize
+2020-09-02 14:04:54,341 - mysql initialize
+2020-09-02 14:05:20,698 - a new connection from 192.168.183.1
+2020-09-02 14:46:16,178 - param initialize
+2020-09-02 14:46:16,642 - server initialize
+2020-09-02 14:46:16,661 - timer initialize
+2020-09-02 14:46:16,668 - mysql initialize
+2020-09-02 14:46:21,639 - a new connection from 192.168.183.1
+2020-09-02 14:47:32,086 - param initialize
+2020-09-02 14:47:32,848 - server initialize
+2020-09-02 14:47:32,874 - timer initialize
+2020-09-02 14:47:32,880 - mysql initialize
+2020-09-02 14:47:43,555 - a new connection from 192.168.183.1
+2020-09-02 14:48:03,886 - xe_line1_robot1 alter device state to offline!
+2020-09-02 14:48:04,704 - check this connection time out,close this connection with 192.168.183.1
+2020-09-02 14:48:46,045 - param initialize
+2020-09-02 14:48:46,547 - server initialize
+2020-09-02 14:48:46,557 - timer initialize
+2020-09-02 14:48:46,568 - mysql initialize
+2020-09-02 14:48:51,402 - a new connection from 192.168.183.1
+2020-09-02 15:05:10,423 - param initialize
+2020-09-02 15:05:10,911 - server initialize
+2020-09-02 15:05:10,920 - timer initialize
+2020-09-02 15:05:10,929 - mysql initialize
+2020-09-02 15:05:19,675 - a new connection from 192.168.183.1
+2020-09-02 15:05:47,050 - param initialize
+2020-09-02 15:05:47,568 - server initialize
+2020-09-02 15:05:47,580 - timer initialize
+2020-09-02 15:05:47,590 - mysql initialize
+2020-09-02 15:05:52,715 - a new connection from 192.168.183.1
+2020-09-02 15:12:02,690 - param initialize
+2020-09-02 15:12:03,336 - server initialize
+2020-09-02 15:12:03,345 - timer initialize
+2020-09-02 15:12:03,347 - mysql initialize
+2020-09-02 15:12:07,625 - a new connection from 192.168.183.1
+2020-09-02 15:12:49,980 - param initialize
+2020-09-02 15:12:50,609 - server initialize
+2020-09-02 15:12:50,623 - timer initialize
+2020-09-02 15:12:50,636 - mysql initialize
+2020-09-02 15:12:57,050 - a new connection from 192.168.183.1
+2020-09-02 15:18:26,931 - param initialize
+2020-09-02 15:18:27,570 - server initialize
+2020-09-02 15:18:27,587 - timer initialize
+2020-09-02 15:18:27,619 - mysql initialize
+2020-09-02 15:18:34,615 - a new connection from 192.168.183.1
+2020-09-02 15:18:58,176 - param initialize
+2020-09-02 15:18:58,815 - server initialize
+2020-09-02 15:18:58,825 - timer initialize
+2020-09-02 15:18:58,827 - mysql initialize
+2020-09-02 15:19:05,174 - a new connection from 192.168.183.1
+2020-09-02 15:19:56,292 - param initialize
+2020-09-02 15:19:56,879 - server initialize
+2020-09-02 15:19:56,891 - timer initialize
+2020-09-02 15:19:56,902 - mysql initialize
+2020-09-02 15:20:00,776 - a new connection from 192.168.183.1
+2020-09-02 15:21:50,474 - param initialize
+2020-09-02 15:21:50,962 - server initialize
+2020-09-02 15:21:50,975 - timer initialize
+2020-09-02 15:21:50,980 - mysql initialize
+2020-09-02 15:22:01,732 - a new connection from 192.168.183.1
+2020-09-02 15:22:20,516 - a new connection from 192.168.183.1
+2020-09-02 15:25:51,841 - param initialize
+2020-09-02 15:25:52,340 - server initialize
+2020-09-02 15:25:52,353 - timer initialize
+2020-09-02 15:25:52,364 - mysql initialize
+2020-09-02 15:25:57,650 - a new connection from 192.168.183.1
+2020-09-02 15:28:46,889 - param initialize
+2020-09-02 15:28:47,387 - server initialize
+2020-09-02 15:28:47,399 - timer initialize
+2020-09-02 15:28:47,413 - mysql initialize
+2020-09-02 15:28:53,106 - a new connection from 192.168.183.1
+2020-09-02 15:29:27,067 - param initialize
+2020-09-02 15:29:27,549 - server initialize
+2020-09-02 15:29:27,559 - timer initialize
+2020-09-02 15:29:27,569 - mysql initialize
+2020-09-02 15:29:35,049 - a new connection from 192.168.183.1
+2020-09-02 15:32:17,910 - param initialize
+2020-09-02 15:32:18,428 - server initialize
+2020-09-02 15:32:18,438 - timer initialize
+2020-09-02 15:32:18,439 - mysql initialize
+2020-09-02 15:32:23,361 - a new connection from 192.168.183.1
+2020-09-02 15:33:32,222 - param initialize
+2020-09-02 15:33:32,725 - server initialize
+2020-09-02 15:33:32,733 - timer initialize
+2020-09-02 15:33:32,734 - mysql initialize
+2020-09-02 15:33:40,808 - a new connection from 192.168.183.1
+2020-09-02 15:34:35,151 - param initialize
+2020-09-02 15:34:35,651 - server initialize
+2020-09-02 15:34:35,662 - timer initialize
+2020-09-02 15:34:35,664 - mysql initialize
+2020-09-02 15:34:38,880 - a new connection from 192.168.183.1
+2020-09-02 15:36:13,435 - param initialize
+2020-09-02 15:36:13,896 - server initialize
+2020-09-02 15:36:13,908 - timer initialize
+2020-09-02 15:36:13,913 - mysql initialize
+2020-09-02 15:36:19,287 - a new connection from 192.168.183.1
+2020-09-02 15:37:35,000 - param initialize
+2020-09-02 15:37:35,470 - server initialize
+2020-09-02 15:37:35,480 - timer initialize
+2020-09-02 15:37:35,481 - mysql initialize
+2020-09-02 15:37:43,605 - a new connection from 192.168.183.1

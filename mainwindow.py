@@ -18,7 +18,6 @@ from yamlTool import Yaml_Tool
 from deviceState import DeviceState,MonitorState
 from PyQt5.QtGui import QPixmap
 from deviceDialog import DeviceDialog
-import copy
 
 
 class myButton(QPushButton):

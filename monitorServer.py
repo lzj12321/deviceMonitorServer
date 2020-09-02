@@ -11,6 +11,7 @@ from deviceState import DeviceState
 from device import Device,StateMachine
 import datetime
 from soundPlayerTherad import SoundPlayerThread
+import time
 
 
 class MonitorServer(QObject):
@@ -127,20 +128,25 @@ class MonitorServer(QObject):
         if len(self.waitPlayAlarmDevice)!=0:
             self.playAlarmSound(self.waitPlayAlarmDevice[0])
 
+        for _device in self.getMonitoringDevice():
+            if self.devices[_device].state==DeviceState.STOP or self.devices[_device].state==DeviceState.PAUSE:
+                if _device not in self.waitPlayAlarmDevice:
+                    self.waitPlayAlarmDevice.append(_device)
+            
         ####clear the production if the hour is changed###
         _hour=int(datetime.datetime.now().strftime('%H'))
         if _hour!=self.hour:
             self.clearDeviceHourProduction(self.getCalculatingDevice())
 
         #### only detect offline time more than three times it will close the connection #########
-        for _device in self.isCheckDeviceOnline.keys():
-            if self.devices[_device].state!=DeviceState.OFFLINE:
-                if not self.isCheckDeviceOnline[_device]:
-                    self.appendRunMsg.emit(_device+" offline!")
-                    self.outLog(_device+' alter device state to offline!')
-                    self.stateMachine.changeState(self.devices[_device],DeviceState.OFFLINE)
-                    self.closeDeviceConnection(_device)
-            self.isCheckDeviceOnline[_device]=False
+        # for _device in self.isCheckDeviceOnline.keys():
+        #     if self.devices[_device].state!=DeviceState.OFFLINE:
+        #         if not self.isCheckDeviceOnline[_device]:
+        #             self.appendRunMsg.emit(_device+" offline!")
+        #             self.outLog(_device+' alter device state to offline!')
+        #             self.stateMachine.changeState(self.devices[_device],DeviceState.OFFLINE)
+        #             self.closeDeviceConnection(_device)
+        #     self.isCheckDeviceOnline[_device]=False
         pass
 
     def closeDeviceConnection(self,_device):
@@ -155,7 +161,7 @@ class MonitorServer(QObject):
         self.outLog('timer initialize')
         checkTimer=QTimer(self)
         checkTimer.timeout.connect(self.checkTimerTimeout)
-        checkTimer.setInterval(3000000)
+        checkTimer.setInterval(10000)
         checkTimer.start()
         pass
 
@@ -225,6 +231,17 @@ class MonitorServer(QObject):
         pass
 
     def playAlarmSound(self,_device):
+
+        ###loop play alarm device###
+        if self.devices[_device].state!=DeviceState.PAUSE and self.devices[_device].state!=DeviceState.STOP:
+            if _device in self.waitPlayAlarmDevice:
+                self.waitPlayAlarmDevice.remove(_device)
+            if len(self.waitPlayAlarmDevice)!=0 and not self.isPlayingAlarmSound:
+                self.playAlarmSound(self.waitPlayAlarmDevice[0])
+            return
+        
+        ###new alarm device###
+        print("new alarm device "+_device)
         if self.isPlayingAlarmSound:
             if _device not in self.waitPlayAlarmDevice:
                 self.waitPlayAlarmDevice.append(_device)
@@ -232,10 +249,15 @@ class MonitorServer(QObject):
         else:
             if _device in self.waitPlayAlarmDevice:
                 self.waitPlayAlarmDevice.remove(_device)
-            print(_device+" play alarm sound")
-            _thread=SoundPlayerThread(_device)
-            _thread.playEnd.connect(self.playAlarmSoundEnd)
-            _thread.start()
+            # print(_device+" play alarm sound")
+            self.__playSound(_device)
+        pass
+
+    def __playSound(self,_device):
+        time.sleep(1) 
+        self._thread=SoundPlayerThread(_device)
+        self._thread.playEnd.connect(self.playAlarmSoundEnd)
+        self._thread.start()
         pass
 
     def playAlarmSoundEnd(self,_device):
@@ -244,16 +266,11 @@ class MonitorServer(QObject):
 
     def processDeviceStateChanged(self,_device,_state):
         print(_device+" state changed")
-        if _state==DeviceState.PAUSE or _state==DeviceState.STOP:
-            if _device not in self.stopDeviceList:
-                self.stopDeviceList.append(_device)
-                self.playAlarmSound(_device)
 
-        elif _state!=DeviceState.PAUSE and _state!=DeviceState.STOP:
-            if _device in self.stopDeviceList:
-                self.stopDeviceList.remove(_device)
         self.updateDeviceState.emit(_device,_state)
         self.saveDeviceStateChangeLog(_device,_state)
+        if _state==DeviceState.PAUSE or _state==DeviceState.STOP:
+            self.playAlarmSound(_device)
         pass
 
     def preProcessMsgFromDevice(self,msg,sockIp):

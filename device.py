@@ -20,6 +20,7 @@ class Device(QObject):
         self.fsm=None
     
     def enter_offline(self):
+        self.state=DeviceState.OFFLINE
         self.stateChanged.emit(self.deviceSerial,DeviceState.OFFLINE)
         print("%s enter offline state!"% self.deviceSerial)
         pass
@@ -28,6 +29,7 @@ class Device(QObject):
         pass
 
     def enter_calculate(self):
+        self.state=DeviceState.CALCULATE
         self.stateChanged.emit(self.deviceSerial,DeviceState.CALCULATE)
         print("%s enter calculate state!"% self.deviceSerial)
         pass
@@ -36,6 +38,7 @@ class Device(QObject):
         pass
 
     def enter_idle(self):
+        self.state=DeviceState.IDLE
         self.stateChanged.emit(self.deviceSerial,DeviceState.IDLE)
         print("%s enter idle state!"% self.deviceSerial)
         pass
@@ -45,6 +48,7 @@ class Device(QObject):
         pass
 
     def enter_monitor(self):
+        self.state=DeviceState.MONITOR
         self.stateChanged.emit(self.deviceSerial,DeviceState.MONITOR)
         print("%s enter monitor state!"% self.deviceSerial)
         pass
@@ -53,6 +57,7 @@ class Device(QObject):
         pass
 
     def enter_ota(self):
+        self.state=DeviceState.OTA
         self.stateChanged.emit(self.deviceSerial,DeviceState.OTA)
         print("%s enter ota state!"% self.deviceSerial)
         pass
@@ -61,6 +66,7 @@ class Device(QObject):
         pass
 
     def enter_pause(self):
+        self.state=DeviceState.PAUSE
         self.stateChanged.emit(self.deviceSerial,DeviceState.PAUSE)
         print("%s enter pause state!"% self.deviceSerial)
         pass
@@ -69,6 +75,7 @@ class Device(QObject):
         pass
         
     def enter_stop(self):
+        self.state=DeviceState.STOP
         self.stateChanged.emit(self.deviceSerial,DeviceState.STOP)
         print("%s enter stop state!"% self.deviceSerial)
         pass
@@ -77,6 +84,7 @@ class Device(QObject):
         pass
 
     def enter_unknown(self):
+        self.state=DeviceState.UNKNOWN_WORKMODE
         self.stateChanged.emit(self.deviceSerial,DeviceState.UNKNOWN_WORKMODE)
         print("%s enter unknown state!"% self.deviceSerial)
         pass

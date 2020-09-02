@@ -28,7 +28,7 @@
 
 String checkConnectionMsg="";
 const int workModeAddress=1;
-IPAddress localIp(192, 168, 1, 74);
+IPAddress localIp(192, 168, 1, 64);
 IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 255, 0);
 struct stru_netWorkParam {
@@ -48,7 +48,7 @@ struct stru_netWorkParam {
 };
 
 struct stru_deviceParam {
-  String deviceSerial = "xe_line7_ultra";
+  String deviceSerial = "xe_line6_ultra";
   String firmWareVersion = "1";
   int workMode = CALCULATE_MODE;
   unsigned int workState = NORMAL;
