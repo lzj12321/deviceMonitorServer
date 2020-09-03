@@ -249,12 +249,11 @@ class MonitorServer(QObject):
         else:
             if _device in self.waitPlayAlarmDevice:
                 self.waitPlayAlarmDevice.remove(_device)
-            # print(_device+" play alarm sound")
             self.__playSound(_device)
         pass
 
     def __playSound(self,_device):
-        time.sleep(1) 
+        self.isPlayingAlarmSound=True
         self._thread=SoundPlayerThread(_device)
         self._thread.playEnd.connect(self.playAlarmSoundEnd)
         self._thread.start()
