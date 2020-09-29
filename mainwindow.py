@@ -18,6 +18,7 @@ from yamlTool import Yaml_Tool
 from deviceState import DeviceState,MonitorState
 from PyQt5.QtGui import QPixmap
 from deviceDialog import DeviceDialog
+import copy
 
 
 class myButton(QPushButton):
@@ -68,8 +69,8 @@ class GUI(QWidget):
         self.label_34.setObjectName("label_34")
         self.label_35 = QtWidgets.QLabel(self)
         
-        deviceLabel_x=30
-        self.label_35.setGeometry(QtCore.QRect(deviceLabel_x, 510, labelWidth, labelHeight))
+        deviceLabel_x=50
+        self.label_35.setGeometry(QtCore.QRect(deviceLabel_x, 545, labelWidth, labelHeight))
         font = QtGui.QFont()
         font.setPointSize(labelFontSize)
         font.setBold(True)
@@ -78,7 +79,7 @@ class GUI(QWidget):
         self.label_35.setAlignment(QtCore.Qt.AlignCenter)
         self.label_35.setObjectName("label_35")
         self.label_36 = QtWidgets.QLabel(self)
-        self.label_36.setGeometry(QtCore.QRect(deviceLabel_x, 405, labelWidth, labelHeight))
+        self.label_36.setGeometry(QtCore.QRect(deviceLabel_x, 440, labelWidth, labelHeight))
         font = QtGui.QFont()
         font.setPointSize(labelFontSize)
         font.setBold(True)
@@ -87,7 +88,7 @@ class GUI(QWidget):
         self.label_36.setAlignment(QtCore.Qt.AlignCenter)
         self.label_36.setObjectName("label_36")
         self.label_37 = QtWidgets.QLabel(self)
-        self.label_37.setGeometry(QtCore.QRect(deviceLabel_x, 610, labelWidth, labelHeight))
+        self.label_37.setGeometry(QtCore.QRect(deviceLabel_x, 650, labelWidth, labelHeight))
         font = QtGui.QFont()
         font.setPointSize(labelFontSize)
         font.setBold(True)
@@ -97,7 +98,7 @@ class GUI(QWidget):
         self.label_37.setObjectName("label_37")
 
         self.label_38 = QtWidgets.QLabel(self)
-        self.label_38.setGeometry(QtCore.QRect(deviceLabel_x, 715, labelWidth, labelHeight))
+        self.label_38.setGeometry(QtCore.QRect(deviceLabel_x, 755, labelWidth, labelHeight))
         font = QtGui.QFont()
         font.setPointSize(labelFontSize)
         font.setBold(True)
@@ -118,8 +119,8 @@ class GUI(QWidget):
     def deviceLabelIni(self):
         labelWidth=180
         labelHeight=70
-        label_y=190
-        label_x=0
+        label_y=230
+        label_x=30
         label_x_gap=25
         label_y_gap=35
         
@@ -129,7 +130,7 @@ class GUI(QWidget):
             _label.setParent(self)
             self.labelArray.append(_label)
             if i%5==0:
-                label_y=190
+                label_y=230
                 label_x=label_x+labelWidth+label_x_gap
                 _label.setText(str(int(i/5+1))+'拉')
                 _label.setEnabled(False)
@@ -336,15 +337,15 @@ class GUI(QWidget):
         self.monitorButton.setText("MONITOR")
         # self.calculateButton.setText("CALCULATE")
 
-        buttonY=860
-        buttonX=580
+        buttonY=930
+        buttonX=520
         # self.calculateButton.setGeometry(buttonX-200,buttonY,_buttonWidth,_buttonHeight)
         self.otaButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
-        buttonX+=200
+        buttonX+=220
         self.monitorButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
-        buttonX+=200
+        buttonX+=220
         self.clearButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
-        buttonX+=200
+        buttonX+=220
         self.confirmButton.setGeometry(buttonX,buttonY,_buttonWidth,_buttonHeight)
         _buttons=[]
         _buttons.append(self.otaButton)
@@ -488,6 +489,6 @@ class GUI(QWidget):
 if __name__ == '__main__':
     app=QApplication(sys.argv)
     runGui=GUI()
-    # runGui.showFullScreen()
-    runGui.show()
+    runGui.showFullScreen()
+    #runGui.show()
     sys.exit(app.exec_())

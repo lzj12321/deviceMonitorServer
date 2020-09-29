@@ -77,7 +77,7 @@ class MonitorServer(QObject):
                 else:
                     self.appendRunMsg.emit('can\'t set '+_device+' into ota mode because it not online!')
             elif self.devices[_device].state==DeviceState.OTA:
-                print('test idle')
+               # print('test idle')
                 self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('idle')
         pass
 
@@ -89,14 +89,14 @@ class MonitorServer(QObject):
                 if _device in self.onlineDeviceIp.keys():
                     self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('monitor')
                     # self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('calculate')
-                    print('send monitor msg to '+_device)
+                   # print('send monitor msg to '+_device)
                 else:
                     pass
                     # self.appendRunMsg.emit('cant set '+_device+' into monitor model because it not on line!')
             elif self.devices[_device].state!=DeviceState.OTA:
                 if _device in self.onlineDeviceIp.keys():
                     self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('idle')
-                    print('send idle msg to '+_device)
+                 #   print('send idle msg to '+_device)
                 else:
                     pass
                     # self.appendRunMsg.emit('cant set '+_device+' into idle model because it not on line!')
@@ -109,11 +109,11 @@ class MonitorServer(QObject):
                     continue
                 if _device in self.onlineDeviceIp.keys():
                     self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('calculate')
-                    print('send calculate msg to '+_device)
+                   # print('send calculate msg to '+_device)
             elif self.devices[_device].state==DeviceState.CALCULATE:
                 if _device in self.onlineDeviceIp.keys():
                     self.ipSocket[self.onlineDeviceIp[_device]].sendMsg('idle')
-                    print('send idle msg to '+_device)
+                    #print('send idle msg to '+_device)
 
 
     def clearDeviceHourProduction(self,_productList):
@@ -139,14 +139,14 @@ class MonitorServer(QObject):
             self.clearDeviceHourProduction(self.getCalculatingDevice())
 
         #### only detect offline time more than three times it will close the connection #########
-        # for _device in self.isCheckDeviceOnline.keys():
-        #     if self.devices[_device].state!=DeviceState.OFFLINE:
-        #         if not self.isCheckDeviceOnline[_device]:
-        #             self.appendRunMsg.emit(_device+" offline!")
-        #             self.outLog(_device+' alter device state to offline!')
-        #             self.stateMachine.changeState(self.devices[_device],DeviceState.OFFLINE)
-        #             self.closeDeviceConnection(_device)
-        #     self.isCheckDeviceOnline[_device]=False
+        for _device in self.isCheckDeviceOnline.keys():
+            if self.devices[_device].state!=DeviceState.OFFLINE:
+                if not self.isCheckDeviceOnline[_device]:
+                    self.appendRunMsg.emit(_device+" offline!")
+                    self.outLog(_device+' alter device state to offline!')
+                    self.stateMachine.changeState(self.devices[_device],DeviceState.OFFLINE)
+                    self.closeDeviceConnection(_device)
+            self.isCheckDeviceOnline[_device]=False
         pass
 
     def closeDeviceConnection(self,_device):
@@ -161,7 +161,7 @@ class MonitorServer(QObject):
         self.outLog('timer initialize')
         checkTimer=QTimer(self)
         checkTimer.timeout.connect(self.checkTimerTimeout)
-        checkTimer.setInterval(10000)
+        checkTimer.setInterval(30000)
         checkTimer.start()
         pass
 
@@ -249,12 +249,13 @@ class MonitorServer(QObject):
         else:
             if _device in self.waitPlayAlarmDevice:
                 self.waitPlayAlarmDevice.remove(_device)
+            # print(_device+" play alarm sound")
             self.__playSound(_device)
         pass
 
     def __playSound(self,_device):
         self.isPlayingAlarmSound=True
-        self._thread=SoundPlayerThread(_device)
+        self._thread=SoundPlayerThread(_device,3)
         self._thread.playEnd.connect(self.playAlarmSoundEnd)
         self._thread.start()
         pass
@@ -273,7 +274,7 @@ class MonitorServer(QObject):
         pass
 
     def preProcessMsgFromDevice(self,msg,sockIp):
-        print("msg:"+msg)
+        #print("msg:"+msg)
         isMsgValid=True
         _device=''
         _validMsg=''
