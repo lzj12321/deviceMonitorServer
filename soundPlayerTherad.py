@@ -15,7 +15,7 @@ class SoundPlayerThread(QThread):
         self.playTime=_playTime
 
     def run(self):
-        _alarmsoundPath="./alarmSound/"+self.alarmDevice+".wav"        
+        _alarmsoundPath="./alarmSound/"+self.alarmDevice+".wav"
         sound = AudioSegment.from_file(_alarmsoundPath)
         while self.playTime>0:
             play(sound)
@@ -24,7 +24,7 @@ class SoundPlayerThread(QThread):
 
         self.playEnd.emit(self.alarmDevice)
         pass
-    
+
 if __name__=="__main__":
     test=SoundPlayerThread("xe_line3_robot3",3)
     test.start()

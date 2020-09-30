@@ -230,8 +230,12 @@ class MonitorServer(QObject):
         self.stateMachine.changeState(self.devices[_device],DeviceState.IDLE)
         pass
 
-    def playAlarmSound(self,_device):
+    def stopPlayDeviceAlarmSound(self,_device):
+        if self._alarmThread.isRunning() and self.alarmingDevice==_device and self.isPlayingAlarmSound:
+            self._alarmThread.quit()
+        pass
 
+    def playAlarmSound(self,_device):
         ###loop play alarm device###
         if self.devices[_device].state!=DeviceState.PAUSE and self.devices[_device].state!=DeviceState.STOP:
             if _device in self.waitPlayAlarmDevice:
@@ -254,10 +258,11 @@ class MonitorServer(QObject):
         pass
 
     def __playSound(self,_device):
+        self._alarmThread=SoundPlayerThread(_device,3)
+        self._alarmThread.playEnd.connect(self.playAlarmSoundEnd)
+        self._alarmThread.start()
         self.isPlayingAlarmSound=True
-        self._thread=SoundPlayerThread(_device,3)
-        self._thread.playEnd.connect(self.playAlarmSoundEnd)
-        self._thread.start()
+        self.alarmingDevice=_device
         pass
 
     def playAlarmSoundEnd(self,_device):
@@ -271,6 +276,8 @@ class MonitorServer(QObject):
         self.saveDeviceStateChangeLog(_device,_state)
         if _state==DeviceState.PAUSE or _state==DeviceState.STOP:
             self.playAlarmSound(_device)
+        elif _state==DeviceState.MONITOR:
+            self.stopPlayDeviceAlarmSound(_device)
         pass
 
     def preProcessMsgFromDevice(self,msg,sockIp):
@@ -328,23 +335,12 @@ class MonitorServer(QObject):
                 self.process_idle_check_msg(_device)
             elif _validMsg=='unknown_check':
                 self.process_unknownWorkmode_msg(_device)
-            elif _validMsg=='calculate_check':
-                self.process_calculate_msg(_device)
-            elif "calculate-" in _validMsg:
-                validMsgs=_validMsg.split("-")
-                if len(validMsgs)==2:
-                    self.devices[_device].productNum=int(validMsgs[1])
-                    self.saveProductionData(_device,self.devices[_device].productNum)
             else:
                 self.outLog("receive a invalid msg:"+msg)
         else:
             self.outLog("receive a invalid msg:"+msg)
         pass
 
-    def saveProductionData(self,_device,_production):
-        self.mysqlTool.saveDeviceProductionData(_device,_production)
-        pass
-    
     def getMonitoringDevice(self):
         _monitoringDevices=[]
         for _device in self.devices.keys():

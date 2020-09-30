@@ -188,8 +188,6 @@ class StateMachine(object):
         if newState==obj.state:
             return
             pass
-            # fsm=self.getFsm(obj.state)
-            # fsm.enter(obj)
         else:
             oldFsm=self.getFsm(obj.state)
             oldFsm.exit(obj)
