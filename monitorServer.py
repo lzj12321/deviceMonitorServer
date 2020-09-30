@@ -42,7 +42,7 @@ class MonitorServer(QObject):
         self.stopDeviceList=[]
         self.waitPlayAlarmDevice=[]
         self.isPlayingAlarmSound=False
-
+        self.alarmingDevice=''
         self.stateMachine=StateMachine()
         for _device in self.params['devices'].keys():
             self.isCheckDeviceOnline[_device]=False
@@ -231,8 +231,10 @@ class MonitorServer(QObject):
         pass
 
     def stopPlayDeviceAlarmSound(self,_device):
-        if self._alarmThread.isRunning() and self.alarmingDevice==_device and self.isPlayingAlarmSound:
-            self._alarmThread.quit()
+        if self.alarmingDevice==_device and self.isPlayingAlarmSound:
+            self._alarmThread.isRunning():
+                self._alarmThread.terminate()
+                self.isPlayingAlarmSound=False
         pass
 
     def playAlarmSound(self,_device):
